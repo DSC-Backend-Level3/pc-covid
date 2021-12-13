@@ -6,7 +6,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "RequestDispatcher", value = "/RequestDispatcher")
-public class RequestDispatcher extends HttpServlet{
+public class RequestDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String url = "localhost:8080/pc-covid/add";
