@@ -15,7 +15,7 @@ public class WardDTO implements Serializable {
 
     private int id; //ward's id
     private String name; //the name of the ward
-    private int districtID; //Districr's id for this ward
+    private int districtID; //District's id for this ward
 
     public WardDTO() {
     }

@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 public class VaccinationInfoDTO implements Serializable {
 
-    private int id; //Vaccinational infomation id
+    private int id; //Vaccination information id
     private String idNumber; //resident's id
     private int vaccineID; //vaccine's id
     private int province; //Province's id
