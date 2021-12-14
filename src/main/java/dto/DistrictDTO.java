@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class DistrictDTO implements Serializable {
 
     private int id; //District's id
-    private String name; //the name of the distric
+    private String name; //the name of the district
     private int provinceID; //Province's id for this district
 
     public DistrictDTO() {

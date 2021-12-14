@@ -2,6 +2,8 @@ package dao;
 
 import dto.DistrictDTO;
 
+import javax.naming.NamingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface DistrictDao {
@@ -10,5 +12,5 @@ public interface DistrictDao {
      * @param provinceID a province ID for searching.
      * @return An {@code ArrayList} of {@code DistrictDTO} object from database.
      */
-    ArrayList<DistrictDTO> getDistrictByProvinceID(int provinceID);
+    ArrayList<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException;
 }

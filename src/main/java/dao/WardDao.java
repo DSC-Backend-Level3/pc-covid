@@ -2,6 +2,8 @@ package dao;
 
 import dto.WardDTO;
 
+import javax.naming.NamingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface WardDao {
@@ -10,5 +12,5 @@ public interface WardDao {
      * @param districtID a district ID for searching.
      * @return An {@code ArrayList} of {@code WardDTO} from database.
      */
-    ArrayList<WardDTO> getWardByDistrictID(int districtID);
+    ArrayList<WardDTO> getWardByDistrictID(int districtID) throws SQLException, NamingException;
 }
