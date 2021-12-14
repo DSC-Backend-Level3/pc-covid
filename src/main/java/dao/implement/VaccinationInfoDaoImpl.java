@@ -95,11 +95,11 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
     @Override
     public boolean isAvailableFor2ndInjection(int id) throws NamingException, SQLException{
-        int count = 0;
+        int numOfInjection = 0;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
-                String sql = "SELECT [vaccineID]"
+                String sql = "SELECT COUNT([vaccineID]) as numOfInjection"
                         + " FROM [VaccinationInfo]"
                         + " WHERE idNumber = ?";
 
@@ -107,10 +107,10 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                 preparedStatement.setInt(1, id);
                 resultSet = preparedStatement.executeQuery();
 
-                while (resultSet.next()) {
-                    count ++;
+                if (resultSet.next()) {
+                    numOfInjection = resultSet.getInt("numOfInjection");
                 }
-                return count == 2;
+                return numOfInjection == 2;
             }
         } finally {
             closeConnection();
