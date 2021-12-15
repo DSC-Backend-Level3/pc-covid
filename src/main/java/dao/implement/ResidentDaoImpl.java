@@ -9,12 +9,25 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ResidentDaoImpl implements ResidentDao {
+    private Connection con = null;
+    private PreparedStatement stm = null;
+    private ResultSet rs = null;
+
+    private void closeConnection() throws SQLException {
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+
     @Override
     public ResidentDTO getResidentById(String idNumber)
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
         try {
             //1. Connect DB
             con = DBHelper.makeConnection();
@@ -49,15 +62,7 @@ public class ResidentDaoImpl implements ResidentDao {
             }
 
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
         return null;
 
@@ -66,9 +71,6 @@ public class ResidentDaoImpl implements ResidentDao {
     @Override
     public ArrayList<ResidentDTO> getAllResidents()
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
         ArrayList<ResidentDTO> list = null;
         try {
             //1. Connect DB
@@ -104,15 +106,7 @@ public class ResidentDaoImpl implements ResidentDao {
             }
 
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
         return null;
     }
@@ -120,8 +114,6 @@ public class ResidentDaoImpl implements ResidentDao {
     @Override
     public boolean addNewResident(ResidentDTO residentDTO)
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
         try {
             //1. Connect DB
             con = DBHelper.makeConnection();
@@ -153,12 +145,7 @@ public class ResidentDaoImpl implements ResidentDao {
                 }
             }
         } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
         return false;
     }
@@ -166,8 +153,6 @@ public class ResidentDaoImpl implements ResidentDao {
     @Override
     public void updateResidentInformation(ResidentDTO residentDTO)
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
         try {
             //1. Connect DB
             con = DBHelper.makeConnection();
@@ -199,20 +184,13 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.executeUpdate();
             }
         } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
     }
 
     @Override
     public void updateResidentPassword(String idNumber, String password)
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
         try {
             //1. Connect DB
             con = DBHelper.makeConnection();
@@ -228,21 +206,13 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.executeUpdate();
             }
         } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
     }
 
     @Override
     public boolean isUpdated(String idNumber)
             throws SQLException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
         try {
             //1. Connect DB
             con = DBHelper.makeConnection();
@@ -263,15 +233,7 @@ public class ResidentDaoImpl implements ResidentDao {
                 }
             }
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+            closeConnection();
         }
         return false;
     }
