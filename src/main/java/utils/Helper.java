@@ -63,7 +63,7 @@ public class Helper {
         if (session == null) {
             return false; //if the session is not exist
         }
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute("idNumber");
         return email != null; //username exist in session or not
     }
 

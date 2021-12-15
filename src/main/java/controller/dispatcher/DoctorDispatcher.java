@@ -9,26 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "AdminDispatcher", value = "/AdminDispatcher")
-public class AdminDispatcher extends HttpServlet {
+@WebServlet(name = "DoctorDispatcher", value = "/DoctorDispatcher")
+public class DoctorDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        processRequest(request, response);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
-        switch (path){
+        switch (path) {
             case "add":
-                request.getRequestDispatcher(Router.ADD_VACCINE_CONTROLLER).forward(request,response);
-                break;
-            case "create":
-                request.getRequestDispatcher(Router.CREATE_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
+                request.getRequestDispatcher(Router.ADD_VACCINATION_INFO_CONTROLLER).forward(request,response);
                 break;
             default:
                 request.setAttribute("errorMessage", "This action is not support or exist");
