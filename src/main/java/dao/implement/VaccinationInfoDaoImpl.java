@@ -12,8 +12,6 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ArrayList<VaccinationInfoDTO> list;
-    private VaccinationInfoDTO vaccineInfo;
 
     public void closeConnection() throws SQLException {
         if (resultSet != null) {
@@ -31,6 +29,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
     @Override
     public ArrayList<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException{
+        ArrayList<VaccinationInfoDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -50,10 +49,10 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
                     VaccinationInfoDTO dto = new VaccinationInfoDTO(id, idNumber, vaccineID, province, district, ward, date);
 
-                    if (this.list == null) {
-                        this.list = new ArrayList<>();
+                    if (list == null) {
+                        list = new ArrayList<>();
                     }
-                    this.list.add(dto);
+                    list.add(dto);
                 }
             }
         } finally {
@@ -65,12 +64,13 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
     @Override
     public VaccinationInfoDTO getVaccinationInfoByID(int id) throws NamingException, SQLException{
+        VaccinationInfoDTO vaccineInfo = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String sql = "SELECT [idNumber], [vaccineID], [province], [district], [ward], [date]"
                         + " FROM [VaccinationInfo]"
-                        + " WHERE id = ?";
+                        + " WHERE [id] = ?";
 
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, id);
@@ -99,9 +99,9 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
-                String sql = "SELECT COUNT([vaccineID]) as numOfInjection"
+                String sql = "SELECT COUNT([vaccineID]) as [numOfInjection]"
                         + " FROM [VaccinationInfo]"
-                        + " WHERE idNumber = ?";
+                        + " WHERE [idNumber] = ?";
 
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, id);

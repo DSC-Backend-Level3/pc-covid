@@ -15,8 +15,6 @@ public class VaccineDaoImpl implements VaccineDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ArrayList<VaccineDTO> list;
-    private VaccineDTO vaccine;
 
     public void closeConnection() throws SQLException{
         if (resultSet != null) {
@@ -40,6 +38,7 @@ public class VaccineDaoImpl implements VaccineDao {
      */
     @Override
     public ArrayList<VaccineDTO> getAllVaccines() throws SQLException{
+        ArrayList<VaccineDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -57,10 +56,10 @@ public class VaccineDaoImpl implements VaccineDao {
 
                     VaccineDTO dto = new VaccineDTO(id, vaccineName, firm, country, interval);
 
-                    if (this.list == null) {
-                        this.list = new ArrayList<>();
+                    if (list == null) {
+                        list = new ArrayList<>();
                     }
-                    this.list.add(dto);
+                    list.add(dto);
                 }
             }
         } catch (NamingException e) {
@@ -79,6 +78,7 @@ public class VaccineDaoImpl implements VaccineDao {
      */
     @Override
     public VaccineDTO getVaccineByID(int vaccineID) throws SQLException, NamingException{
+        VaccineDTO vaccine = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {

@@ -15,7 +15,6 @@ public class ProvinceDaoImpl implements ProvinceDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ArrayList<ProvinceDTO> list;
 
     public void closeConnection() throws SQLException {
         if (resultSet != null) {
@@ -37,7 +36,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
      */
     @Override
     public ArrayList<ProvinceDTO> getAllProvinces() throws NamingException, SQLException {
-
+        ArrayList<ProvinceDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -53,10 +52,10 @@ public class ProvinceDaoImpl implements ProvinceDao {
 
                     ProvinceDTO dto = new ProvinceDTO(id, name);
 
-                    if (this.list == null) {
-                        this.list = new ArrayList<>();
+                    if (list == null) {
+                        list = new ArrayList<>();
                     }
-                    this.list.add(dto);
+                    list.add(dto);
                 }
             }
         } finally {

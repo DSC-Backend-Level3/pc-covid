@@ -16,7 +16,6 @@ public class WardDaoImpl implements WardDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    ArrayList<WardDTO> list;
 
     public void closeConnection() throws SQLException{
         if (resultSet != null) {
@@ -34,12 +33,13 @@ public class WardDaoImpl implements WardDao {
 
     @Override
     public ArrayList<WardDTO> getWardByDistrictID(int districtIDValue) throws SQLException, NamingException {
+        ArrayList<WardDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String sql = "SELECT [id], [name], [districtID]"
                         + " FROM [Ward]"
-                        + " WHERE districtID = ?";
+                        + " WHERE [districtID] = ?";
 
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, districtIDValue);
@@ -51,10 +51,10 @@ public class WardDaoImpl implements WardDao {
 
                     WardDTO dto = new WardDTO(id, name, districtIDValue);
 
-                    if (this.list == null) {
-                        this.list = new ArrayList<>();
+                    if (list == null) {
+                        list = new ArrayList<>();
                     }
-                    this.list.add(dto);
+                    list.add(dto);
                 }
             }
         } finally {

@@ -15,7 +15,6 @@ public class DistrictDaoImpl implements DistrictDao {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ArrayList<DistrictDTO> list;
 
     public void closeConnection() throws SQLException {
         if (resultSet != null) {
@@ -38,12 +37,13 @@ public class DistrictDaoImpl implements DistrictDao {
      */
     @Override
     public ArrayList<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException {
+        ArrayList<DistrictDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String sql = "SELECT [id], [name], [provinceID]"
                         + " FROM [District]"
-                        + " WHERE provinceID = ?";
+                        + " WHERE [provinceID] = ?";
 
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, provinceID);
@@ -56,10 +56,10 @@ public class DistrictDaoImpl implements DistrictDao {
 
                     DistrictDTO dto = new DistrictDTO(id, vaccineName, provinceID);
 
-                    if (this.list == null) {
-                        this.list = new ArrayList<>();
+                    if (list == null) {
+                        list = new ArrayList<>();
                     }
-                    this.list.add(dto);
+                    list.add(dto);
                 }
             }
         } finally {
