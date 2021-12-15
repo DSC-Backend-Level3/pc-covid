@@ -2,15 +2,13 @@ package controller.dispatcher;
 
 import constant.Router;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "AdminDispatcher", value = "/AdminDispatcher")
-public class AdminDispatcher extends HttpServlet {
+@WebServlet(name = "UserDispatcher", value = "/UserDispatcher")
+public class UserDispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request,response);
@@ -24,11 +22,17 @@ public class AdminDispatcher extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
         switch (path){
-            case "add":
-                request.getRequestDispatcher(Router.ADD_VACCINE_CONTROLLER).forward(request,response);
+            case "update-password":
+                request.getRequestDispatcher(Router.CHANGE_PASSWORD_CONTROLLER).forward(request,response);
                 break;
-            case "create":
-                request.getRequestDispatcher(Router.CREATE_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
+            case "update-info":
+                request.getRequestDispatcher(Router.UPDATE_PROFILE_CONTROLLER).forward(request,response);
+                break;
+            case "vaccination-info":
+                request.getRequestDispatcher(Router.USER_VACCINATION_INFO_CONTROLLER).forward(request,response);
+                break;
+            case "view":
+                request.getRequestDispatcher(Router.VIEW_PROFILE_CONTROLLER).forward(request,response);
                 break;
             default:
                 request.setAttribute("errorMessage", "This action is not support or exist");
