@@ -7,6 +7,7 @@ import utils.DBHelper;
 import javax.naming.NamingException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     private Connection connection;
@@ -28,26 +29,24 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     }
 
     @Override
-    public ArrayList<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException{
-        ArrayList<VaccinationInfoDTO> list = null;
+    public List<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException{
+        List<VaccinationInfoDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
-                String sql = "SELECT [id], [idNumber], [vaccineID], [province], [district], [ward], [date]"
+                String sql = "SELECT [id], [residentID], [vaccineID], [wardID], [date]"
                         + " FROM [VaccinationInfo]";
                 preparedStatement = connection.prepareStatement(sql);
                 resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
-                    String idNumber = resultSet.getString("idNumber");
+                    String residentID = resultSet.getString("residentID");
                     int vaccineID = resultSet.getInt("vaccineID");
-                    int province = resultSet.getInt("province");
-                    int district = resultSet.getInt("district");
-                    int ward = resultSet.getInt("ward");
+                    int wardID = resultSet.getInt("wardID");
                     Timestamp date = resultSet.getTimestamp("date");
 
-                    VaccinationInfoDTO dto = new VaccinationInfoDTO(id, idNumber, vaccineID, province, district, ward, date);
+                    VaccinationInfoDTO dto = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
 
                     if (list == null) {
                         list = new ArrayList<>();
@@ -68,7 +67,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
-                String sql = "SELECT [idNumber], [vaccineID], [province], [district], [ward], [date]"
+                String sql = "SELECT [residentID], [vaccineID], [wardID], [date]"
                         + " FROM [VaccinationInfo]"
                         + " WHERE [id] = ?";
 
@@ -77,14 +76,12 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    String idNumber = resultSet.getString("idNumber");
+                    String residentID = resultSet.getString("residentID");
                     int vaccineID = resultSet.getInt("vaccineID");
-                    int province = resultSet.getInt("province");
-                    int district = resultSet.getInt("district");
-                    int ward = resultSet.getInt("ward");
+                    int wardID = resultSet.getInt("ward");
                     Timestamp date = resultSet.getTimestamp("date");
 
-                    vaccineInfo = new VaccinationInfoDTO(id, idNumber, vaccineID, province, district, ward, date);
+                    vaccineInfo = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
                 }
             }
         } finally {
@@ -94,17 +91,48 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     }
 
     @Override
-    public boolean isAvailableFor2ndInjection(int id) throws NamingException, SQLException{
+    public List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
+        List<VaccinationInfoDTO> list = null;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String sql = "SELECT [id], [vaccineID], [wardID], [date]"
+                        + " FROM [VaccinationInfo]"
+                        + " WHERE [residentID] = ?";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, residentID);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    int vaccineID = resultSet.getInt("vaccineID");
+                    int wardID = resultSet.getInt("ward");
+                    Timestamp date = resultSet.getTimestamp("date");
+                    if(list == null){
+                        list = new ArrayList<>();
+                    }
+                    list.add(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
+                }
+
+            }
+        } finally {
+            closeConnection();
+        }
+        return list;
+    }
+
+    @Override
+    public boolean isAvailableFor2ndInjection(int residentID) throws NamingException, SQLException{
         int numOfInjection = 0;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
                 String sql = "SELECT COUNT([vaccineID]) as [numOfInjection]"
                         + " FROM [VaccinationInfo]"
-                        + " WHERE [idNumber] = ?";
+                        + " WHERE [residentID] = ?";
 
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, residentID);
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {

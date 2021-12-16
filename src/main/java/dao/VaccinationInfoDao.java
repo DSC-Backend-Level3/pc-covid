@@ -5,6 +5,7 @@ import dto.VaccinationInfoDTO;
 import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface VaccinationInfoDao {
 
@@ -13,7 +14,7 @@ public interface VaccinationInfoDao {
      *
      * @return An {@code ArrayList} of {@code VaccinationInfoDTO} object from database.
      */
-    ArrayList<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException;
+    List<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException;
 
     /**
      * Get the vaccination info by ID.
@@ -22,6 +23,7 @@ public interface VaccinationInfoDao {
      */
     VaccinationInfoDTO getVaccinationInfoByID(int id) throws NamingException, SQLException;
 
+    List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws  NamingException, SQLException;
     /**
      * Check if the resident is available for the 2nd injection.
      *
