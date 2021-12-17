@@ -12,38 +12,41 @@
     <title>Profile Page</title>
 </head>
 <body>
-    <h1>Personal Information</h1>
-    <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
-    <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
-    <c:set var="district" value="${requestScope.PROFILE_DISTRICT}"/>
-    <c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
-    <c:if test="${not empty result}">
-        <p>
-            Full name: ${result.firstName + " " + result.lastName} <br>
-            Gender   : <c:choose>
-                            <c:when test="${result.gender eq F}">Female</c:when>
-                            <c:otherwise>Male</c:otherwise>
-                        </c:choose> <br>
-            Date of birth:<br>
+<h1>Personal Information</h1>
+<c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
+<c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
+<c:set var="district" value="${requestScope.PROFILE_DISTRICT}"/>
+<c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
+<c:if test="${not empty result}">
+    <p>
+        Full name: ${result.firstName + " " + result.lastName} <br>
+        Gender : <c:choose>
+        <c:when test="${result.gender eq F}">Female</c:when>
+        <c:otherwise>Male</c:otherwise>
+    </c:choose> <br>
+        Date of birth:<br>
             ${result.DOB}<br>
-            Identity card:<br>
-            ${result.idNumber}<br>
-            Phone number :<br>
+        Identity card:<br>
+            ${result.id}<br>
+        Phone number :<br>
             ${result.phoneNumber}<br>
-            Health insurance card number:<br>
+        Health insurance card number:<br>
             ${result.healthInsuranceID}<br>
-            Email:<br>
+        Email:<br>
             ${result.email} <br>
-            Province/City: <br>
+        Province/City: <br>
             ${province} <br>
-            District: <br>
+        District: <br>
             ${district}<br>
-            Ward/Commune: <br>
+        Ward/Commune: <br>
             ${ward} <br>
-            House number: <br>
+        House number: <br>
             ${result.houseNumber}
-        </p>
-    </c:if>
-    <button type="UpdateProfileController"><a href="">UPDATE</a></button>
+    </p>
+</c:if>
+<form action="ViewProfileController">
+    <input type="submit" value="Update Profile" name="btAction">
+</form>
+<button><a href="changePassword.jsp">Change Password</a></button>
 </body>
 </html>

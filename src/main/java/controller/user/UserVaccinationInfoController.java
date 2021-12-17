@@ -41,7 +41,7 @@ public class UserVaccinationInfoController extends HttpServlet {
 
             for(VaccinationInfoDTO dto : list){
                 listVaccine.add(daoVaccine.getVaccineByID(dto.getVaccineID()));
-                listWard.add(daoWard.getWardByID(dto.getWard()));
+                listWard.add(daoWard.getWardByID(dto.getWardID()));
             }
             for(WardDTO wardDto : listWard){
                 listDistrict.add(daoDistrict.getDistrictByID(wardDto.getDistrictID()));

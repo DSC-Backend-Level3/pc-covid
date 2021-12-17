@@ -39,11 +39,11 @@ public class VaccinationInfoDTO implements Serializable {
         this.id = id;
     }
 
-    public String getIdNumber() {
+    public String getResidentID() {
         return residentID;
     }
 
-    public void setIdNumber(String residentID) {
+    public void setResidentID(String residentID) {
         this.residentID = residentID;
     }
 
@@ -55,11 +55,11 @@ public class VaccinationInfoDTO implements Serializable {
         this.vaccineID = vaccineID;
     }
 
-    public int getWard() {
+    public int getWardID() {
         return wardID;
     }
 
-    public void setWard(int ward) {
+    public void setWardID(int ward) {
         this.wardID = wardID;
     }
 

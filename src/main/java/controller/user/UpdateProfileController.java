@@ -13,8 +13,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import static constant.Router.ERROR_PAGE;
-import static constant.Router.USER_DISPATCHER;
+import static constant.Router.*;
 
 @WebServlet(name = "UpdateProfileController", value = "/UpdateProfileController")
 public class UpdateProfileController extends HttpServlet {
@@ -29,18 +28,27 @@ public class UpdateProfileController extends HttpServlet {
         String phoneNumber = request.getParameter("txtPhoneNumber");
         String email = request.getParameter("txtEmail");
         String healthInsuranceID = request.getParameter("txtHealthInsuranceID");
-        String gender = request.getParameter("txtGender");
+        String gender = request.getParameter("cboGender");
         Timestamp DOB = Timestamp.valueOf(request.getParameter("txtDOB"));
         String nationality = request.getParameter("txtNationality");
         int wardID = Integer.parseInt(request.getParameter("cboWard"));
-        String houseNumber = GetParam.getStringParam(request, "txtHouseNumber", "House Number", 1, 10, null);
-        ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender,
+        String houseNumber = request.getParameter("txtHouseNumber");
+        String button = request.getParameter("btUpdate");
+        String genderDB = null;
+        if (gender.equals("Female")) {
+            genderDB = "F";
+        } else if (gender.equals("Male")) {
+            genderDB = "M";
+        }
+        ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
                 DOB, nationality, wardID, houseNumber, null, null);
         String url = ERROR_PAGE;
-        try{
-            ResidentDaoImpl dao = new ResidentDaoImpl();
-            dao.updateResidentInformation(dto);
-            url = USER_DISPATCHER;
+        try {
+            if (button.equals("Save Changes")) {
+                ResidentDaoImpl dao = new ResidentDaoImpl();
+                dao.updateResidentInformation(dto);
+                url = UPDATE_USER_PROFILE;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException e) {

@@ -13,8 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import static constant.Router.ERROR_PAGE;
-import static constant.Router.USER_DISPATCHER;
+import static constant.Router.*;
 
 @WebServlet(name = "ChangePasswordController", value = "/ChangePasswordController")
 public class ChangePasswordController extends HttpServlet {
@@ -33,17 +32,20 @@ public class ChangePasswordController extends HttpServlet {
         String oldPassword = request.getParameter("txtPassword");
         String newPassword = request.getParameter("txtNewPassword");
         String newPasswordConfirm = request.getParameter("txtNewPasswordConfirm");
+        String button = request.getParameter("btAction");
         String url = ERROR_PAGE;
         try {
-            String hashedOldPassword = hashString(oldPassword);
-            String hashedNewPassword = hashString(newPassword);
-            String hashedNewPasswordConfirm = hashString(newPasswordConfirm);
-            ResidentDaoImpl dao = new ResidentDaoImpl();
-            boolean check = dao.checkPassword(id, hashedOldPassword);
-            if (check) {
-                if (hashedNewPassword.equals(hashedNewPasswordConfirm)) {
-                    dao.updateResidentPassword(id, hashedNewPassword);
-                    url = USER_DISPATCHER;
+            if(button.equals("Save Changes")) {
+                String hashedOldPassword = hashString(oldPassword);
+                String hashedNewPassword = hashString(newPassword);
+                String hashedNewPasswordConfirm = hashString(newPasswordConfirm);
+                ResidentDaoImpl dao = new ResidentDaoImpl();
+                boolean check = dao.checkPassword(id, hashedOldPassword);
+                if (check) {
+                    if (hashedNewPassword.equals(hashedNewPasswordConfirm)) {
+                        dao.updateResidentPassword(id, hashedNewPassword);
+                        url = UPDATE_PASSWORD;
+                    }
                 }
             }
         } finally {

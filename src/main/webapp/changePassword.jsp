@@ -10,9 +10,6 @@
 <body>
     <h1>Update Password</h1>
     <form action="ChangePasswordController">
-         ResidentDTO dto = (ResidentDTO) request.getAttribute("LOGIN"); %>
-        <input type="hidden" name="txtIdNumber"
-               value="<%= dto.getIdNumber() %>" />
         Current Password <input type="text" name="txtPassword" value="">
         New Password<input type="text" name="txtNewPassword" value="">
         Re-type New Password<input type="text" name="txtNewPasswordConfirm" value="">
