@@ -17,8 +17,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static constant.Router.ERROR_PAGE;
-import static constant.Router.USER_DISPATCHER;
+import static constant.Router.*;
 
 @WebServlet(name = "ViewProfileController", value = "/ViewProfileController")
 public class ViewProfileController extends HttpServlet {
@@ -44,7 +43,7 @@ public class ViewProfileController extends HttpServlet {
             request.setAttribute("PROFILE_PROVINCE", province );
             request.setAttribute("PROFILE_DISTRICT", district);
             request.setAttribute("PROFILE_WARD", ward);
-            url = USER_DISPATCHER;
+            url = VIEW_USER_PROFILE;
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

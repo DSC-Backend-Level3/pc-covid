@@ -33,5 +33,6 @@ public class Router {
     public final static String LOGIN_PAGE = "login.jsp";
     public final static String ERROR_PAGE = "error.jsp";
     public  final  static  String VIEW_VACCINATION_INFO = "viewVaccinationInfo.jsp";
+    public final static String VIEW_USER_PROFILE = "viewProfile.jsp";
 
 }

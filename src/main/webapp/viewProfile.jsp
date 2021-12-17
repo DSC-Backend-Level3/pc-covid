@@ -44,6 +44,6 @@
             ${result.houseNumber}
         </p>
     </c:if>
-
+    <button type="updateProfile.jsp"><a href="">UPDATE</a></button>
 </body>
 </html>

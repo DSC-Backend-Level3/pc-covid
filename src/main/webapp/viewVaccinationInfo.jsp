@@ -68,6 +68,6 @@
         </tbody>
     </table>
 </c:if>
-<a href="viewProfile.jsp">VIEW PROFILE</a>
+<button type="button"><a href="https://github.com/DSC-Backend-Level3">VIEW PROFILE</a></button>
 </body>
 </html>
