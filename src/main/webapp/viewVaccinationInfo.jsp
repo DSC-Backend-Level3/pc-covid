@@ -68,6 +68,6 @@
         </tbody>
     </table>
 </c:if>
-<button type="button"><a href="https://github.com/DSC-Backend-Level3">VIEW PROFILE</a></button>
+<button type="button"><a href="ViewProfileController">VIEW PROFILE</a></button>
 </body>
 </html>
