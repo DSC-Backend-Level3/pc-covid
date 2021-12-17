@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProvinceDaoImpl implements ProvinceDao {
     private Connection connection;
@@ -29,14 +30,15 @@ public class ProvinceDaoImpl implements ProvinceDao {
             connection.close();
         }
     }
+
     /**
      * Get a list of available provinces.
      *
      * @return An {@code ArrayList} of {@code ProvinceDTO} object from database.
      */
     @Override
-    public ArrayList<ProvinceDTO> getAllProvinces() throws NamingException, SQLException {
-        ArrayList<ProvinceDTO> list = null;
+    public List<ProvinceDTO> getAllProvinces() throws NamingException, SQLException {
+        List<ProvinceDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -63,4 +65,28 @@ public class ProvinceDaoImpl implements ProvinceDao {
         }
         return list;
     }
+
+    @Override
+    public ProvinceDTO getProvinceByID(int provinceID) throws SQLException, NamingException {
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String sql = "SELECT [id], [name] " +
+                        "FROM [Province] " +
+                        "WHERE [id] = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, provinceID);
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    ProvinceDTO dto = new ProvinceDTO(provinceID, name);
+                    return dto;
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return null;
+    }
+
 }

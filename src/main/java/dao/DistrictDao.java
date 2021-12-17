@@ -5,6 +5,7 @@ import dto.DistrictDTO;
 import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface DistrictDao {
     /**
@@ -12,5 +13,6 @@ public interface DistrictDao {
      * @param provinceID a province ID for searching.
      * @return An {@code ArrayList} of {@code DistrictDTO} object from database.
      */
-    ArrayList<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException;
+    List<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException;
+    DistrictDTO getDistrictByID(int id) throws SQLException, NamingException;
 }

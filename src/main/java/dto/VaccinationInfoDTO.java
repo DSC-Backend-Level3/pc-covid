@@ -15,23 +15,19 @@ import java.sql.Timestamp;
 public class VaccinationInfoDTO implements Serializable {
 
     private int id; //Vaccination information id
-    private String idNumber; //resident's id
+    private String residentID; //resident's id
     private int vaccineID; //vaccine's id
-    private int province; //Province's id
-    private int district; //District's id
-    private int ward; //Ward's id
+    private int wardID; //Ward's id
     private Timestamp date; //date of injection
 
     public VaccinationInfoDTO() {
     }
 
-    public VaccinationInfoDTO(int id, String idNumber, int vaccineID, int province, int district, int ward, Timestamp date) {
+    public VaccinationInfoDTO(int id, String residentID, int vaccineID,int wardID, Timestamp date) {
         this.id = id;
-        this.idNumber = idNumber;
+        this.residentID = residentID;
         this.vaccineID = vaccineID;
-        this.province = province;
-        this.district = district;
-        this.ward = ward;
+        this.wardID = wardID;
         this.date = date;
     }
 
@@ -44,11 +40,11 @@ public class VaccinationInfoDTO implements Serializable {
     }
 
     public String getIdNumber() {
-        return idNumber;
+        return residentID;
     }
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
+    public void setIdNumber(String residentID) {
+        this.residentID = residentID;
     }
 
     public int getVaccineID() {
@@ -59,28 +55,12 @@ public class VaccinationInfoDTO implements Serializable {
         this.vaccineID = vaccineID;
     }
 
-    public int getProvince() {
-        return province;
-    }
-
-    public void setProvince(int province) {
-        this.province = province;
-    }
-
-    public int getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(int district) {
-        this.district = district;
-    }
-
     public int getWard() {
-        return ward;
+        return wardID;
     }
 
     public void setWard(int ward) {
-        this.ward = ward;
+        this.wardID = wardID;
     }
 
     public Timestamp getDate() {

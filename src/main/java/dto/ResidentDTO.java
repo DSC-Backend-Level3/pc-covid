@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 public class ResidentDTO implements Serializable {
 
-    private String idNumber;
+    private String id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -23,18 +23,16 @@ public class ResidentDTO implements Serializable {
     private String gender;
     private Timestamp DOB;
     private String nationality;
-    private int province;
-    private int district;
-    private int ward;
+    private int wardID;
     private String houseNumber;
-    private int role;
+    private Integer roleID;
     private String password;
 
     public ResidentDTO() {
     }
 
-    public ResidentDTO(String idNumber, String firstName, String lastName, String phoneNumber, String email, String healthInsuranceID, String gender, Timestamp DOB, String nationality, int province, int district, int ward, String houseNumber, int role, String password) {
-        this.idNumber = idNumber;
+    public ResidentDTO(String id, String firstName, String lastName, String phoneNumber, String email, String healthInsuranceID, String gender, Timestamp DOB, String nationality, int wardID, String houseNumber, Integer roleID, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -43,20 +41,18 @@ public class ResidentDTO implements Serializable {
         this.gender = gender;
         this.DOB = DOB;
         this.nationality = nationality;
-        this.province = province;
-        this.district = district;
-        this.ward = ward;
+        this.wardID = wardID;
         this.houseNumber = houseNumber;
-        this.role = role;
+        this.roleID = roleID;
         this.password = password;
     }
 
     public String getIdNumber() {
-        return idNumber;
+        return id;
     }
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
+    public void setIdNumber(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -123,28 +119,12 @@ public class ResidentDTO implements Serializable {
         this.nationality = nationality;
     }
 
-    public int getProvince() {
-        return province;
-    }
-
-    public void setProvince(int province) {
-        this.province = province;
-    }
-
-    public int getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(int district) {
-        this.district = district;
-    }
-
     public int getWard() {
-        return ward;
+        return wardID;
     }
 
-    public void setWard(int ward) {
-        this.ward = ward;
+    public void setWard(int wardID) {
+        this.wardID = wardID;
     }
 
     public String getHouseNumber() {
@@ -155,12 +135,12 @@ public class ResidentDTO implements Serializable {
         this.houseNumber = houseNumber;
     }
 
-    public int getRole() {
-        return role;
+    public Integer getRole() {
+        return roleID;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setRole(Integer role) {
+        this.roleID = role;
     }
 
     public String getPassword() {

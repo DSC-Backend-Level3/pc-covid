@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 public class VaccineDTO implements Serializable {
 
-    private int vaccineID;
-    private String vaccineName;
+    private int id;
+    private String name;
     private String firm;
     private String country;
     private int interval;
@@ -22,28 +22,28 @@ public class VaccineDTO implements Serializable {
     public VaccineDTO() {
     }
 
-    public VaccineDTO(int vaccineID, String vaccineName, String firm, String country, int interval) {
-        this.vaccineID = vaccineID;
-        this.vaccineName = vaccineName;
+    public VaccineDTO(int id, String name, String firm, String country, int interval) {
+        this.id = id;
+        this.name = name;
         this.firm = firm;
         this.country = country;
         this.interval = interval;
     }
 
-    public int getVaccineID() {
-        return vaccineID;
+    public int getId() {
+        return id;
     }
 
-    public void setVaccineID(int vaccineID) {
-        this.vaccineID = vaccineID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getVaccineName() {
-        return vaccineName;
+        return name;
     }
 
-    public void setVaccineName(String vaccineName) {
-        this.vaccineName = vaccineName;
+    public void setVaccineName(String name) {
+        this.name = name;
     }
 
     public String getFirm() {
