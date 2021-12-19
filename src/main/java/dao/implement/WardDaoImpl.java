@@ -62,4 +62,28 @@ public class WardDaoImpl implements WardDao {
         }
         return list;
     }
+
+    @Override
+    public WardDTO getWardByID(int id) throws SQLException, NamingException {
+        try{
+            connection = DBHelper.makeConnection();
+            if(connection!=null){
+                String sql = "SELECT [id], [name], [districtID] " +
+                        "FROM [Ward] " +
+                        "WHERE [id] = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                if(resultSet.next()){
+                    String name = resultSet.getString("name");
+                    int districtID = resultSet.getInt("districtID");
+                    WardDTO dto = new WardDTO(id, name, districtID);
+                    return dto;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return null;
+    }
 }

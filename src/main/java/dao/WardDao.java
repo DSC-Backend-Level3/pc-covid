@@ -13,4 +13,5 @@ public interface WardDao {
      * @return An {@code ArrayList} of {@code WardDTO} from database.
      */
     ArrayList<WardDTO> getWardByDistrictID(int districtID) throws SQLException, NamingException;
+    WardDTO getWardByID(int id) throws SQLException, NamingException;
 }

@@ -14,14 +14,14 @@ import java.io.Serializable;
 public class RoleDTO implements Serializable {
 
     private int id;
-    private String role;
+    private String roleName;
 
     public RoleDTO() {
     }
 
-    public RoleDTO(int id, String role) {
+    public RoleDTO(int id, String roleName) {
         this.id = id;
-        this.role = role;
+        this.roleName = roleName;
     }
 
     public int getId() {
@@ -32,12 +32,12 @@ public class RoleDTO implements Serializable {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
 }

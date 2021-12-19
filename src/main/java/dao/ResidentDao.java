@@ -5,6 +5,7 @@ import dto.ResidentDTO;
 import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ResidentDao {
     /**
@@ -19,7 +20,7 @@ public interface ResidentDao {
      * Get a list of available residents.
      * @return An {@code ArrayList} of {@code ResidentDTO} object from database.
      */
-    ArrayList<ResidentDTO> getAllResidents() throws SQLException, NamingException;
+    List<ResidentDTO> getAllResidents() throws SQLException, NamingException;
 
     /**
      * Add a new resident to the database.
@@ -48,5 +49,6 @@ public interface ResidentDao {
      * @return {@code True} - if the resident information is updated;
      *         Otherwise, return {@code False}.
      */
-    boolean isUpdated(String idNumber) throws SQLException, NamingException;
+    boolean isUpdated(String id) throws SQLException, NamingException;
+    boolean checkPassword (String id, String password) throws SQLException, NamingException;
 }

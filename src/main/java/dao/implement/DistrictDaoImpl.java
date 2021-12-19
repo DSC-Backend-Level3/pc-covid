@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DistrictDaoImpl implements DistrictDao {
     private Connection connection;
@@ -29,6 +30,7 @@ public class DistrictDaoImpl implements DistrictDao {
             connection.close();
         }
     }
+
     /**
      * Get the list of district by province ID.
      *
@@ -36,8 +38,8 @@ public class DistrictDaoImpl implements DistrictDao {
      * @return The list province.
      */
     @Override
-    public ArrayList<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException {
-        ArrayList<DistrictDTO> list = null;
+    public List<DistrictDTO> getDistrictByProvinceID(int provinceID) throws SQLException, NamingException {
+        List<DistrictDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -67,4 +69,31 @@ public class DistrictDaoImpl implements DistrictDao {
         }
         return list;
     }
+
+    @Override
+    public DistrictDTO getDistrictByID(int id) throws SQLException, NamingException {
+
+        try{
+            connection = DBHelper.makeConnection();
+            if (connection != null){
+                String sql = "SELECT [id], [name], [provinceID] " +
+                        "FROM [District] " +
+                        "WHERE [id] = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                if(resultSet.next()){
+                    String name = resultSet.getString("name");
+                    int provinceID = resultSet.getInt("provinceID");
+                    DistrictDTO dto = new DistrictDTO(id, name, provinceID);
+                    return dto;
+                }
+
+            }
+        }finally {
+            closeConnection();
+        }
+        return null;
+    }
+
 }
