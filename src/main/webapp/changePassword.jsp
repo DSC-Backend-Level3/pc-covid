@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Update Password</h1>
-    <form action="ChangePasswordController">
+    <form action="update-password">
         Current Password <input type="text" name="txtPassword" value="">
         New Password<input type="text" name="txtNewPassword" value="">
         Re-type New Password<input type="text" name="txtNewPasswordConfirm" value="">

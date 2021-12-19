@@ -68,7 +68,7 @@
         </tbody>
     </table>
 </c:if>
-<form action="ViewProfileController">
+<form action="view">
     <input type="submit" value="View Profile" name="btAction" >
 </form>
 <button><a href="changePassword.jsp">Change Password</a></button>

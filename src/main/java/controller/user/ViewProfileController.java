@@ -22,9 +22,10 @@ import static constant.Router.*;
 
 @WebServlet(name = "ViewProfileController", value = "/ViewProfileController")
 public class ViewProfileController extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, NamingException {
-        response.setContentType("text/html;charset=UTF-8");
+
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("txtID");
         String button = request.getParameter("btAction");
         String url = ERROR_PAGE;
@@ -43,40 +44,22 @@ public class ViewProfileController extends HttpServlet {
             List<ProvinceDTO> listrProvince = provinceDao.getAllProvinces();
 
             request.setAttribute("PROFILE_PAGE", dto);
-            request.setAttribute("PROFILE_PROVINCE", province );
+            request.setAttribute("PROFILE_PROVINCE", province);
             request.setAttribute("PROFILE_DISTRICT", district);
             request.setAttribute("PROFILE_WARD", ward);
             request.setAttribute("PROVINCE_LIST", listrProvince);
-            if(button.equals("View Profile")) {
+            if (button.equals("View Profile")) {
                 url = VIEW_USER_PROFILE;
-            }else if(button.equals("Update Profile")){
+            } else if (button.equals("Update Profile")) {
                 url = UPDATE_USER_PROFILE;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-        }
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
     }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
     }
 }

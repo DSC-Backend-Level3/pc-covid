@@ -44,7 +44,7 @@
             ${result.houseNumber}
     </p>
 </c:if>
-<form action="ViewProfileController">
+<form action="view">
     <input type="submit" value="Update Profile" name="btAction">
 </form>
 <button><a href="changePassword.jsp">Change Password</a></button>

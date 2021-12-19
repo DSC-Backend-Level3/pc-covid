@@ -18,7 +18,7 @@
 <c:set var="district" value="${requestScope.PROFILE_DISTRICT}"/>
 <c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
-<form action="UpdateProfileController">
+<form action="update-info">
     <c:if test="${not empty result}">
         First name: <input type="text" name="txtFirstName" value="${result.firstName}">
         Last name : <input type="text" name="txtLastName" value="${result.lastName}">
