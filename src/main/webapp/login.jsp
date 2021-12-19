@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="password" name="txtPassword"
+                                               id="password" name="password"
                                                placeholder="Password">
                                     </div>
                                     <hr/>

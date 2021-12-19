@@ -1,5 +1,6 @@
 package controller.user;
 
+import constant.Attribute;
 import dao.VaccineDao;
 import dao.implement.*;
 import dto.*;
@@ -21,45 +22,59 @@ public class UserVaccinationInfoController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String idNumber = request.getParameter("txtIdNumber");
+        HttpSession session = request.getSession(false);
+
         String url = ERROR_PAGE;
         try {
-            VaccinationInfoDaoImpl dao = new VaccinationInfoDaoImpl();
-            List<VaccinationInfoDTO> list = dao.getVaccinationInfoByIdUser(idNumber);
+            if (session != null) {
+                String idNumber = (String) session.getAttribute(Attribute.USER.USER_ID);
+                System.out.println(idNumber);
+                if (idNumber != null) {
+                    ResidentDaoImpl userDao = new ResidentDaoImpl();
+                    ResidentDTO resident = userDao.getResidentById(idNumber);
 
-            VaccineDaoImpl daoVaccine = new VaccineDaoImpl();
-            ArrayList<VaccineDTO> listVaccine = null;
+                    VaccinationInfoDaoImpl dao = new VaccinationInfoDaoImpl();
+                    List<VaccinationInfoDTO> list = dao.getVaccinationInfoByIdUser(idNumber);
 
-            ProvinceDaoImpl daoProvince = new ProvinceDaoImpl();
-            ArrayList<ProvinceDTO> listProvince = null;
+                    VaccineDaoImpl daoVaccine = new VaccineDaoImpl();
+                    ArrayList<VaccineDTO> listVaccine = new ArrayList<>();
 
-            DistrictDaoImpl daoDistrict = new DistrictDaoImpl();
-            ArrayList<DistrictDTO> listDistrict = null;
+                    ProvinceDaoImpl daoProvince = new ProvinceDaoImpl();
+                    ArrayList<ProvinceDTO> listProvince = new ArrayList<>();
 
-            WardDaoImpl daoWard = new WardDaoImpl();
-            ArrayList<WardDTO> listWard = null;
+                    DistrictDaoImpl daoDistrict = new DistrictDaoImpl();
+                    ArrayList<DistrictDTO> listDistrict = new ArrayList<>();
 
-            for(VaccinationInfoDTO dto : list){
-                listVaccine.add(daoVaccine.getVaccineByID(dto.getVaccineID()));
-                listWard.add(daoWard.getWardByID(dto.getWardID()));
+                    WardDaoImpl daoWard = new WardDaoImpl();
+                    ArrayList<WardDTO> listWard = new ArrayList<>();
+
+                    for (VaccinationInfoDTO dto : list) {
+                        listVaccine.add(daoVaccine.getVaccineByID(dto.getVaccineID()));
+                        listWard.add(daoWard.getWardByID(dto.getWardID()));
+                    }
+                    for (WardDTO wardDto : listWard) {
+                        listDistrict.add(daoDistrict.getDistrictByID(wardDto.getDistrictID()));
+                    }
+                    for (DistrictDTO districtDto : listDistrict) {
+                        listProvince.add(daoProvince.getProvinceByID(districtDto.getProvinceID()));
+                    }
+
+                    request.setAttribute("USER_INFO", resident);
+                    request.setAttribute("VACCINES", listVaccine);
+                    request.setAttribute("VACCINATION_INFO", list);
+                    request.setAttribute("PROVINCES", listProvince);
+                    request.setAttribute("DISTRICTS", listDistrict);
+                    request.setAttribute("WARDS", listWard);
+                    url = VIEW_VACCINATION_INFO;
+                }
             }
-            for(WardDTO wardDto : listWard){
-                listDistrict.add(daoDistrict.getDistrictByID(wardDto.getDistrictID()));
-            }
-            for(DistrictDTO districtDto : listDistrict){
-                listProvince.add(daoProvince.getProvinceByID(districtDto.getProvinceID()));
-            }
-            request.setAttribute("VACCINE", listVaccine);
-            request.setAttribute("VACCINATION_INFO", list);
-            request.setAttribute("PROVINCE", listProvince);
-            request.setAttribute("DISTRICT", listDistrict);
-            request.setAttribute("WARD", listWard);
-            url = VIEW_VACCINATION_INFO;
+            System.out.println(session);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException e) {
             e.printStackTrace();
         } finally {
+            System.out.println(url);
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

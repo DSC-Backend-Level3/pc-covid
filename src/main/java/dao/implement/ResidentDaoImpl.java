@@ -36,7 +36,7 @@ public class ResidentDaoImpl implements ResidentDao {
             if (con != null) {
                 //3. Create Statement to set SQL
                 String sql = "SELECT id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB, "
-                        + "nationality, wardID, houseNumber, roleID "
+                        + "nationality, wardID, houseNumber, roleID, password "
                         + "FROM Resident "
                         + "WHERE id = ?";
                 stm = con.prepareStatement(sql);
@@ -51,13 +51,12 @@ public class ResidentDaoImpl implements ResidentDao {
                     String gender = rs.getString(7);
                     Timestamp DOB = rs.getTimestamp(8);
                     String nationality = rs.getString(9);
-                    int province = rs.getInt(10);
-                    int district = rs.getInt(11);
-                    int wardID = rs.getInt(12);
-                    String houseNumber = rs.getString(13);
-                    int roleID = rs.getInt(14);
+                    int wardID = rs.getInt(10);
+                    String houseNumber = rs.getString(11);
+                    int roleID = rs.getInt(12);
+                    String password = rs.getString(13);
                     ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB,
-                            nationality, wardID, houseNumber, roleID, null);
+                            nationality, wardID, houseNumber, roleID, password);
                     return dto;
                 }
             }

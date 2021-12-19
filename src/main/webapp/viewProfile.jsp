@@ -19,9 +19,11 @@
 <c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
 <c:if test="${not empty result}">
     <p>
-        Full name: ${result.firstName + " " + result.lastName} <br>
-        Gender : <c:choose>
-        <c:when test="${result.gender eq F}">Female</c:when>
+        Full name: <br>
+        ${result.firstName} ${result.lastName} <br>
+        Gender :<br>
+        <c:choose>
+        <c:when test="${result.gender == 'F'}">Female</c:when>
         <c:otherwise>Male</c:otherwise>
     </c:choose> <br>
         Date of birth:<br>
@@ -35,11 +37,11 @@
         Email:<br>
             ${result.email} <br>
         Province/City: <br>
-            ${province} <br>
+            ${province.name} <br>
         District: <br>
-            ${district}<br>
+            ${district.name}<br>
         Ward/Commune: <br>
-            ${ward} <br>
+            ${ward.name} <br>
         House number: <br>
             ${result.houseNumber}
     </p>
@@ -47,6 +49,6 @@
 <form action="view">
     <input type="submit" value="Update Profile" name="btAction">
 </form>
-<button><a href="changePassword.jsp">Change Password</a></button>
+<button><a href="changePassword.html">Change Password</a></button>
 </body>
 </html>

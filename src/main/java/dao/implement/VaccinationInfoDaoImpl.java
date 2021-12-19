@@ -106,7 +106,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     int vaccineID = resultSet.getInt("vaccineID");
-                    int wardID = resultSet.getInt("ward");
+                    int wardID = resultSet.getInt("wardID");
                     Timestamp date = resultSet.getTimestamp("date");
                     if(list == null){
                         list = new ArrayList<>();

@@ -1,5 +1,6 @@
 package controller.user;
 
+import constant.Attribute;
 import dao.implement.DistrictDaoImpl;
 import dao.implement.ProvinceDaoImpl;
 import dao.implement.ResidentDaoImpl;
@@ -26,32 +27,37 @@ public class ViewProfileController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("txtID");
+        HttpSession session = request.getSession(false);
         String button = request.getParameter("btAction");
         String url = ERROR_PAGE;
         try {
-            ResidentDaoImpl dao = new ResidentDaoImpl();
-            ResidentDTO dto = dao.getResidentById(id);
+            if (session != null) {
+                String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+                if (id!=null) {
+                    ResidentDaoImpl dao = new ResidentDaoImpl();
+                    ResidentDTO dto = dao.getResidentById(id);
 
-            WardDaoImpl wardDao = new WardDaoImpl();
-            WardDTO ward = wardDao.getWardByID(dto.getWardID());
+                    WardDaoImpl wardDao = new WardDaoImpl();
+                    WardDTO ward = wardDao.getWardByID(dto.getWardID());
 
-            DistrictDaoImpl districtDao = new DistrictDaoImpl();
-            DistrictDTO district = districtDao.getDistrictByID(ward.getDistrictID());
+                    DistrictDaoImpl districtDao = new DistrictDaoImpl();
+                    DistrictDTO district = districtDao.getDistrictByID(ward.getDistrictID());
 
-            ProvinceDaoImpl provinceDao = new ProvinceDaoImpl();
-            ProvinceDTO province = provinceDao.getProvinceByID(district.getProvinceID());
-            List<ProvinceDTO> listrProvince = provinceDao.getAllProvinces();
+                    ProvinceDaoImpl provinceDao = new ProvinceDaoImpl();
+                    ProvinceDTO province = provinceDao.getProvinceByID(district.getProvinceID());
+                    List<ProvinceDTO> listrProvince = provinceDao.getAllProvinces();
 
-            request.setAttribute("PROFILE_PAGE", dto);
-            request.setAttribute("PROFILE_PROVINCE", province);
-            request.setAttribute("PROFILE_DISTRICT", district);
-            request.setAttribute("PROFILE_WARD", ward);
-            request.setAttribute("PROVINCE_LIST", listrProvince);
-            if (button.equals("View Profile")) {
-                url = VIEW_USER_PROFILE;
-            } else if (button.equals("Update Profile")) {
-                url = UPDATE_USER_PROFILE;
+                    request.setAttribute("PROFILE_PAGE", dto);
+                    request.setAttribute("PROFILE_PROVINCE", province);
+                    request.setAttribute("PROFILE_DISTRICT", district);
+                    request.setAttribute("PROFILE_WARD", ward);
+                    request.setAttribute("PROVINCE_LIST", listrProvince);
+                    if (button.equals("View Profile")) {
+                        url = VIEW_USER_PROFILE;
+                    } else if (button.equals("Update Profile")) {
+                        url = UPDATE_USER_PROFILE;
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

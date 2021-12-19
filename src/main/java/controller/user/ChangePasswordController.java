@@ -1,5 +1,6 @@
 package controller.user;
 
+import constant.Attribute;
 import dao.implement.ResidentDaoImpl;
 import utils.GetParam;
 import utils.Helper;
@@ -21,23 +22,25 @@ public class ChangePasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("txtID");
+        HttpSession session = request.getSession(false);
         String oldPassword = request.getParameter("txtPassword");
         String newPassword = request.getParameter("txtNewPassword");
         String newPasswordConfirm = request.getParameter("txtNewPasswordConfirm");
-        String button = request.getParameter("btAction");
+        request.setAttribute("OLD_PASSWORD", oldPassword);
+        request.setAttribute("NEW_PASSWORD", newPassword);
         String url = ERROR_PAGE;
         try {
-            if (button.equals("Save Changes")) {
+            if(session != null) {
+                String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 String hashedOldPassword = Helper.hashString(oldPassword);
                 String hashedNewPassword = Helper.hashString(newPassword);
                 String hashedNewPasswordConfirm = Helper.hashString(newPasswordConfirm);
                 ResidentDaoImpl dao = new ResidentDaoImpl();
                 boolean check = dao.checkPassword(id, hashedOldPassword);
                 if (check) {
-                    if (hashedNewPassword.equals(hashedNewPasswordConfirm)) {
+                    if (hashedNewPassword.equalsIgnoreCase(hashedNewPasswordConfirm)) {
                         dao.updateResidentPassword(id, hashedNewPassword);
-                        url = UPDATE_PASSWORD;
+                        url = UPDATE_PASSWORD_SUCCESS;
                     }
                 }
             }

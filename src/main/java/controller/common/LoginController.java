@@ -1,10 +1,12 @@
 package controller.common;
 
 import constant.Attribute;
+import constant.PathValue;
 import constant.Router;
 import dao.ResidentDao;
 import dao.implement.ResidentDaoImpl;
 import dto.ResidentDTO;
+import utils.Helper;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 @WebServlet(name = "LoginController", value = "/LoginController")
@@ -25,11 +28,11 @@ public class LoginController extends HttpServlet {
             //do login
             login(request, response);
             //on success
-            response.sendRedirect(Router.PAGE.HOME_PAGE + "?result=success");
+            response.sendRedirect(PathValue.HOME_PAGE + "?result=success");
         } catch (IllegalArgumentException ex) { //on fail
             //forward back to login page
             request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request, response);
-        } catch (SQLException | NamingException ex) { //internal error
+        } catch (SQLException | NamingException | NoSuchAlgorithmException ex) { //internal error
             //set error message
             request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, ex.getMessage());
             //forward to error page
@@ -38,13 +41,14 @@ public class LoginController extends HttpServlet {
     }
 
 
-    private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException {
+    private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         //initialize resource
         ResidentDao residentDao = new ResidentDaoImpl();
         //get parameter
         String idNumber = request.getParameter(Attribute.USER.USER_ID);
         String password = request.getParameter(Attribute.USER.USER_PASSWORD);
+        String hashedPassword = Helper.hashString(password);
         //if parameter is missing
         if (idNumber == null || password == null) {
             request.setAttribute(Attribute.ERROR.MISSING_PARAMETER, "ID number or password can not be empty");
@@ -60,7 +64,7 @@ public class LoginController extends HttpServlet {
         //hashing password
         //password = hashingMethod(password);
         //comparing password
-        if (!password.equals(residentDTO.getPassword())) {
+        if (!hashedPassword.equalsIgnoreCase(residentDTO.getPassword())) {
             request.setAttribute("wrongPasswordError", "Wrong password");
             throw new IllegalArgumentException();
         }

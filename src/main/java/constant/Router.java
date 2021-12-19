@@ -50,7 +50,7 @@ public class Router {
 
         public final static String LOGIN_PAGE = "login.jsp";
         public final static String ERROR_PAGE = "error.jsp";
-        public final static String HOME_PAGE = "index.jsp";
+        //public final static String HOME_PAGE = "homepage";
     }
 
     public final static String LOGIN_PAGE = "login.jsp";
@@ -58,6 +58,6 @@ public class Router {
     public  final  static  String VIEW_VACCINATION_INFO = "viewVaccinationInfo.jsp";
     public final static String VIEW_USER_PROFILE = "viewProfile.jsp";
     public  final static String UPDATE_USER_PROFILE = "updateProfile.jsp";
-    public  final static String UPDATE_PASSWORD = "changePassword.jsp";
+    public  final static String UPDATE_PASSWORD_SUCCESS = "changePassword.jsp";
 
 }

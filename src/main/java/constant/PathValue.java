@@ -58,4 +58,5 @@ public class PathValue {
     public static class DOCTOR {
         public final static String ADD_NEW_VACCINATION_INFO = "/add";
     }
+    public final  static String HOME_PAGE = "homepage";
 }

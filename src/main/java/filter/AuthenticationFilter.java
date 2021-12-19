@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
 public class AuthenticationFilter implements Filter {
     public void init(FilterConfig config) {
     }
@@ -25,9 +25,9 @@ public class AuthenticationFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest) request;
 
             String path = req.getRequestURI().substring(req.getContextPath().length());
-            if (path.startsWith("/static/")) {
+            if (path.startsWith("/static/") || path.contains(".html") || path.contains(".jsp")) {
                 chain.doFilter(request, response);
-            } else {
+            }else {
                 request.setAttribute(Attribute.PATH, path);
                 //get session
                 HttpSession session = req.getSession(false);

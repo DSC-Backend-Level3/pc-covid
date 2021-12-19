@@ -1,5 +1,6 @@
 package controller.user;
 
+import constant.Attribute;
 import dao.implement.ResidentDaoImpl;
 import dto.ResidentDTO;
 import utils.GetParam;
@@ -22,7 +23,8 @@ public class UpdateProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String id = request.getParameter("txtID");
+        HttpSession session = request.getSession(false);
+
         String firstName = request.getParameter("txtFirstName");
         String lastName = request.getParameter("txtLastName");
         String phoneNumber = request.getParameter("txtPhoneNumber");
@@ -33,28 +35,32 @@ public class UpdateProfileController extends HttpServlet {
         String nationality = request.getParameter("txtNationality");
         int wardID = Integer.parseInt(request.getParameter("cboWard"));
         String houseNumber = request.getParameter("txtHouseNumber");
-        String button = request.getParameter("btUpdate");
         String genderDB = null;
         if (gender.equals("Female")) {
             genderDB = "F";
         } else if (gender.equals("Male")) {
             genderDB = "M";
         }
-        ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
-                DOB, nationality, wardID, houseNumber, null, null);
         String url = ERROR_PAGE;
         try {
-            if (button.equals("Save Changes")) {
-                ResidentDaoImpl dao = new ResidentDaoImpl();
-                dao.updateResidentInformation(dto);
-                url = UPDATE_USER_PROFILE;
+            if (session != null) {
+                String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+                if (id != null) {
+                    ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
+                            DOB, nationality, wardID, houseNumber, null, null);
+                    ResidentDaoImpl dao = new ResidentDaoImpl();
+                    dao.updateResidentInformation(dto);
+                    url = VIEW_USER_PROFILE;
+                }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException e) {
             e.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
             out.close();
         }
     }

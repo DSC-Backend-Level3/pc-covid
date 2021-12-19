@@ -20,11 +20,14 @@
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
 <form action="update-info">
     <c:if test="${not empty result}">
-        First name: <input type="text" name="txtFirstName" value="${result.firstName}">
-        Last name : <input type="text" name="txtLastName" value="${result.lastName}">
-        Gender : <select name="cboGender">
+        First name:<br>
+        <input type="text" name="txtFirstName" value="${result.firstName}"> <br>
+        Last name :<br>
+        <input type="text" name="txtLastName" value="${result.lastName}"> <br>
+        Gender :<br>
+        <select name="cboGender">
         <c:choose>
-            <c:when test="${result.gender eq F}">
+            <c:when test="${result.gender == 'F'}">
                 <option>Female</option>
                 <option>Male</option>
             </c:when>
@@ -52,12 +55,12 @@
                     <option value="${provinceVar.id}">${provinceVar.name}</option>
                 </c:if>
             </c:forEach>
-        </select>
+        </select><br>
         <!--WARD/ district!-->
         House number: <br>
-        <input type="text" name="txtHouseNumber" value="${result.houseNumber}">
+        <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
-    <input type="button" value="Save Changes" name="btUpdate">
+    <input type="submit" value="Save Changes" name="btUpdate">
 </form>
 
 </body>
