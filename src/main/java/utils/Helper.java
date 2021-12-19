@@ -56,21 +56,6 @@ public class Helper {
     }
 
     /**
-     * Check that user is login or not
-     *
-     * @param request servlet request
-     * @return true if use is login or false if not
-     */
-    public static boolean isLogin(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return false; //if the session is not exist
-        }
-        String email = (String) session.getAttribute("idNumber");
-        return email != null; //username exist in session or not
-    }
-
-    /**
      * Check that user's role is valid or invalid
      *
      * @param request servlet request
