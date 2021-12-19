@@ -1,5 +1,6 @@
 package controller.common;
 
+import constant.Attribute;
 import constant.Router;
 
 import javax.servlet.*;
@@ -14,10 +15,11 @@ public class LogoutController extends HttpServlet {
         //get current session
         HttpSession session = request.getSession();
         //remove exist attribute
-        session.removeAttribute("role");
+        session.removeAttribute(Attribute.USER.USER_ID);
+        session.removeAttribute(Attribute.USER.ROLE);
         //invalidate session
         session.invalidate();
         //forward to login page
-        request.getRequestDispatcher(Router.LOGIN_PAGE).forward(request,response);
+        request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request,response);
     }
 }
