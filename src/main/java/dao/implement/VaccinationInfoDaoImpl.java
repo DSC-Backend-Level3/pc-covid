@@ -92,7 +92,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
     @Override
     public List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
-        List<VaccinationInfoDTO> list = null;
+        List<VaccinationInfoDTO> list = new ArrayList<>();
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -108,17 +108,15 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                     int vaccineID = resultSet.getInt("vaccineID");
                     int wardID = resultSet.getInt("wardID");
                     Timestamp date = resultSet.getTimestamp("date");
-                    if(list == null){
-                        list = new ArrayList<>();
-                    }
                     list.add(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
+                    return list;
                 }
 
             }
         } finally {
             closeConnection();
         }
-        return list;
+        return null;
     }
 
     @Override
@@ -139,6 +137,33 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                     numOfInjection = resultSet.getInt("numOfInjection");
                 }
                 return numOfInjection == 2;
+            }
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addNewVaccinationInfo(VaccinationInfoDTO vaccinationInfo) throws SQLException, NamingException {
+        try {
+            //1. Connect DB
+            connection = DBHelper.makeConnection();
+            //2. Create SQL Statement
+            if (connection != null) {
+                //3. Create Statement to set SQL
+                String sql = "INSERT INTO [VaccinationInfo]([id], [residentID], [vaccineID], [wardID], [date] "
+                        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, vaccinationInfo.getId());
+                preparedStatement.setString(2, vaccinationInfo.getResidentID());
+                preparedStatement.setInt(3, vaccinationInfo.getVaccineID());
+                preparedStatement.setInt(4, vaccinationInfo.getWardID());
+                preparedStatement.setTimestamp(5, vaccinationInfo.getDate());
+                int row = preparedStatement.executeUpdate();
+                if (row > 0) {
+                    return true;
+                }
             }
         } finally {
             closeConnection();

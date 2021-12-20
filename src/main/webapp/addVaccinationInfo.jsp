@@ -18,18 +18,19 @@
 </head>
 <body>
     <h1>Vaccination Information Form</h1>
-    <form action="" method="POST">
+    <form action="DoctorDispatcher" method="POST">
         Resident ID <input type="text" name="residentID" value=""/><br/>
         Vaccine Information ID <input type="text" name="id" value=""/><br/>
 <%--        using drop-down list to presentation--%>
-        Vaccine ID <select>
+        Vaccine ID
+        <select name="vaccineID">
         <option></option>
         <c:set var="vaccineList" value="${requestScope.vaccineList}">
             <c:forEach var="dto" items="${vaccineList}">
                 <option value="${dto.id}">${dto.vaccineName}</option>
             </c:forEach>
         </c:set>
-    </select>
+        </select>
         Province
         <select id="province">
             <option>Select province</option>
@@ -39,7 +40,7 @@
             <option>Select district</option>
         </select>
         Ward
-        <select id="ward">
+        <select id="ward" name="wardID">
             <option>Select ward</option>
         </select>
 

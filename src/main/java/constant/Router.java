@@ -1,6 +1,9 @@
 package constant;
 
 public class Router {
+
+
+
     //dispatcher path
     public static class DISPATCHER{
         public final static String REQUEST_DISPATCHER = "RequestDispatcher";
@@ -25,7 +28,7 @@ public class Router {
 
     //doctor path
     public static class DOCTOR{
-
+        public static final String VIEW_VACCINATION_CONTROLLER = "ViewVaccinationInfoController";
         public final static String ADD_VACCINATION_INFO_CONTROLLER = "AddVaccinationInfoController";
     }
 
@@ -59,5 +62,11 @@ public class Router {
     public final static String VIEW_USER_PROFILE = "viewProfile.jsp";
     public  final static String UPDATE_USER_PROFILE = "updateProfile.jsp";
     public  final static String UPDATE_PASSWORD_SUCCESS = "changePassword.jsp";
+    public static final String VACCINATE_FORM = "addVaccine.html";
+    public  final static String VACCINATE_LIST_PAGE = "vaccineList.jsp";
+    public static final String VACCINATION_INFO_FORM = "addVaccinationInfo.jsp";
+    public  final static String VACCINATION_INFO_LIST_PAGE = "vaccinationInfoList.jsp";
+    public static final String DOCTOR_ACCOUNT_FORM = "addDoctorAccount.jsp";
+    public  final static String DOCTOR_ACCOUNT_PAGE = "doctorAccount.jsp";
 
 }

@@ -21,7 +21,7 @@ public interface ResidentDao {
      * @return An {@code ArrayList} of {@code ResidentDTO} object from database.
      */
     List<ResidentDTO> getAllResidents() throws SQLException, NamingException;
-
+    List<ResidentDTO> getResidentsByRoleId(int roleID) throws SQLException, NamingException;
     /**
      * Add a new resident to the database.
      * @param residentDTO {@code ResidentDTO} object for insertion.
