@@ -3,6 +3,9 @@ package utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,21 +53,6 @@ public class Helper {
             return str.substring(0, maxLength) + "...";
         }
         return str;
-    }
-
-    /**
-     * Check that user is login or not
-     *
-     * @param request servlet request
-     * @return true if use is login or false if not
-     */
-    public static boolean isLogin(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return false; //if the session is not exist
-        }
-        String email = (String) session.getAttribute("idNumber");
-        return email != null; //username exist in session or not
     }
 
     /**
@@ -170,4 +158,11 @@ public class Helper {
         return convertStringToDateTime(formatter.format(new Date(System.currentTimeMillis())));
     }
 
+    public static String hashString(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+        return myHash;
+    }
 }

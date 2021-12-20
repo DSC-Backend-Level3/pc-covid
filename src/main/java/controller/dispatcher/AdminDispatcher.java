@@ -1,5 +1,7 @@
 package controller.dispatcher;
 
+import constant.Attribute;
+import constant.PathValue;
 import constant.Router;
 
 import javax.servlet.ServletException;
@@ -24,15 +26,15 @@ public class AdminDispatcher extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
         switch (path){
-            case "add":
-                request.getRequestDispatcher(Router.ADD_VACCINE_CONTROLLER).forward(request,response);
+            case PathValue.ADMIN.ADD_NEW_VACCINE:
+                request.getRequestDispatcher(Router.ADMIN.ADD_VACCINE_CONTROLLER).forward(request,response);
                 break;
-            case "create":
-                request.getRequestDispatcher(Router.CREATE_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
+            case PathValue.ADMIN.CREATE_DOCTOR_ACCOUNT:
+                request.getRequestDispatcher(Router.ADMIN.CREATE_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
                 break;
             default:
-                request.setAttribute("errorMessage", "This action is not support or exist");
-                request.getRequestDispatcher(Router.ERROR_PAGE).forward(request,response);
+                request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, Attribute.ERROR_MESSAGE.NOT_SUPPORTED_ACTION);
+                request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request,response);
         }
     }
 }

@@ -1,5 +1,7 @@
 package controller.dispatcher;
 
+import constant.Attribute;
+import constant.PathValue;
 import constant.Router;
 
 import javax.servlet.ServletException;
@@ -22,21 +24,20 @@ public class GuestDispatcher extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletPath();
+        String path = (String) request.getAttribute(Attribute.PATH);
 
         switch (path) {
-            case "login":
-                request.getRequestDispatcher(Router.LOGIN_CONTROLLER).forward(request,response);
+            case PathValue.GUEST.LOGIN:
+                request.getRequestDispatcher(Router.COMMON.LOGIN_CONTROLLER).forward(request, response);
                 break;
-            case "logout":
-                request.getRequestDispatcher(Router.LOGOUT_CONTROLLER).forward(request,response);
+            case PathValue.GUEST.LOGOUT:
+                request.getRequestDispatcher(Router.COMMON.LOGOUT_CONTROLLER).forward(request, response);
                 break;
-            case "create":
-                request.getRequestDispatcher(Router.CREATE_ACCOUNT_CONTROLLER).forward(request,response);
+            case PathValue.GUEST.CREATE:
+                request.getRequestDispatcher(Router.COMMON.CREATE_ACCOUNT_CONTROLLER).forward(request, response);
                 break;
             default:
-                request.setAttribute("message","Please login first!");
-                request.getRequestDispatcher(Router.LOGIN_PAGE).forward(request,response);
+                request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request, response);
         }
     }
 }

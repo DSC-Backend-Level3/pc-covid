@@ -47,11 +47,11 @@ public class ResidentDTO implements Serializable {
         this.password = password;
     }
 
-    public String getIdNumber() {
+    public String getId() {
         return id;
     }
 
-    public void setIdNumber(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -119,11 +119,11 @@ public class ResidentDTO implements Serializable {
         this.nationality = nationality;
     }
 
-    public int getWard() {
+    public int getWardID() {
         return wardID;
     }
 
-    public void setWard(int wardID) {
+    public void setWardID(int wardID) {
         this.wardID = wardID;
     }
 
@@ -135,11 +135,11 @@ public class ResidentDTO implements Serializable {
         this.houseNumber = houseNumber;
     }
 
-    public Integer getRole() {
+    public Integer getRoleID() {
         return roleID;
     }
 
-    public void setRole(Integer role) {
+    public void setRoleID(Integer role) {
         this.roleID = role;
     }
 

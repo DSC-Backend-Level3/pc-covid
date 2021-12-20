@@ -1,6 +1,7 @@
 package dao;
 
 import dto.DistrictDTO;
+import dto.ProvinceDTO;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
