@@ -13,14 +13,16 @@
 </head>
 <body>
 <h1>Vaccination Information</h1>
-<!-- Tên người dùng -->
+
+<c:set var="resident" value="${requestScope.USER_INFO}"/>
 <c:set var="result" value="${requestScope.VACCINATION_INFO}"/>
-<c:set var="vaccine" value="${requestScope.VACCINE}"/>
-<c:set var="province" value="${requestScope.PROVINCE}"/>
-<c:set var="district" value="${requestScope.DISTRICT}"/>
-<c:set var="ward" value="${requestScope.WARD}"/>
+<c:set var="vaccines" value="${requestScope.VACCINES}"/>
+<c:set var="provinces" value="${requestScope.PROVINCES}"/>
+<c:set var="districts" value="${requestScope.DISTRICTS}"/>
+<c:set var="wards" value="${requestScope.WARDS}"/>
+<h2>${resident.firstName} ${resident.lastName}</h2>
 <c:if test="${not empty result}">
-    <table>
+    <table border="1">
         <thead>
         <tr>
             <th>Dose.</th>
@@ -36,9 +38,9 @@
                         ${obj.count}
                 </td>
                 <td>
-                    <c:forEach items="${vaccine}" var="vaccineDTO" varStatus="i">
-                        <c:if test="${vaccineDto.vaccineID eq dto.vaccineID}">
-                            ${vaccineDto.vaccineName}
+                    <c:forEach items="${vaccines}" var="vaccineDTO" varStatus="i">
+                        <c:if test="${vaccineDTO.id eq dto.vaccineID}">
+                            ${vaccineDTO.vaccineName}
                         </c:if>
                     </c:forEach>
                 </td>
@@ -46,28 +48,34 @@
                         ${dto.date}
                 </td>
                 <td>
-                    <c:forEach items="${province}" var="provinceDTO" varStatus="p">
-                        <c:if test="${provinceDTO.id eq dto.province}">
-                            <c:set var="provinceName" value="${provinceDTO.name}"/>
+
+                    <c:forEach items="${wards}" var="wardDTO" varStatus="w">
+                        <c:if test="${wardDTO.id eq dto.wardID}">
+                            <c:set var="ward" value="${wardDTO}"/>
                         </c:if>
                     </c:forEach>
-                    <c:forEach items="${district}" var="districtDTO" varStatus="d">
-                        <c:if test="${districtDTO.id eq dto.district}">
-                            <c:set var="districtName" value="${districtDTO.name}"/>
+
+                    <c:forEach items="${districts}" var="districtDTO" varStatus="d">
+                        <c:if test="${districtDTO.id eq ward.districtID}">
+                            <c:set var="district" value="${districtDTO}"/>
                         </c:if>
                     </c:forEach>
-                    <c:forEach items="${ward}" var="wardDTO" varStatus="w">
-                        <c:if test="${wardDTO.id eq dto.ward}">
-                            <c:set var="wardName" value="${wardDTO.name}"/>
+                    <c:forEach items="${provinces}" var="provinceDTO" varStatus="p">
+                        <c:if test="${provinceDTO.id == district.provinceID}">
+                            <c:set var="province" value="${provinceDTO}"/>
                         </c:if>
                     </c:forEach>
-                        ${provinceName + "," + districtName + ", " + wardName}
+                    ${province.name}, ${district.name}, ${ward.name}
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </c:if>
-<a href="viewProfile.jsp">VIEW PROFILE</a>
+<br>
+<form action="view">
+    <input type="submit" value="View Profile" name="btAction">
+</form>
+<button><a href="changePassword.html">Change Password</a></button>
 </body>
 </html>

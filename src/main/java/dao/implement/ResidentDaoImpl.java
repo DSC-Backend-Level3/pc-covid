@@ -36,7 +36,7 @@ public class ResidentDaoImpl implements ResidentDao {
             if (con != null) {
                 //3. Create Statement to set SQL
                 String sql = "SELECT id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB, "
-                        + "nationality, wardID, houseNumber, roleID "
+                        + "nationality, wardID, houseNumber, roleID, password "
                         + "FROM Resident "
                         + "WHERE id = ?";
                 stm = con.prepareStatement(sql);
@@ -51,13 +51,12 @@ public class ResidentDaoImpl implements ResidentDao {
                     String gender = rs.getString(7);
                     Timestamp DOB = rs.getTimestamp(8);
                     String nationality = rs.getString(9);
-                    int province = rs.getInt(10);
-                    int district = rs.getInt(11);
-                    int wardID = rs.getInt(12);
-                    String houseNumber = rs.getString(13);
-                    int roleID = rs.getInt(14);
+                    int wardID = rs.getInt(10);
+                    String houseNumber = rs.getString(11);
+                    int roleID = rs.getInt(12);
+                    String password = rs.getString(13);
                     ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB,
-                            nationality, wardID, houseNumber, roleID, null);
+                            nationality, wardID, houseNumber, roleID, password);
                     return dto;
                 }
             }
@@ -125,7 +124,7 @@ public class ResidentDaoImpl implements ResidentDao {
                         "nationality, wardID, houseNumber, roleID, password) " +
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, residentDTO.getIdNumber());
+                stm.setString(1, residentDTO.getId());
                 stm.setString(2, residentDTO.getFirstName());
                 stm.setString(3, residentDTO.getLastName());
                 stm.setString(4, residentDTO.getPhoneNumber());
@@ -134,9 +133,9 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.setString(7, residentDTO.getGender());
                 stm.setTimestamp(8, residentDTO.getDOB());
                 stm.setString(9, residentDTO.getNationality());
-                stm.setInt(10, residentDTO.getWard());
+                stm.setInt(10, residentDTO.getWardID());
                 stm.setString(11, residentDTO.getHouseNumber());
-                stm.setInt(12, residentDTO.getRole());
+                stm.setInt(12, residentDTO.getRoleID());
                 stm.setString(13, residentDTO.getPassword());
                 int row = stm.executeUpdate();
                 if (row > 0) {
@@ -173,11 +172,11 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.setString(6, residentDTO.getGender());
                 stm.setTimestamp(7, residentDTO.getDOB());
                 stm.setString(8, residentDTO.getNationality());
-                stm.setInt(9, residentDTO.getWard());
+                stm.setInt(9, residentDTO.getWardID());
                 stm.setString(10, residentDTO.getHouseNumber());
-                stm.setInt(11, residentDTO.getRole());
+                stm.setInt(11, residentDTO.getRoleID());
                 stm.setString(12, residentDTO.getPassword());
-                stm.setString(13, residentDTO.getIdNumber());
+                stm.setString(13, residentDTO.getId());
                 stm.executeUpdate();
             }
         } finally {

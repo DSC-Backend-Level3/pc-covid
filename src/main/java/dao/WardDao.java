@@ -1,10 +1,12 @@
 package dao;
 
+import dto.ProvinceDTO;
 import dto.WardDTO;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface WardDao {
     /**

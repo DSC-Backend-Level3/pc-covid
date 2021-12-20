@@ -1,7 +1,7 @@
 package filter;
 
+import constant.Attribute;
 import constant.Router;
-import utils.Helper;
 
 import javax.el.MethodNotFoundException;
 import javax.servlet.*;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthenticationFilter", urlPatterns = "/*", dispatcherTypes = DispatcherType.REQUEST)
 public class AuthenticationFilter implements Filter {
     public void init(FilterConfig config) {
     }
@@ -23,16 +23,30 @@ public class AuthenticationFilter implements Filter {
         try {
             //cast ServletRequest to HttpServletRequest
             HttpServletRequest req = (HttpServletRequest) request;
-            //check if guest is login or not
-            if (!Helper.isLogin(req)) { //is not login
-                HttpSession session = req.getSession();
-                session.setAttribute("role", 0);
+
+            String path = req.getRequestURI().substring(req.getContextPath().length());
+            if (path.startsWith("/static/") || path.contains(".html") || path.contains(".jsp")) {
+                chain.doFilter(request, response);
+            }else {
+                request.setAttribute(Attribute.PATH, path);
+                //get session
+                HttpSession session = req.getSession(false);
+                //check if session is exist
+                if (session != null) { //is exist
+                    String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+                    if (id == null) {
+                        session.setAttribute(Attribute.USER.ROLE, 0);
+                    }
+                    //forward request
+                    request.getRequestDispatcher(Router.DISPATCHER.REQUEST_DISPATCHER).forward(request,response);
+                } else { //is not exist
+                    request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, "Please log in first!");
+                    request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request, response);
+                }
             }
-            //do filter
-            chain.doFilter(request,response);
         } catch (ServletException | IOException | MethodNotFoundException ex) {
             //forward to error page
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request,response);
+            request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }
     }
 }

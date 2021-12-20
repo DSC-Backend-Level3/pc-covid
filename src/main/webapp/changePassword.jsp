@@ -1,22 +1,23 @@
-<%@ page import="dto.ResidentDTO" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--
+  Created by IntelliJ IDEA.
+  User: DELL
+  Date: 12/20/2021
+  Time: 12:57 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Update Password Page</title>
+    <title>Change Password</title>
 </head>
 <body>
-    <h1>Update Password</h1>
-    <form action="ChangePasswordController">
-         ResidentDTO dto = (ResidentDTO) request.getAttribute("LOGIN"); %>
-        <input type="hidden" name="txtIdNumber"
-               value="<%= dto.getIdNumber() %>" />
-        Current Password <input type="text" name="txtPassword" value="">
-        New Password<input type="text" name="txtNewPassword" value="">
-        Re-type New Password<input type="text" name="txtNewPasswordConfirm" value="">
-        <input type="submit" value="Save Changes" name="btAction" />
-    </form>
+<h1>Update Password</h1>
+<c:set var="oldpassword" value="${requestScope.OLD_PASSWORD}"/>
+<c:set var="newpassword" value="${requestScope.NEW_PASSWORD}"/>
+Current Password: <input type="password" name="txtPassword" value="${oldpassword}"> <br>
+New Password: <input type="password" name="txtNewPassword" value="${newpassword}"> <br>
+Re-type New Password: <input type="password" name="txtNewPasswordConfirm" value="${newpassword}"> <br>
+<h1 style="color: red">Updated Successfully!</h1>
 </body>
 </html>
