@@ -40,9 +40,10 @@
                 <td>
                     <c:forEach items="${vaccines}" var="vaccineDTO" varStatus="i">
                         <c:if test="${vaccineDTO.id eq dto.vaccineID}">
-                            ${vaccineDTO.vaccineName}
+                            <c:set var="vaccineName" value="${vaccineDTO}"/>
                         </c:if>
                     </c:forEach>
+                    ${vaccineName.name}
                 </td>
                 <td>
                         ${dto.date}
@@ -71,7 +72,9 @@
         </c:forEach>
         </tbody>
     </table>
+
 </c:if>
+
 <br>
 <form action="view">
     <input type="submit" value="View Profile" name="btAction">

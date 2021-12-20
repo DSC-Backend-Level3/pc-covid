@@ -18,7 +18,8 @@
 <c:set var="district" value="${requestScope.PROFILE_DISTRICT}"/>
 <c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
-<form action="update-info">
+<c:set var="listDictrict" value="${requestScope.LIST_DISTRICT_BY_PROVINCE}"/>
+<form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
         <input type="text" name="txtFirstName" value="${result.firstName}"> <br>
@@ -47,8 +48,9 @@
         <input type="text" name="txtHealthInsuranceID" value="${result.healthInsuranceID}"><br>
         Email:<br>
         <input type="text" name="txtEmail" value="${result.email}"><br>
+
         Province/City: <br>
-        <select name="txtProvince">
+        <select name="cboProvince">
             <option value="${province.id}">${province.name}</option>
             <c:forEach items="${provinceList}" var="provinceVar">
                 <c:if test="${provinceVar.id != province.id}">
@@ -56,12 +58,22 @@
                 </c:if>
             </c:forEach>
         </select><br>
-        <!--WARD/ district!-->
+
+        District: <br>
+        <select name="cboDistrict">
+            <option value="${district.id}">${district.name}</option>
+            <c:forEach items="${listDictrict}" var="districtVar">
+                <option value="${districtVar.id}">${districtVar.name}</option>
+            </c:forEach>
+        </select><br>
+        Ward: <br>
+        <select name="cboWard">
+            <option value="${ward.id}">${ward.name}</option>
+        </select> <br>
         House number: <br>
         <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
     <input type="submit" value="Save Changes" name="btUpdate">
 </form>
-
 </body>
 </html>

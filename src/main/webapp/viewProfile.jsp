@@ -40,15 +40,19 @@
             ${province.name} <br>
         District: <br>
             ${district.name}<br>
-        Ward/Commune: <br>
+        Ward: <br>
             ${ward.name} <br>
         House number: <br>
             ${result.houseNumber}
     </p>
 </c:if>
-<form action="view">
-    <input type="submit" value="Update Profile" name="btAction">
-</form>
+<%--<form action="view">--%>
+<%--    <input type="submit" value="Update Profile" name="btAction">--%>
+<%--</form>--%>
+<c:url value="view" var="Update_Profile">
+    <c:param name="btAction" value="Update Profile"/>
+</c:url>
+<button><a href="${Update_Profile}">Update Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
 </body>
 </html>

@@ -29,6 +29,7 @@ public class DoctorDispatcher extends HttpServlet {
             case PathValue.DOCTOR.ADD_NEW_VACCINATION_INFO:
                 request.getRequestDispatcher(Router.DOCTOR.ADD_VACCINATION_INFO_CONTROLLER).forward(request,response);
                 break;
+
             default:
                 request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, Attribute.ERROR_MESSAGE.NOT_SUPPORTED_ACTION);
                 request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request,response);

@@ -19,5 +19,8 @@ Current Password: <input type="password" name="txtPassword" value="${oldpassword
 New Password: <input type="password" name="txtNewPassword" value="${newpassword}"> <br>
 Re-type New Password: <input type="password" name="txtNewPasswordConfirm" value="${newpassword}"> <br>
 <h1 style="color: red">Updated Successfully!</h1>
+<form action="homepage">
+    <input type="submit" value="Home page">
+</form>
 </body>
 </html>

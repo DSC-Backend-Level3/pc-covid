@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import static constant.Router.*;
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.UPDATE_PASSWORD_SUCCESS;
 
 @WebServlet(name = "ChangePasswordController", value = "/ChangePasswordController")
 public class ChangePasswordController extends HttpServlet {

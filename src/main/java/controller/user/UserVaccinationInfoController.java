@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static constant.Router.*;
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.VIEW_VACCINATION_INFO;
 
 @WebServlet(name = "UserVaccinationInfoController", value = "/UserVaccinationInfoController")
 public class UserVaccinationInfoController extends HttpServlet {
@@ -68,13 +70,11 @@ public class UserVaccinationInfoController extends HttpServlet {
                     url = VIEW_VACCINATION_INFO;
                 }
             }
-            System.out.println(session);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException e) {
             e.printStackTrace();
         } finally {
-            System.out.println(url);
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

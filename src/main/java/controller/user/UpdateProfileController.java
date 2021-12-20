@@ -1,8 +1,12 @@
 package controller.user;
 
 import constant.Attribute;
+import dao.implement.DistrictDaoImpl;
 import dao.implement.ResidentDaoImpl;
+import dao.implement.WardDaoImpl;
+import dto.DistrictDTO;
 import dto.ResidentDTO;
+import dto.WardDTO;
 import utils.GetParam;
 
 import javax.naming.NamingException;
@@ -13,16 +17,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import static constant.Router.*;
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
 
 @WebServlet(name = "UpdateProfileController", value = "/UpdateProfileController")
 public class UpdateProfileController extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
 
         String firstName = request.getParameter("txtFirstName");
@@ -33,24 +39,36 @@ public class UpdateProfileController extends HttpServlet {
         String gender = request.getParameter("cboGender");
         Timestamp DOB = Timestamp.valueOf(request.getParameter("txtDOB"));
         String nationality = request.getParameter("txtNationality");
-        int wardID = Integer.parseInt(request.getParameter("cboWard"));
+        String wardRequest = request.getParameter("cboWard");
         String houseNumber = request.getParameter("txtHouseNumber");
+        String button = request.getParameter("btUpdate");
         String genderDB = null;
         if (gender.equals("Female")) {
             genderDB = "F";
         } else if (gender.equals("Male")) {
             genderDB = "M";
         }
+        ResidentDTO dto = null;
         String url = ERROR_PAGE;
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (id != null) {
-                    ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
-                            DOB, nationality, wardID, houseNumber, null, null);
-                    ResidentDaoImpl dao = new ResidentDaoImpl();
-                    dao.updateResidentInformation(dto);
-                    url = VIEW_USER_PROFILE;
+                    if (wardRequest != null) {
+                        Integer wardID = Integer.parseInt(wardRequest);
+                        dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
+                                DOB, nationality, wardID, houseNumber, null, null);
+                    }else{
+                        dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
+                                DOB, nationality, null, houseNumber, null, null);
+                    }
+                        ResidentDaoImpl dao = new ResidentDaoImpl();
+                        request.setAttribute("PROFILE_PAGE", dto);
+                        dao.updateResidentInformation(dto);
+                        if(button.equalsIgnoreCase("Save changes")) {
+                            url = VIEW_PROFILE_CONTROLLER;
+                        }
+
                 }
             }
 
@@ -61,19 +79,7 @@ public class UpdateProfileController extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-            out.close();
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
     }
 
 }
