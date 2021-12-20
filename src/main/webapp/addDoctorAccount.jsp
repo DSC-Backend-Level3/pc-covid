@@ -28,9 +28,10 @@
             Health Insurance ID <input type="text" name="healthInsuranceID" value=""/><br/>
             Date of birth <input type="text" name="DOB" value=""/><br/>
             Nationality <input type="text" name="nationality" value=""/><br/>
+            Gmail <input type="text", name="email" value=""/><br/>
             <%--    using drop-down list--%>
             Gender
-            <select name="" id="">
+            <select name="gender" id="">
                 <option value="F">F</option>
                 <option value="M">M</option>
             </select>
@@ -43,7 +44,7 @@
                 <option>Select district</option>
             </select>
             Ward
-            <select id="ward">
+            <select id="ward" name="wardID">
                 <option>Select ward</option>
             </select>
             House Number <input type="text" name="houseNumber" value=""/><br/>

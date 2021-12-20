@@ -38,7 +38,7 @@ public class VaccineDTO implements Serializable {
         this.id = id;
     }
 
-    public String getVaccineName() {
+    public String getName() {
         return name;
     }
 

@@ -19,7 +19,8 @@ import java.util.List;
 @WebServlet(name = "AddVaccinationInfoController", value = "/AddVaccinationInfoController")
 public class AddVaccinationInfoController extends HttpServlet {
 
-    protected boolean getHandler(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, NamingException {
+    protected boolean getHandler(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException {
         response.setContentType("text/html");
         VaccineDao vaccineDao = new VaccineDaoImpl();
 

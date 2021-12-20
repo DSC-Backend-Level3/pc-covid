@@ -1,5 +1,6 @@
 package controller.admin;
 
+import constant.Role;
 import constant.Router;
 import dao.ResidentDao;
 import dao.implement.ResidentDaoImpl;
@@ -16,7 +17,6 @@ import java.util.List;
 
 @WebServlet(name = "ViewDoctorAccountsController", value = "/ViewDoctorAccountsController")
 public class ViewDoctorAccountsController extends HttpServlet {
-    protected final int DOCTOR_ROLE_ID = 3;
 
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, NamingException {
@@ -26,7 +26,7 @@ public class ViewDoctorAccountsController extends HttpServlet {
         ResidentDao residentDao = new ResidentDaoImpl();
         List<ResidentDTO> doctorAccounts = null;
 
-        doctorAccounts = residentDao.getResidentsByRoleId(DOCTOR_ROLE_ID);
+        doctorAccounts = residentDao.getResidentsByRoleId(Role.DOCTOR);
         request.setAttribute("doctorList", doctorAccounts);
         return true;
     }
