@@ -21,58 +21,12 @@ public class AddVaccinationInfoController extends HttpServlet {
 
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException, NamingException {
         response.setContentType("text/html");
-        ProvinceDao provinceDao = new ProvinceDaoImpl();
-        DistrictDao districtDao = new DistrictDaoImpl();
-        WardDao wardDao = new WardDaoImpl();
         VaccineDao vaccineDao = new VaccineDaoImpl();
-
-        //get parameter
-        String option = request.getParameter("operation");
 
         //get vaccine list
         List<VaccineDTO> vaccineList = vaccineDao.getAllVaccines();
         request.setAttribute("vaccineList", vaccineList);
 
-        //get province list
-        if (option.equals("province")) {
-                List<ProvinceDTO> list = provinceDao.getAllProvinces();
-//                if (list == null) {
-//                    request.setAttribute("provinceError", "Province list is empty");
-//                    return;
-//                }
-                Gson json = new Gson();
-                String provinceList = json.toJson(list);
-                response.setContentType("text/html");
-                response.getWriter().write(provinceList);
-        }
-
-        //get district list
-        if (option.equals("district")) {
-                int provinceID = Integer.parseInt(request.getParameter("id"));
-                List<DistrictDTO> list = districtDao.getDistrictByProvinceID(provinceID);
-//                if (list == null) {
-//                    request.setAttribute("districtError", "District list is empty");
-//                    return;
-//                }
-                Gson json = new Gson();
-                String provinceList = json.toJson(list);
-                response.setContentType("text/html");
-                response.getWriter().write(provinceList);
-        }
-
-        //get ward list
-        if (option.equals("ward")) {
-                int districtID = Integer.parseInt(request.getParameter("id"));
-                List<WardDTO> list = wardDao.getWardByDistrictID(districtID);
-//                if (list == null) {
-//                    request.setAttribute("wardError", "Ward list is empty");
-//                    return;
-//                }
-                Gson json = new Gson();
-                String provinceList = json.toJson(list);
-                response.setContentType("text/html");
-                response.getWriter().write(provinceList);
-        }
         return true;
     }
 
