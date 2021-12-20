@@ -26,6 +26,7 @@ public class UserDispatcher extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = (String) request.getAttribute(Attribute.PATH);
+        System.out.println(path);
         switch (path) {
             case PathValue.USER.UPDATE_PASSWORD:
                 request.getRequestDispatcher(Router.USER.CHANGE_PASSWORD_CONTROLLER).forward(request, response);

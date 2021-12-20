@@ -27,7 +27,7 @@
         <option></option>
         <c:set var="vaccineList" value="${requestScope.vaccineList}">
             <c:forEach var="dto" items="${vaccineList}">
-                <option value="${dto.id}">${dto.vaccineName}</option>
+                <option value="${dto.id}">${dto.name}</option>
             </c:forEach>
         </c:set>
         </select>

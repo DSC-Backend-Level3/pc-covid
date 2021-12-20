@@ -17,7 +17,10 @@
         <title>Vaccine</title>
     </head>
     <body>
-        <c:set var="result" value="${requestScope.vaccinationInfoList}" />
+        <c:set var="result" value="${requestScope.vaccinationInfoList}"/>
+        <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
+        <c:set var="residentList" value="${requestScope.residentList}"/>
+        <c:set var="locationList" value="${requestScope.locationList}"/>
         <c:if test="${not empty result}">
             <table>
                 <thead>
@@ -25,7 +28,8 @@
                     <th>No.</th>
                     <th>Vaccination Information ID</th>
                     <th>Resident ID</th>
-                    <th>Resident Name</th>
+                    <th>Resident First Name</th>
+                    <th>Resident Last Name</th>
                     <th>Vaccine Name</th>
                     <th>Vaccination's Province</th>
                     <th>Vaccination's District</th>
@@ -39,22 +43,23 @@
                         <td>${obj.count}</td>
                         <td>${dto.id}</td>
                         <td>${dto.residentID}</td>
-                        <c:set var="residentList" value="${requestScope.residentList}">
-                            <td><c:forEach var="resident" items="${residentList}">
-                                <c:if test="${resident.id == dto.id}">
-                                    ${resident.lastName} + ${resident.firstName}
-                                </c:if>
-                            </c:forEach></td>
-                        </c:set>
+                        <td><c:out value="${residentList[obj.index].firstName}"/></td>
+                        <td><c:out value="${residentList[obj.index].lastName}"/></td>
+<%--                            <td><c:forEach var="resident" items="${residentList}">--%>
+<%--                                <c:if test="${resident.id == dto.id}">--%>
+<%--                                    ${resident.lastName}--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach></td>--%>
+                        <td><c:out value="${vaccineList[obj.index].name}"/></td>
 
-                        <c:set var="vaccineList" value="${requestScope.vaccineList}">
-                            <td><c:forEach var="vaccine" items="${vaccineList}">
-                                <c:if test="${vaccine.id == dto.vaccineID}">
-                                    ${vaccine.name}
-                                </c:if>
-                            </c:forEach></td>
-                        </c:set>
-                        <td>${dto.wardID}</td>
+<%--                            <td><c:forEach var="vaccine" items="${vaccineList}">--%>
+<%--                                <c:if test="${vaccine.id == dto.vaccineID}">--%>
+<%--                                    ${vaccine.name}--%>
+<%--                                </c:if>--%>
+<%--                            </c:forEach></td>--%>
+                        <td><c:out value="${locationList[obj.index].provinceName}"/></td>
+                        <td><c:out value="${locationList[obj.index].districtName}"/></td>
+                        <td><c:out value="${locationList[obj.index].wardName}"/></td>
                         <td>${dto.date}</td>
                     </tr>
                 </c:forEach>

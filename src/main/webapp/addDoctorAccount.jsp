@@ -60,7 +60,7 @@
             $(document).ready(function () {
                 $.ajax({
                     // check url
-                    url: "CreateDoctorAccountController",
+                    url: "LocationController",
                     method: "GET",
                     data: {operation: 'province'},
                     success: function (data, textStatus, jqXHR) {
@@ -88,7 +88,7 @@
                     };
 
                     $.ajax({
-                        url: "CreateDoctorAccountController",
+                        url: "LocationController",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {
@@ -116,7 +116,7 @@
                     };
 
                     $.ajax({
-                        url: "CreateDoctorAccountController",
+                        url: "LocationController",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {

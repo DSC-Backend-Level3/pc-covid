@@ -27,6 +27,7 @@ public class LoginController extends HttpServlet {
         try {
             //do login
             login(request, response);
+            System.out.println("Step 1");
             //on success
             response.sendRedirect(PathValue.HOME_PAGE + "?result=success");
         } catch (IllegalArgumentException ex) { //on fail

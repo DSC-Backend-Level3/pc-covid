@@ -1,15 +1,9 @@
 package controller.doctor;
 
 import constant.Router;
-import dao.ResidentDao;
-import dao.VaccinationInfoDao;
-import dao.VaccineDao;
-import dao.implement.ResidentDaoImpl;
-import dao.implement.VaccinationInfoDaoImpl;
-import dao.implement.VaccineDaoImpl;
-import dto.ResidentDTO;
-import dto.VaccinationInfoDTO;
-import dto.VaccineDTO;
+import dao.*;
+import dao.implement.*;
+import dto.*;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
@@ -30,24 +24,43 @@ public class ViewVaccinationInfoController extends HttpServlet {
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
         ResidentDao residentDao = new ResidentDaoImpl();
         VaccineDao vaccineDao = new VaccineDaoImpl();
-        List<VaccinationInfoDTO> vaccinationInfoList = null;
+        ProvinceDao provinceDao = new ProvinceDaoImpl();
+        DistrictDao districtDao = new DistrictDaoImpl();
+        WardDao wardDao = new WardDaoImpl();
+        List<LocationDTO> locationList = new ArrayList<>();
+        List<VaccinationInfoDTO> vaccinationInfoList;
         List<ResidentDTO> residentList = new ArrayList<>();
         List<VaccineDTO> vaccineList = new ArrayList<>();
 
         vaccinationInfoList = vaccinationInfoDao.getAllVaccinationInfo();
         for (VaccinationInfoDTO vaccinationInfo : vaccinationInfoList) {
+            //get resident list
             String residentID = vaccinationInfo.getResidentID();
-            int vaccineID = vaccinationInfo.getVaccineID();
-
             ResidentDTO resident = residentDao.getResidentById(residentID);
-            VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
-
             residentList.add(resident);
+
+            //get vaccine list
+            int vaccineID = vaccinationInfo.getVaccineID();
+            VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
             vaccineList.add(vaccine);
+
+            //get location list
+            int wardID = vaccinationInfo.getWardID();
+            WardDTO ward = wardDao.getWardByID(wardID);
+            String wardName = ward.getName();
+            int districtID = ward.getDistrictID();
+            DistrictDTO district = districtDao.getDistrictByID(districtID);
+            String districtName = district.getName();
+            int provinceID = district.getProvinceID();
+            ProvinceDTO province = provinceDao.getProvinceByID(provinceID);
+            String provinceName = province.getName();
+            locationList.add(new LocationDTO(provinceName, districtName, wardName));
         }
         request.setAttribute("vaccinationInfoList", vaccinationInfoList);
         request.setAttribute("residentList", residentList);
         request.setAttribute("vaccineList", vaccineList);
+        request.setAttribute("locationList", locationList);
+
         return true;
     }
 
@@ -61,6 +74,7 @@ public class ViewVaccinationInfoController extends HttpServlet {
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
         } finally {
+            System.out.println("sang trang vaccine");
             RequestDispatcher dispatcher = request.getRequestDispatcher(Router.VACCINATION_INFO_LIST_PAGE);
             dispatcher.forward(request, response);
         }

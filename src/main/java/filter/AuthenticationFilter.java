@@ -37,6 +37,7 @@ public class AuthenticationFilter implements Filter {
                     if (id == null) {
                         session.setAttribute(Attribute.USER.ROLE, 0);
                     }
+                    System.out.println("Step 0");
                     //forward request
                     request.getRequestDispatcher(Router.DISPATCHER.REQUEST_DISPATCHER).forward(request,response);
                 } else { //is not exist
@@ -45,6 +46,8 @@ public class AuthenticationFilter implements Filter {
                 }
             }
         } catch (ServletException | IOException | MethodNotFoundException ex) {
+            System.out.println("Hello Filter");
+            ex.printStackTrace();
             //forward to error page
             request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }

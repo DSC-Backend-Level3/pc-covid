@@ -27,6 +27,7 @@ public class RequestDispatcher extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         int role = (int) session.getAttribute(Attribute.USER.ROLE);
+        System.out.println(role);
         switch (role) {
             case Role.GUEST :
                 request.getRequestDispatcher(Router.DISPATCHER.GUEST_DISPATCHER).forward(request,response);
@@ -35,6 +36,7 @@ public class RequestDispatcher extends HttpServlet {
                 request.getRequestDispatcher(Router.DISPATCHER.ADMIN_DISPATCHER).forward(request, response);
                 break;
             case Role.DOCTOR:
+                System.out.println("doctor role");
                 request.getRequestDispatcher(Router.DISPATCHER.DOCTOR_DISPATCHER).forward(request, response);
                 break;
             case Role.USER:

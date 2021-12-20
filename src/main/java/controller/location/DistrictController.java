@@ -14,5 +14,4 @@ public class DistrictController extends HttpServlet {
         //get district list based on province id
         request.setAttribute("districtList", null);
     }
-
 }

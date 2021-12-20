@@ -40,7 +40,7 @@
                 <td>
                     <c:forEach items="${vaccines}" var="vaccineDTO" varStatus="i">
                         <c:if test="${vaccineDTO.id eq dto.vaccineID}">
-                            ${vaccineDTO.vaccineName}
+                            ${vaccineDTO.name}
                         </c:if>
                     </c:forEach>
                 </td>
