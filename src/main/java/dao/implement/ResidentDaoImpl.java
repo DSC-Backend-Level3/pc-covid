@@ -65,7 +65,6 @@ public class ResidentDaoImpl implements ResidentDao {
             closeConnection();
         }
         return null;
-
     }
 
     @Override
@@ -109,6 +108,48 @@ public class ResidentDaoImpl implements ResidentDao {
             closeConnection();
         }
         return list;
+    }
+
+    @Override
+    public List<ResidentDTO> getResidentsByRoleId(int roleID) throws SQLException, NamingException {
+        List<ResidentDTO> residentList = new ArrayList<>();
+        try {
+            //1. Connect DB
+            con = DBHelper.makeConnection();
+            //2. Create SQL Statement
+            if (con != null) {
+                //3. Create Statement to set SQL
+                String sql = "SELECT id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB, "
+                        + "nationality, wardID, houseNumber, password "
+                        + "FROM Resident "
+                        + "WHERE roleID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, roleID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String id = rs.getString(1);
+                    String firstName = rs.getString(2);
+                    String lastName = rs.getString(3);
+                    String phoneNumber = rs.getString(4);
+                    String email = rs.getString(5);
+                    String healthInsuranceID = rs.getString(6);
+                    String gender = rs.getString(7);
+                    Timestamp DOB = rs.getTimestamp(8);
+                    String nationality = rs.getString(9);
+                    int wardID = rs.getInt(10);
+                    String houseNumber = rs.getString(11);
+                    String password = rs.getString(12);
+                    ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB,
+                            nationality, wardID, houseNumber, roleID, password);
+                    residentList.add(dto);
+                    return residentList;
+                }
+            }
+
+        } finally {
+            closeConnection();
+        }
+        return null;
     }
 
     @Override

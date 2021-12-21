@@ -31,4 +31,5 @@ public interface VaccinationInfoDao {
      * @return {@code True} if the resident is available or {@code False} if is not.
      */
     boolean isAvailableFor2ndInjection(int id) throws NamingException, SQLException;
+    boolean addNewVaccinationInfo(VaccinationInfoDTO vaccinationInfo) throws SQLException, NamingException;
 }

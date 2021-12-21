@@ -12,6 +12,7 @@
     <title>Profile Page</title>
 </head>
 <body>
+<button><a href="homepage">Home Page</a></button>
 <h1>Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
@@ -54,5 +55,6 @@
 </c:url>
 <button><a href="${Update_Profile}">Update Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
+
 </body>
 </html>

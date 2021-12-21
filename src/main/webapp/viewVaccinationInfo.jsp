@@ -66,19 +66,19 @@
                             <c:set var="province" value="${provinceDTO}"/>
                         </c:if>
                     </c:forEach>
-                    ${province.name}, ${district.name}, ${ward.name}
+                        ${province.name}, ${district.name}, ${ward.name}
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-
 </c:if>
 
 <br>
-<form action="view">
-    <input type="submit" value="View Profile" name="btAction">
-</form>
+<c:url value="view" var="View_Profile">
+    <c:param name="btAction" value="View Profile"/>
+</c:url>
+<button><a href="${View_Profile}">View Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
 </body>
 </html>

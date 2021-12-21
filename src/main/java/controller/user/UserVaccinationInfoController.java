@@ -30,7 +30,6 @@ public class UserVaccinationInfoController extends HttpServlet {
         try {
             if (session != null) {
                 String idNumber = (String) session.getAttribute(Attribute.USER.USER_ID);
-                System.out.println(idNumber);
                 if (idNumber != null) {
                     ResidentDaoImpl userDao = new ResidentDaoImpl();
                     ResidentDTO resident = userDao.getResidentById(idNumber);

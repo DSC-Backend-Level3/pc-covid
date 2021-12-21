@@ -12,6 +12,7 @@
     <title>Update Page</title>
 </head>
 <body>
+<button><a href="homepage">Home Page</a></button>
 <h1>Update Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>

@@ -45,7 +45,7 @@ public class ResidentDTO implements Serializable {
         this.houseNumber = houseNumber;
         this.roleID = roleID;
         this.password = password;
-    }
+}
 
     public String getId() {
         return id;
