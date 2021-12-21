@@ -18,34 +18,34 @@
 </head>
 <body>
     <h1>Vaccination Information Form</h1>
-    <form action="DoctorDispatcher" method="POST">
-        Resident ID <input type="text" name="residentID" value=""/><br/>
-        Vaccine Information ID <input type="text" name="id" value=""/><br/>
+    <form action="add" method="POST">
+        <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
+        Resident ID <input type="text" name="residentID" value="" required/><br/>
+        Vaccine Information ID <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine ID
-        <select name="vaccineID">
-        <option></option>
-        <c:set var="vaccineList" value="${requestScope.vaccineList}">
-            <c:forEach var="dto" items="${vaccineList}">
-                <option value="${dto.id}">${dto.name}</option>
-            </c:forEach>
-        </c:set>
+        <select name="vaccineID" required>
+            <option value="">Select name</option>
+            <option>Select Vaccine</option>
+                <c:forEach var="dto" items="${vaccineList}">
+                    <option value="${dto.id}">${dto.name}</option>
+                </c:forEach>
         </select>
         Province
-        <select id="province">
+        <select id="province" required>
             <option>Select province</option>
         </select>
         District
-        <select id="district">
+        <select id="district" required>
             <option>Select district</option>
         </select>
         Ward
-        <select id="ward" name="wardID">
-            <option>Select ward</option>
+        <select id="ward" name="wardID" required>
+            <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value=""/><br/>
-        <input type="submit" value="Add" name="btAction">
+        Injection's Date <input type="text" name="date" value="" required/><br/>
+        <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
@@ -54,20 +54,23 @@
             referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             $.ajax({
                 // check url
-                url: "LocationController",
+                url: "loadLocation",
                 method: "GET",
                 data: {operation: 'province'},
                 success: function (data, textStatus, jqXHR) {
-                    let obj = $.parseJSON(data);
-                    $.each(obj, function (key, value) {
+                    // let obj = $.parseJSON(data);
+                    console.log(data[0].id);
+                    $.each(data, function (key, value) {
                         $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#province').append('<option>province Unavailable</option>');
+
+                    $('#province').append('<option>Province Unavailable</option>');
                 },
                 cache: false
             });
@@ -86,15 +89,15 @@
                 };
 
                 $.ajax({
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: data,
                     success: function (data, textStatus, jqXHR) {
-                        console.log(data);
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+//                        console.log(data);
+                        $.each(data, function (key, value) {
                             $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
+//                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('#district').append('<option>District Unavailable</option>');
@@ -113,15 +116,16 @@
                     id: did
                 };
 
+
                 $.ajax({
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: data,
                     success: function (data, textStatus, jqXHR) {
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+                        $.each(data, function (key, value) {
                             $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
+//                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('#ward').append('<option>Ward Unavailable</option>');

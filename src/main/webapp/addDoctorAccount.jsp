@@ -18,38 +18,39 @@
     </head>
     <body>
         <h1>Doctor Account Form</h1>
-        <form action="" method="POST">
-            Doctor ID <input type="text" name="id" value=""/><br/>
-            Doctor Password <input type="text" name="password" value=""/><br/>
+        <form action="create" method="POST">
+            Doctor ID <input type="text" name="id" value="" required/><br/>
+            Doctor Password <input type="text" name="password" value="" required/><br/>
             <%--    default  --%>
-            First Name <input type="text" name="firstName" value=""/><br/>
-            Last Name <input type="text" name="lastName" value=""/><br/>
-            Phone Number <input type="text" name="phoneNumber" value=""/><br/>
-            Health Insurance ID <input type="text" name="healthInsuranceID" value=""/><br/>
-            Date of birth <input type="text" name="DOB" value=""/><br/>
-            Nationality <input type="text" name="nationality" value=""/><br/>
-            Gmail <input type="text", name="email" value=""/><br/>
+            First Name <input type="text" name="firstName" value="" required/><br/>
+            Last Name <input type="text" name="lastName" value="" required/><br/>
+            Phone Number <input type="text" name="phoneNumber" value="" required/><br/>
+            Health Insurance ID <input type="text" name="healthInsuranceID" value="" required/><br/>
+            Date of birth <input type="text" name="DOB" value="" required/><br/>
+            Nationality <input type="text" name="nationality" value="" required/><br/>
+            Gmail <input type="text", name="email" value="" required/><br/>
             <%--    using drop-down list--%>
             Gender
-            <select name="gender" id="">
+            <select name="gender" id="" required>
+                <option value="">Select Gender</option>
                 <option value="F">F</option>
                 <option value="M">M</option>
             </select>
             Province
-            <select id="province">
-                <option>Select province</option>
+            <select id="province" required>
+                <option value="">Select province</option>
             </select>
             District
-            <select id="district">
-                <option>Select district</option>
+            <select id="district" required>
+                <option value="">Select district</option>
             </select>
             Ward
-            <select id="ward" name="wardID">
-                <option>Select ward</option>
+            <select id="ward" name="wardID" required>
+                <option value="">Select ward</option>
             </select>
-            House Number <input type="text" name="houseNumber" value=""/><br/>
+            House Number <input type="text" name="houseNumber" value="" required/><br/>
 
-            <input type="submit" value="Add" name="btAction">
+            <input type="submit" value="Add Doctor" name="btAction">
         </form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
                 integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
@@ -60,12 +61,11 @@
             $(document).ready(function () {
                 $.ajax({
                     // check url
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: {operation: 'province'},
                     success: function (data, textStatus, jqXHR) {
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+                        $.each(data, function (key, value) {
                             $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
                     },
@@ -88,13 +88,11 @@
                     };
 
                     $.ajax({
-                        url: "LocationController",
+                        url: "loadLocation",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {
-                            console.log(data);
-                            let obj = $.parseJSON(data);
-                            $.each(obj, function (key, value) {
+                            $.each(data, function (key, value) {
                                 $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                             });
                         },
@@ -116,12 +114,11 @@
                     };
 
                     $.ajax({
-                        url: "LocationController",
+                        url: "loadLocation",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {
-                            let obj = $.parseJSON(data);
-                            $.each(obj, function (key, value) {
+                            $.each(data, function (key, value) {
                                 $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                             });
                         },

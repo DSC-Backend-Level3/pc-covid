@@ -20,15 +20,16 @@
         <c:set var="result" value="${requestScope.vaccineList}"/>
         <c:if test="${not empty result}">
             <table>
-            <thead>
-            <tr>
-            <th>No.</th>
-            <th>Vaccine ID</th>
-            <th>Vaccine name</th>
-            <th>Origin</th>
-            <th>Time for 2rd dose</th>
-            </tr>
-            </thead>
+                <thead>
+                    <tr>
+                    <th>No.</th>
+                    <th>Vaccine ID</th>
+                    <th>Vaccine name</th>
+                    <th>Origin</th>
+                    <th>Organization</th>
+                    <th>Time for 2rd dose</th>
+                    </tr>
+                </thead>
             <tbody>
             <c:forEach var="dto" items="${result}" varStatus="obj" >
                 <tr>
@@ -37,6 +38,7 @@
                     <td>${dto.name}</td>
                     <td>${dto.country}</td>
                     <td>${dto.firm}</td>
+                    <td>${dto.interval}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -46,5 +48,8 @@
         <c:if test="${empty result}">
             <h2>Vaccine' information is unavailable!</h2>
         </c:if>
+
+        <a href="addVaccine.html">Adding New Vaccine</a>
+        <a href="adminHome.jsp">Home Page</a>
     </body>
 </html>

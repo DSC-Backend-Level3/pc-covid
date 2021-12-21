@@ -65,6 +65,7 @@ public class Attribute {
          */
         public final static String NATIONALITY = "nationality";
 
+        public static final String USER_NAME = "name" ;
     }
 
     public static class ERROR{

@@ -126,7 +126,7 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, roleID);
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
                     String id = rs.getString(1);
                     String firstName = rs.getNString(2);
                     String lastName = rs.getNString(3);
@@ -142,8 +142,9 @@ public class ResidentDaoImpl implements ResidentDao {
                     ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB,
                             nationality, wardID, houseNumber, roleID, password);
                     residentList.add(dto);
-                    return residentList;
+
                 }
+                return residentList;
             }
 
         } finally {

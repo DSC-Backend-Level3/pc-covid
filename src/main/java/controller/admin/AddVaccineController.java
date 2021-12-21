@@ -1,5 +1,6 @@
 package controller.admin;
 
+import constant.PathValue;
 import constant.Router;
 import dao.VaccineDao;
 import dao.implement.VaccineDaoImpl;
@@ -10,14 +11,18 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 @WebServlet(name = "AddVaccineController", value = "/AddVaccineController")
 public class AddVaccineController extends HttpServlet {
-    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException {
-        VaccineDao vaccineDao = new VaccineDaoImpl();
+    private final String PAGE_RETURN = "viewVaccine?btAction=View+Vaccine";
+    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, UnsupportedEncodingException {
 
+        VaccineDao vaccineDao = new VaccineDaoImpl();
+        response.setContentType("text/html; charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
         int id;
         String name;
         String country;
@@ -46,7 +51,8 @@ public class AddVaccineController extends HttpServlet {
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         } finally {
-            response.sendRedirect(Router.ADMIN.ADD_VACCINE_CONTROLLER);
+            System.out.println("Im here");
+            response.sendRedirect(PAGE_RETURN);
         }
     }
 }

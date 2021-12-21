@@ -84,10 +84,8 @@ public class DistrictDaoImpl implements DistrictDao {
                 if(resultSet.next()){
                     String name = resultSet.getString("name");
                     int provinceID = resultSet.getInt("provinceID");
-                    DistrictDTO dto = new DistrictDTO(id, name, provinceID);
-                    return dto;
+                    return new DistrictDTO(id, name, provinceID);
                 }
-
             }
         }finally {
             closeConnection();

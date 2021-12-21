@@ -16,27 +16,26 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static constant.Router.PAGE.DOCTOR_ACCOUNT_FORM;
-import static constant.Router.PAGE.ERROR_PAGE;
-
 @WebServlet(name = "AddVaccinationInfoController", value = "/AddVaccinationInfoController")
 public class AddVaccinationInfoController extends HttpServlet {
 
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response)
             throws SQLException {
-        response.setContentType("text/html");
         VaccineDao vaccineDao = new VaccineDaoImpl();
 
         //get vaccine list
         List<VaccineDTO> vaccineList = vaccineDao.getAllVaccines();
         request.setAttribute("vaccineList", vaccineList);
 
+        response.setContentType("text/html;charset=UTF-8");
         return true;
     }
 
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+
+
 
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
 
@@ -59,16 +58,14 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if (getHandler(request, response)) {
-                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+            String link = request.getParameter("btAction");
+            if (getHandler(request, response) && link.equals("Add Vaccination")) {
+                request.getRequestDispatcher(Router.VACCINATION_INFO_FORM).forward(request, response);
             }
-//            else {
-//                request.getRequestDispatcher(Routers.EVENT_MANAGEMENT_CONTROLLER).forward(request, response);
-//            }
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
         }
     }
 
@@ -84,7 +81,7 @@ public class AddVaccinationInfoController extends HttpServlet {
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
         }
     }
 }

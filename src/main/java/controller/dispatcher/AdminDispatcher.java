@@ -24,7 +24,8 @@ public class AdminDispatcher extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletPath();
+        String path = (String) request.getAttribute(Attribute.PATH);
+        System.out.println(path);
         switch (path){
             case PathValue.ADMIN.ADD_NEW_VACCINE:
                 request.getRequestDispatcher(Router.ADMIN.ADD_VACCINE_CONTROLLER).forward(request,response);
@@ -32,7 +33,22 @@ public class AdminDispatcher extends HttpServlet {
             case PathValue.ADMIN.CREATE_DOCTOR_ACCOUNT:
                 request.getRequestDispatcher(Router.ADMIN.CREATE_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
                 break;
+            case PathValue.ADMIN.VIEW_DOCTOR_LIST:
+                request.getRequestDispatcher(Router.ADMIN.VIEW_DOCTOR_ACCOUNT_CONTROLLER).forward(request,response);
+                break;
+            case PathValue.DOCTOR.LOAD_LOCATION:
+                System.out.println("load Location here");
+                request.getRequestDispatcher(Router.DOCTOR.LOCATION_CONTROLLER).forward(request,response);
+                break;
+            case PathValue.ADMIN.VIEW_VACCINE_LIST:
+                System.out.println("I see vaccine");
+                request.getRequestDispatcher(Router.ADMIN.VIEW_VACCINE_CONTROLLER).forward(request,response);
+                break;
+            case "/" + PathValue.HOME_PAGE:
+                request.getRequestDispatcher(Router.ADMIN.ADMIN_HOME).forward(request, response);
+                break;
             default:
+                System.out.println("I can not see vaccine");
                 request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, Attribute.ERROR_MESSAGE.NOT_SUPPORTED_ACTION);
                 request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request,response);
         }
