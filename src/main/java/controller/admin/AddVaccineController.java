@@ -51,7 +51,6 @@ public class AddVaccineController extends HttpServlet {
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Im here");
             response.sendRedirect(PAGE_RETURN);
         }
     }

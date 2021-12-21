@@ -31,6 +31,7 @@ public class Attribute {
          * User role attribute
          */
         public final static String ROLE = "role";
+        public static final String USER_NAME = "name" ;
 
         /**
          * User first name attribute
@@ -65,7 +66,6 @@ public class Attribute {
          */
         public final static String NATIONALITY = "nationality";
 
-        public static final String USER_NAME = "name" ;
     }
 
     public static class ERROR{

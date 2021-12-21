@@ -194,10 +194,10 @@ public class ResidentDaoImpl implements ResidentDao {
     public void updateResidentInformation(ResidentDTO residentDTO)
             throws SQLException, NamingException {
         try {
-            System.out.println("connection");
+
             //1. Connect DB
             con = DBHelper.makeConnection();
-            System.out.println(con);
+
             //2. Create SQL Statement
             if (con != null) {
 

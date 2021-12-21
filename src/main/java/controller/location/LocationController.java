@@ -38,6 +38,7 @@ public class LocationController extends HttpServlet {
                     request.setAttribute("provinceError", "Province list is empty");
                     return;
                 }
+
                 Gson json = new Gson();
                 String provinceList = json.toJson(list);
 

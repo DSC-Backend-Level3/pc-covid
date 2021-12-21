@@ -154,7 +154,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
             //2. Create SQL Statement
             if (connection != null) {
                 //3. Create Statement to set SQL
-                String sql = "INSERT INTO [VaccinationInfo]([id], [residentID], [vaccineID], [wardID], [date] "
+                String sql = "INSERT INTO [VaccinationInfo]([id], [residentID], [vaccineID], [wardID], [date]) "
                         + " VALUES (?, ?, ?, ?, ?)";
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setInt(1, vaccinationInfo.getId());

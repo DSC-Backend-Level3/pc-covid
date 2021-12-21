@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 
 @WebServlet(name = "CreateDoctorAccountController", value = "/CreateDoctorAccountController")
 public class CreateDoctorAccountController extends HttpServlet {
+    private final String PAGE_RETURN = "viewDoctor?btAction=View+Doctor";
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException {
 
         request.setCharacterEncoding("UTF-8");
@@ -64,7 +65,7 @@ public class CreateDoctorAccountController extends HttpServlet {
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
         } finally {
-            response.sendRedirect(Router.ADMIN.CREATE_DOCTOR_ACCOUNT_CONTROLLER);
+            response.sendRedirect(PAGE_RETURN);
         }
     }
 }

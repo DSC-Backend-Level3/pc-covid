@@ -18,6 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "AddVaccinationInfoController", value = "/AddVaccinationInfoController")
 public class AddVaccinationInfoController extends HttpServlet {
+    private static final String PAGE_RETURN = "homepage?result=success";
 
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response)
             throws SQLException {
@@ -35,8 +36,6 @@ public class AddVaccinationInfoController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-
-
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
 
         String residentID;
@@ -46,13 +45,13 @@ public class AddVaccinationInfoController extends HttpServlet {
         Timestamp date;
 
         residentID = request.getParameter("residentID");
-        id = Integer.parseInt(request.getParameter("vaccineID"));
+        id = Integer.parseInt(request.getParameter("id"));
         vaccineID = Integer.parseInt(request.getParameter("vaccineID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
         date = Timestamp.valueOf(request.getParameter("date"));
 
         VaccinationInfoDTO vaccinationInfo= new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
-
+        System.out.println("Resident:" + residentID + "Vaccination" + id + "Vaccine" + vaccineID + "Ward" + wardID + "date" + date);
         return vaccinationInfoDao.addNewVaccinationInfo(vaccinationInfo);
     }
     @Override
@@ -73,7 +72,8 @@ public class AddVaccinationInfoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if (postHandler(request, response)) {
-                request.getRequestDispatcher(Router.DOCTOR.VIEW_VACCINATION_CONTROLLER).forward(request, response);
+                response.sendRedirect("homepage?result=success");
+//                request.getRequestDispatcher("homepage?result=success").forward(request, response);
             }
 
         } catch (Exception ex) {
