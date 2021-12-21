@@ -119,8 +119,8 @@ public class VaccineDaoImpl implements VaccineDao {
                 preparedStatement.setInt(1, vaccine.getId());
                 preparedStatement.setString(2, vaccine.getName());
                 preparedStatement.setString(3, vaccine.getFirm());
-                preparedStatement.setString(3, vaccine.getCountry());
-                preparedStatement.setInt(1, vaccine.getInterval());
+                preparedStatement.setString(4, vaccine.getCountry());
+                preparedStatement.setInt(5, vaccine.getInterval());
                 int row = preparedStatement.executeUpdate();
                 if (row > 0) {
                     return true;

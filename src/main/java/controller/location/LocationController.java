@@ -23,10 +23,10 @@ import java.util.List;
 public class LocationController extends HttpServlet {
     protected void getHandler(HttpServletRequest request, HttpServletResponse response) {
 
-        response.setContentType("text/html;charset=UTF-8");
         ProvinceDao provinceDao = new ProvinceDaoImpl();
         DistrictDao districtDao = new DistrictDaoImpl();
         WardDao wardDao = new WardDaoImpl();
+        response.setContentType("application/json;charset=utf-8");
 
         System.out.println("Hello I'm coming");
         //get parameter
@@ -45,7 +45,7 @@ public class LocationController extends HttpServlet {
                 }
                 Gson json = new Gson();
                 String provinceList = json.toJson(list);
-                response.setContentType("text/html");
+
                 response.getWriter().write(provinceList);
                 System.out.println("I get province");
 
@@ -66,7 +66,6 @@ public class LocationController extends HttpServlet {
                 }
                 Gson json = new Gson();
                 String provinceList = json.toJson(list);
-                response.setContentType("text/html");
                 response.getWriter().write(provinceList);
             } catch (SQLException | NamingException | IOException ex) {
                 ex.printStackTrace();
@@ -84,7 +83,6 @@ public class LocationController extends HttpServlet {
                 }
                 Gson json = new Gson();
                 String provinceList = json.toJson(list);
-                response.setContentType("text/html");
                 response.getWriter().write(provinceList);
             } catch (SQLException | NamingException | IOException ex) {
                 ex.printStackTrace();

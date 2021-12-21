@@ -18,7 +18,7 @@
 </head>
 <body>
     <h1>Vaccination Information Form</h1>
-    <form action="DoctorDispatcher" method="POST">
+    <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" value=""/><br/>
         Vaccine Information ID <input type="text" name="id" value=""/><br/>
@@ -45,7 +45,7 @@
         </select>
 
         Injection's Date <input type="text" name="date" value=""/><br/>
-        <input type="submit" value="Add" name="btAction">
+        <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
@@ -62,9 +62,9 @@
                 method: "GET",
                 data: {operation: 'province'},
                 success: function (data, textStatus, jqXHR) {
-                    console.log(data);
-                    let obj = $.parseJSON(data);
-                    $.each(obj, function (key, value) {
+                    // let obj = $.parseJSON(data);
+                    console.log(data[0].id);
+                    $.each(data, function (key, value) {
                         $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
                 },
@@ -94,8 +94,7 @@
                     data: data,
                     success: function (data, textStatus, jqXHR) {
 //                        console.log(data);
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+                        $.each(data, function (key, value) {
                             $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
 //                        $('select').formSelect();
@@ -117,16 +116,13 @@
                     id: did
                 };
 
-                let $;
+
                 $.ajax({
                     url: "loadLocation",
                     method: "GET",
                     data: data,
                     success: function (data, textStatus, jqXHR) {
-                       console.log(data);
-                        let $;
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+                        $.each(data, function (key, value) {
                             $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
 //                        $('select').formSelect();

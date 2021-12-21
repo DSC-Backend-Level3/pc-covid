@@ -48,5 +48,8 @@
         <c:if test="${empty result}">
             <h2>Doctors' information is unavailable!</h2>
         </c:if>
+
+        <a href="addDoctorAccount.jsp">Create New Doctor Account</a>
+        <a href="adminHome.jsp">Home Page</a>
     </body>
 </html>

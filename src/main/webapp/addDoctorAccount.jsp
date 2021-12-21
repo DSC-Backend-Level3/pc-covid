@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Doctor Account Form</h1>
-        <form action="" method="POST">
+        <form action="create" method="POST">
             Doctor ID <input type="text" name="id" value=""/><br/>
             Doctor Password <input type="text" name="password" value=""/><br/>
             <%--    default  --%>
@@ -49,7 +49,7 @@
             </select>
             House Number <input type="text" name="houseNumber" value=""/><br/>
 
-            <input type="submit" value="Add" name="btAction">
+            <input type="submit" value="Add Doctor" name="btAction">
         </form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
                 integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
@@ -60,12 +60,11 @@
             $(document).ready(function () {
                 $.ajax({
                     // check url
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: {operation: 'province'},
                     success: function (data, textStatus, jqXHR) {
-                        let obj = $.parseJSON(data);
-                        $.each(obj, function (key, value) {
+                        $.each(data, function (key, value) {
                             $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
                     },
@@ -88,13 +87,11 @@
                     };
 
                     $.ajax({
-                        url: "LocationController",
+                        url: "loadLocation",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {
-                            console.log(data);
-                            let obj = $.parseJSON(data);
-                            $.each(obj, function (key, value) {
+                            $.each(data, function (key, value) {
                                 $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                             });
                         },
@@ -116,12 +113,11 @@
                     };
 
                     $.ajax({
-                        url: "LocationController",
+                        url: "loadLocation",
                         method: "GET",
                         data: data,
                         success: function (data, textStatus, jqXHR) {
-                            let obj = $.parseJSON(data);
-                            $.each(obj, function (key, value) {
+                            $.each(data, function (key, value) {
                                 $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                             });
                         },

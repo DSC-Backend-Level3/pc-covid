@@ -21,13 +21,13 @@ public class AddVaccinationInfoController extends HttpServlet {
 
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response)
             throws SQLException {
-        response.setContentType("text/html");
         VaccineDao vaccineDao = new VaccineDaoImpl();
 
         //get vaccine list
         List<VaccineDTO> vaccineList = vaccineDao.getAllVaccines();
         request.setAttribute("vaccineList", vaccineList);
 
+        response.setContentType("text/html;charset=UTF-8");
         return true;
     }
 
