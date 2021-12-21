@@ -20,31 +20,31 @@
     <h1>Vaccination Information Form</h1>
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
-        Resident ID <input type="text" name="residentID" value=""/><br/>
-        Vaccine Information ID <input type="text" name="id" value=""/><br/>
+        Resident ID <input type="text" name="residentID" value="" required/><br/>
+        Vaccine Information ID <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine ID
-        <select name="vaccineID">
-            <option></option>
+        <select name="vaccineID" required>
+            <option value="">Select name</option>
             <option>Select Vaccine</option>
                 <c:forEach var="dto" items="${vaccineList}">
                     <option value="${dto.id}">${dto.name}</option>
                 </c:forEach>
         </select>
         Province
-        <select id="province">
+        <select id="province" required>
             <option>Select province</option>
         </select>
         District
-        <select id="district">
+        <select id="district" required>
             <option>Select district</option>
         </select>
         Ward
-        <select id="ward" name="wardID">
-            <option>Select ward</option>
+        <select id="ward" name="wardID" required>
+            <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value=""/><br/>
+        Injection's Date <input type="text" name="date" value="" required/><br/>
         <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 

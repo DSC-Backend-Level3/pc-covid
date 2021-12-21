@@ -27,6 +27,7 @@ public class Attribute {
          * User role attribute
          */
         public final static String ROLE = "role";
+        public static final String USER_NAME = "name" ;
     }
 
     public static class ERROR{
