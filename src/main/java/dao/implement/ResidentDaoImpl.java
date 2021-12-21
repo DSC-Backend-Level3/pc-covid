@@ -285,8 +285,8 @@ public class ResidentDaoImpl implements ResidentDao {
             con = DBHelper.makeConnection();
             if (con != null){
                 String sql = "SELECT id " +
-                            "FROM Resident " +
-                            "WHERE id = ? AND password = ?";
+                        "FROM Resident " +
+                        "WHERE id = ? AND password = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, id);
                 stm.setString(2, password);
