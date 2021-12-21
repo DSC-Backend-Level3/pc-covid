@@ -20,20 +20,22 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static constant.Router.*;
+import static constant.Router.PAGE.*;
 
 @WebServlet(name = "ViewProfileController", value = "/ViewProfileController")
 public class ViewProfileController extends HttpServlet {
 
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control","no-cache, no-store");
         HttpSession session = request.getSession(false);
         String button = request.getParameter("btAction");
         String url = ERROR_PAGE;
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
-                if (id!=null) {
+                if (id != null) {
                     ResidentDaoImpl dao = new ResidentDaoImpl();
                     ResidentDTO dto = dao.getResidentById(id);
 
@@ -52,11 +54,12 @@ public class ViewProfileController extends HttpServlet {
                     request.setAttribute("PROFILE_DISTRICT", district);
                     request.setAttribute("PROFILE_WARD", ward);
                     request.setAttribute("PROVINCE_LIST", listrProvince);
-                    if (button.equals("View Profile")) {
-                        url = VIEW_USER_PROFILE;
-                    } else if (button.equals("Update Profile")) {
+                    if (button.equals("Update Profile")) {
                         url = UPDATE_USER_PROFILE;
+                    } else {
+                        url = VIEW_USER_PROFILE;
                     }
+
                 }
             }
         } catch (SQLException e) {
@@ -64,8 +67,18 @@ public class ViewProfileController extends HttpServlet {
         } catch (NamingException e) {
             e.printStackTrace();
         } finally {
-        RequestDispatcher rd = request.getRequestDispatcher(url);
-        rd.forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
     }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
     }
 }
+

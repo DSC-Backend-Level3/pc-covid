@@ -15,6 +15,9 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static constant.Router.PAGE.DOCTOR_ACCOUNT_PAGE;
+import static constant.Router.PAGE.ERROR_PAGE;
+
 @WebServlet(name = "ViewDoctorAccountsController", value = "/ViewDoctorAccountsController")
 public class ViewDoctorAccountsController extends HttpServlet {
 
@@ -39,9 +42,9 @@ public class ViewDoctorAccountsController extends HttpServlet {
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(Router.DOCTOR_ACCOUNT_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(DOCTOR_ACCOUNT_PAGE);
             dispatcher.forward(request, response);
         }
     }

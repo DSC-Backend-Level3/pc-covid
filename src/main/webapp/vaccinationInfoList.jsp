@@ -22,7 +22,7 @@
         <c:set var="residentList" value="${requestScope.residentList}"/>
         <c:set var="locationList" value="${requestScope.locationList}"/>
         <c:if test="${not empty result}">
-            <table>
+            <table border="1">
                 <thead>
                 <tr>
                     <th>No.</th>

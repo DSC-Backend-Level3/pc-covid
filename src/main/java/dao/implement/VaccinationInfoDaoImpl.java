@@ -92,7 +92,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
     @Override
     public List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
-        List<VaccinationInfoDTO> list = new ArrayList<>();
+        List<VaccinationInfoDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
             if (connection != null) {
@@ -108,15 +108,17 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                     int vaccineID = resultSet.getInt("vaccineID");
                     int wardID = resultSet.getInt("wardID");
                     Timestamp date = resultSet.getTimestamp("date");
+                    if(list == null){
+                        list = new ArrayList<>();
+                    }
                     list.add(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
-                    return list;
                 }
 
             }
         } finally {
             closeConnection();
         }
-        return null;
+        return list;
     }
 
     @Override

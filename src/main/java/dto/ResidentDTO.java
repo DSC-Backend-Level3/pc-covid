@@ -23,7 +23,7 @@ public class ResidentDTO implements Serializable {
     private String gender;
     private Timestamp DOB;
     private String nationality;
-    private int wardID;
+    private Integer wardID;
     private String houseNumber;
     private Integer roleID;
     private String password;
@@ -31,7 +31,7 @@ public class ResidentDTO implements Serializable {
     public ResidentDTO() {
     }
 
-    public ResidentDTO(String id, String firstName, String lastName, String phoneNumber, String email, String healthInsuranceID, String gender, Timestamp DOB, String nationality, int wardID, String houseNumber, Integer roleID, String password) {
+    public ResidentDTO(String id, String firstName, String lastName, String phoneNumber, String email, String healthInsuranceID, String gender, Timestamp DOB, String nationality, Integer wardID, String houseNumber, Integer roleID, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -119,11 +119,11 @@ public class ResidentDTO implements Serializable {
         this.nationality = nationality;
     }
 
-    public int getWardID() {
+    public Integer getWardID() {
         return wardID;
     }
 
-    public void setWardID(int wardID) {
+    public void setWardID(Integer wardID) {
         this.wardID = wardID;
     }
 

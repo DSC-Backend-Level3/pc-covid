@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import static constant.Router.*;
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.UPDATE_PASSWORD_SUCCESS;
 
 @WebServlet(name = "ChangePasswordController", value = "/ChangePasswordController")
 public class ChangePasswordController extends HttpServlet {
@@ -23,11 +25,12 @@ public class ChangePasswordController extends HttpServlet {
             ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        String oldPassword = request.getParameter("txtPassword");
-        String newPassword = request.getParameter("txtNewPassword");
-        String newPasswordConfirm = request.getParameter("txtNewPasswordConfirm");
+        String oldPassword = request.getParameter(Attribute.USER.USER_PASSWORD);
+        String newPassword = request.getParameter(Attribute.USER.NEW_PASSWORD);
+        String newPasswordConfirm = request.getParameter(Attribute.USER.CONFIRM_PASSWORD);
         request.setAttribute("OLD_PASSWORD", oldPassword);
         request.setAttribute("NEW_PASSWORD", newPassword);
+        boolean checkValid = false;
         String url = ERROR_PAGE;
         try {
             if(session != null) {
@@ -40,9 +43,11 @@ public class ChangePasswordController extends HttpServlet {
                 if (check) {
                     if (hashedNewPassword.equalsIgnoreCase(hashedNewPasswordConfirm)) {
                         dao.updateResidentPassword(id, hashedNewPassword);
-                        url = UPDATE_PASSWORD_SUCCESS;
+                        checkValid = true;
                     }
                 }
+                request.setAttribute("CHECK_VALID", checkValid);
+                url = UPDATE_PASSWORD_SUCCESS;
             }
         } catch (SQLException e) {
             e.printStackTrace();

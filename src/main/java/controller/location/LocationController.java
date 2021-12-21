@@ -31,7 +31,6 @@ public class LocationController extends HttpServlet {
         System.out.println("Hello I'm coming");
         //get parameter
         String option = request.getParameter("operation");
-
         //get province list
         if (option.equals("province")) {
             try {

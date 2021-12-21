@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.VACCINATE_LIST_PAGE;
+
 @WebServlet(name = "ViewVaccineController", value = "/ViewVaccineController")
 public class ViewVaccineController extends HttpServlet {
     protected boolean getHandler(HttpServletRequest request, HttpServletResponse response) throws SQLException {
@@ -35,9 +38,9 @@ public class ViewVaccineController extends HttpServlet {
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(Router.VACCINATE_LIST_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATE_LIST_PAGE);
             dispatcher.forward(request, response);
         }
     }

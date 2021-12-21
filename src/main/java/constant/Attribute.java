@@ -20,6 +20,10 @@ public class Attribute {
          */
         public final static String USER_PASSWORD = "password";
         /**
+         * User new password
+         */
+        public final static String NEW_PASSWORD = "newPassword";
+        /**
          * User confirm password
          */
         public final static String CONFIRM_PASSWORD = "confirmPassword";
@@ -28,6 +32,40 @@ public class Attribute {
          */
         public final static String ROLE = "role";
         public static final String USER_NAME = "name" ;
+
+        /**
+         * User first name attribute
+         */
+        public final static String FIRST_NAME = "firstName";
+        /**
+         * User last name attribute
+         */
+        public final static String LAST_NAME = "lastName";
+        /**
+         * User phone number attribute
+         */
+        public final static String PHONE_NUMBER = "phoneNumber";
+        /**
+         * User gender attribute
+         */
+        public final static String GENDER = "gender";
+        /**
+         * User date of birth attribute
+         */
+        public final static String DOB = "DOB";
+        /**
+         * User email attribute
+         */
+        public final static String EMAIL = "email";
+        /**
+         * User health insurance ID attribute
+         */
+        public final static String HEALTH_INSURANCE_ID = "healthInsuranceID";
+        /**
+         * User nationality ID attribute
+         */
+        public final static String NATIONALITY = "nationality";
+
     }
 
     public static class ERROR{

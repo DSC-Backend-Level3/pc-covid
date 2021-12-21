@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.VACCINATION_INFO_LIST_PAGE;
+
 @WebServlet(name = "ViewVaccinationInfoController", value = "/ViewVaccinationInfoController")
 public class ViewVaccinationInfoController extends HttpServlet {
 
@@ -73,10 +76,10 @@ public class ViewVaccinationInfoController extends HttpServlet {
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
             System.out.println("sang trang vaccine");
-            RequestDispatcher dispatcher = request.getRequestDispatcher(Router.VACCINATION_INFO_LIST_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATION_INFO_LIST_PAGE);
             dispatcher.forward(request, response);
         }
     }
