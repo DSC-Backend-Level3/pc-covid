@@ -4,7 +4,8 @@
               driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
               name="DSBlink"
               type="javax.sql.DataSource"
-              url="jdbc:sqlserver://localhost:1433;database=VaccineManagement;"
+              url="jdbc:sqlserver://localhost:1433;database=VaccineManagement;sendStringParametersAsUnicode=true"
               username="sa"
-              password="20122001"/>
+              password="20122001"
+    />
 </Context>

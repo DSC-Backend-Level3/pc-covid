@@ -43,8 +43,8 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.setString(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    String firstName = rs.getString(2);
-                    String lastName = rs.getString(3);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
                     String phoneNumber = rs.getString(4);
                     String email = rs.getString(5);
                     String healthInsuranceID = rs.getString(6);
@@ -84,8 +84,8 @@ public class ResidentDaoImpl implements ResidentDao {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String id = rs.getString(1);
-                    String firstName = rs.getString(2);
-                    String lastName = rs.getString(3);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
                     String phoneNumber = rs.getString(4);
                     String email = rs.getString(5);
                     String healthInsuranceID = rs.getString(6);
@@ -128,8 +128,8 @@ public class ResidentDaoImpl implements ResidentDao {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     String id = rs.getString(1);
-                    String firstName = rs.getString(2);
-                    String lastName = rs.getString(3);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
                     String phoneNumber = rs.getString(4);
                     String email = rs.getString(5);
                     String healthInsuranceID = rs.getString(6);
@@ -166,8 +166,8 @@ public class ResidentDaoImpl implements ResidentDao {
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, residentDTO.getId());
-                stm.setString(2, residentDTO.getFirstName());
-                stm.setString(3, residentDTO.getLastName());
+                stm.setNString(2, residentDTO.getFirstName());
+                stm.setNString(3, residentDTO.getLastName());
                 stm.setString(4, residentDTO.getPhoneNumber());
                 stm.setString(5, residentDTO.getEmail());
                 stm.setString(6, residentDTO.getHealthInsuranceID());
@@ -193,10 +193,13 @@ public class ResidentDaoImpl implements ResidentDao {
     public void updateResidentInformation(ResidentDTO residentDTO)
             throws SQLException, NamingException {
         try {
+            System.out.println("connection");
             //1. Connect DB
             con = DBHelper.makeConnection();
+            System.out.println(con);
             //2. Create SQL Statement
             if (con != null) {
+
                 //3. Create Statement to set SQL
                 String sql = "UPDATE Resident " +
                         "SET firstName = ISNULL(?, firstName) , lastName = ISNULL(?, lastName), phoneNumber = ISNULL(?, phoneNumber), " +
@@ -205,8 +208,8 @@ public class ResidentDaoImpl implements ResidentDao {
                         "wardID = ISNULL(?, wardID), houseNumber = ISNULL(?, houseNumber), roleID = ISNULL(?, roleID), password = ISNULL(?, password) " +
                         "WHERE id = ?";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, residentDTO.getFirstName());
-                stm.setString(2, residentDTO.getLastName());
+                stm.setNString(1, residentDTO.getFirstName());
+                stm.setNString(2, residentDTO.getLastName());
                 stm.setString(3, residentDTO.getPhoneNumber());
                 stm.setString(4, residentDTO.getEmail());
                 stm.setString(5, residentDTO.getHealthInsuranceID());

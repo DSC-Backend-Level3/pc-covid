@@ -9,9 +9,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Page</title>
 </head>
 <body>
+
 <button><a href="homepage">Home Page</a></button>
 <h1>Update Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
@@ -19,7 +24,8 @@
 <c:set var="district" value="${requestScope.PROFILE_DISTRICT}"/>
 <c:set var="ward" value="${requestScope.PROFILE_WARD}"/>
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
-<c:set var="listDictrict" value="${requestScope.LIST_DISTRICT_BY_PROVINCE}"/>
+<c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
+<c:set var="listWard" value="${requestScope.WARD_LIST}"/>
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
@@ -51,7 +57,7 @@
         <input type="text" name="txtEmail" value="${result.email}"><br>
 
         Province/City: <br>
-        <select name="cboProvince">
+        <select onchange="selectProvince()" name="cboProvince" id="province">
             <option value="${province.id}">${province.name}</option>
             <c:forEach items="${provinceList}" var="provinceVar">
                 <c:if test="${provinceVar.id != province.id}">
@@ -59,22 +65,52 @@
                 </c:if>
             </c:forEach>
         </select><br>
-
         District: <br>
-        <select name="cboDistrict">
-            <option value="${district.id}">${district.name}</option>
+        <select onchange="selectDistrict()" name="cboDistrict" id="district">
+            <c:choose>
+                <c:when test="${not empty district}">
+                    <option value="${district.id}">${district.name}</option>
+                </c:when>
+                <c:otherwise>
+                    <option>Select district</option>
+                </c:otherwise>
+            </c:choose>
             <c:forEach items="${listDictrict}" var="districtVar">
                 <option value="${districtVar.id}">${districtVar.name}</option>
             </c:forEach>
         </select><br>
         Ward: <br>
         <select name="cboWard">
-            <option value="${ward.id}">${ward.name}</option>
+            <c:choose>
+                <c:when test="${not empty ward}">
+                    <option value="${ward.id}">${ward.name}</option>
+                </c:when>
+                <c:otherwise>
+                    <option>Select ward</option>
+                </c:otherwise>
+            </c:choose>
+            <c:forEach items="${listWard}" var="wardVar">
+                <option value="${wardVar.id}">${wardVar.name}</option>
+            </c:forEach>
         </select> <br>
         House number: <br>
         <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
-    <input type="submit" value="Save Changes" name="btUpdate">
+    <input type="submit" value="Save Changes" name="btAction">
 </form>
+<script>
+    function  selectProvince(){
+        var e = document.getElementById("province");
+        var value = e.options[e.selectedIndex].value;
+        document.location.href = "update-info?cboProvince=" + value;
+    }
+    function  selectDistrict(){
+        var e1 = document.getElementById("province");
+        var value1 = e1.options[e1.selectedIndex].value;
+        var e = document.getElementById("district");
+        var value = e.options[e.selectedIndex].value;
+        document.location.href = "update-info?cboDistrict=" + value + "&cboProvince=" + value1;
+    }
+</script>
 </body>
 </html>

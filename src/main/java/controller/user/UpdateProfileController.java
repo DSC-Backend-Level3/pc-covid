@@ -2,35 +2,88 @@ package controller.user;
 
 import constant.Attribute;
 import dao.implement.DistrictDaoImpl;
+import dao.implement.ProvinceDaoImpl;
 import dao.implement.ResidentDaoImpl;
 import dao.implement.WardDaoImpl;
 import dto.DistrictDTO;
+import dto.ProvinceDTO;
 import dto.ResidentDTO;
 import dto.WardDTO;
-import utils.GetParam;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import static constant.Router.*;
 import static constant.Router.PAGE.ERROR_PAGE;
+import static constant.Router.PAGE.UPDATE_USER_PROFILE;
 import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
 
 @WebServlet(name = "UpdateProfileController", value = "/UpdateProfileController")
 public class UpdateProfileController extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        String province = request.getParameter("cboProvince");
+        String district = request.getParameter("cboDistrict");
+        String url = ERROR_PAGE;
+        try {
+            if (session != null) {
+                String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+                if (province != null) {
+                    //get district list by provinceID
+                    int provinceID = Integer.parseInt(province);
+                    DistrictDaoImpl districtDao = new DistrictDaoImpl();
+                    List<DistrictDTO> list = districtDao.getDistrictByProvinceID(provinceID);
+
+                    //get resident by ID
+                    ResidentDaoImpl dao = new ResidentDaoImpl();
+                    ResidentDTO dto = dao.getResidentById(id);
+
+
+                    ProvinceDaoImpl provinceDao = new ProvinceDaoImpl();
+                    ProvinceDTO province1 = provinceDao.getProvinceByID(provinceID);
+                    List<ProvinceDTO> listrProvince = provinceDao.getAllProvinces();
+
+                    request.setAttribute("PROFILE_PAGE", dto);
+                    request.setAttribute("PROFILE_PROVINCE", province1);
+                    request.setAttribute("PROVINCE_LIST", listrProvince);
+                    request.setAttribute("DISTRICT_LIST", list);
+                    if(district != null){
+                        //get district
+                        int districtID = Integer.parseInt(district);
+                        DistrictDTO districtDTO = districtDao.getDistrictByID(districtID);
+                        request.setAttribute("PROFILE_DISTRICT", districtDTO);
+
+                        //get ward list by districtID
+                        WardDaoImpl wardDao = new WardDaoImpl();
+                        List<WardDTO> listWard = wardDao.getWardByDistrictID(districtID);
+                        request.setAttribute("WARD_LIST", listWard);
+
+                    }//If select district
+
+                    url = UPDATE_USER_PROFILE;
+                }//If select province
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-
+        request.setCharacterEncoding("UTF-8");
         String firstName = request.getParameter("txtFirstName");
         String lastName = request.getParameter("txtLastName");
         String phoneNumber = request.getParameter("txtPhoneNumber");
@@ -41,7 +94,7 @@ public class UpdateProfileController extends HttpServlet {
         String nationality = request.getParameter("txtNationality");
         String wardRequest = request.getParameter("cboWard");
         String houseNumber = request.getParameter("txtHouseNumber");
-        String button = request.getParameter("btUpdate");
+        System.out.println(firstName);
         String genderDB = null;
         if (gender.equals("Female")) {
             genderDB = "F";
@@ -54,21 +107,21 @@ public class UpdateProfileController extends HttpServlet {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (id != null) {
+                    ResidentDaoImpl residentDao = new ResidentDaoImpl();
+                    ResidentDTO resident = residentDao.getResidentById(id);
+                    int roleID = resident.getRoleID();
                     if (wardRequest != null) {
                         Integer wardID = Integer.parseInt(wardRequest);
                         dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
-                                DOB, nationality, wardID, houseNumber, null, null);
-                    }else{
-                        dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
-                                DOB, nationality, null, houseNumber, null, null);
-                    }
+                                DOB, nationality, wardID, houseNumber, roleID, null);
+
+
                         ResidentDaoImpl dao = new ResidentDaoImpl();
+
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
-                        if(button.equalsIgnoreCase("Save changes")) {
-                            url = VIEW_PROFILE_CONTROLLER;
-                        }
-
+                        url = VIEW_PROFILE_CONTROLLER;
+                    }
                 }
             }
 

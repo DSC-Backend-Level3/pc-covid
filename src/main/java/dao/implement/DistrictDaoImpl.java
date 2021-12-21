@@ -53,10 +53,9 @@ public class DistrictDaoImpl implements DistrictDao {
 
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
-                    String vaccineName = resultSet.getString("vaccineName");
                     String name = resultSet.getString("name");
 
-                    DistrictDTO dto = new DistrictDTO(id, vaccineName, provinceID);
+                    DistrictDTO dto = new DistrictDTO(id, name, provinceID);
 
                     if (list == null) {
                         list = new ArrayList<>();
