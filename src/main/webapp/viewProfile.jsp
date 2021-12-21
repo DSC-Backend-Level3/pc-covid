@@ -1,4 +1,8 @@
-<%--
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="dto.ResidentDTO" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/16/2021
@@ -32,7 +36,15 @@
         <c:otherwise>Male</c:otherwise>
     </c:choose> <br>
         Date of birth:<br>
-            ${result.DOB}<br>
+        <%
+            ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
+            Timestamp date = dto.getDOB();
+            LocalDateTime localDateTime = date.toLocalDateTime();
+            String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        %>
+        <%= formattedDate %>
+        <br>
         Identity card:<br>
             ${result.id}<br>
         Phone number :<br>

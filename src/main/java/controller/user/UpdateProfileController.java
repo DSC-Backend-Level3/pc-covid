@@ -17,12 +17,16 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static constant.Router.*;
 import static constant.Router.PAGE.ERROR_PAGE;
 import static constant.Router.PAGE.UPDATE_USER_PROFILE;
 import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 @WebServlet(name = "UpdateProfileController", value = "/UpdateProfileController")
 public class UpdateProfileController extends HttpServlet {
@@ -90,7 +94,7 @@ public class UpdateProfileController extends HttpServlet {
         String email = request.getParameter(Attribute.USER.EMAIL);
         String healthInsuranceID = request.getParameter(Attribute.USER.HEALTH_INSURANCE_ID);
         String gender = request.getParameter(Attribute.USER.GENDER);
-        Timestamp DOB = Timestamp.valueOf(request.getParameter(Attribute.USER.DOB));
+        String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
         String wardRequest = request.getParameter("cboWard");
         String houseNumber = request.getParameter("txtHouseNumber");
@@ -106,22 +110,30 @@ public class UpdateProfileController extends HttpServlet {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (id != null) {
+
+                    LocalDateTime parsedDate = LocalDate.parse(DOB, ISO_LOCAL_DATE).atStartOfDay();
+                    Timestamp date = Timestamp.valueOf(parsedDate);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
                     ResidentDTO resident = residentDao.getResidentById(id);
                     int roleID = resident.getRoleID();
                     if (wardRequest != null) {
                         Integer wardID = Integer.parseInt(wardRequest);
                         dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
-                                DOB, nationality, wardID, houseNumber, roleID, null);
+                                date, nationality, wardID, houseNumber, roleID, null);
                         ResidentDaoImpl dao = new ResidentDaoImpl();
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
                         url = VIEW_PROFILE_CONTROLLER;
                     }
+
                 }
             }
 
-        } catch (SQLException e) {
+        }catch (DateTimeParseException e){
+                request.setAttribute("ERROR", "Invalid date.");
+                url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
+
+        }catch (SQLException e) {
             e.printStackTrace();
         } catch (NamingException e) {
             e.printStackTrace();

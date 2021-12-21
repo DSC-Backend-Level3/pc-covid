@@ -1,4 +1,8 @@
-<%--
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="dto.ResidentDTO" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/17/2021
@@ -26,6 +30,7 @@
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
 <c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
 <c:set var="listWard" value="${requestScope.WARD_LIST}"/>
+<c:set var="error" value="${requestScope.ERROR}"/>
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
@@ -46,7 +51,19 @@
         </c:choose>
     </select><br>
         Date of birth: <br>
-        <input type="text" name="DOB" value="${result.DOB}"><br>
+        <%
+            ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
+            Timestamp date = dto.getDOB();
+            LocalDateTime localDateTime = date.toLocalDateTime();
+            String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        %>
+
+        <input type="text" name="DOB" value="<%= formattedDate %>" placeholder="yyyy-MM-dd"
+               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"><br>
+        <c:if test="${not empty error}">
+            <p style="color: red">${error}</p>
+        </c:if>
         Identity card:<br>
         <input type="text" name="txtID" value="${result.id}"><br>
         Phone number: <br>
