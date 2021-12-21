@@ -60,12 +60,12 @@ public class AddVaccinationInfoController extends HttpServlet {
         try {
             String link = request.getParameter("btAction");
             if (getHandler(request, response) && link.equals("Add Vaccination")) {
-                request.getRequestDispatcher(Router.VACCINATION_INFO_FORM).forward(request, response);
+                request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
             }
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }
     }
 
@@ -75,13 +75,11 @@ public class AddVaccinationInfoController extends HttpServlet {
             if (postHandler(request, response)) {
                 request.getRequestDispatcher(Router.DOCTOR.VIEW_VACCINATION_CONTROLLER).forward(request, response);
             }
-//            else {
-//                request.getRequestDispatcher(Routers.EVENT_MANAGEMENT_CONTROLLER).forward(request, response);
-//            }
+
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
-            request.getRequestDispatcher(Router.ERROR_PAGE).forward(request, response);
+            request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }
     }
 }

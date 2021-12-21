@@ -78,7 +78,6 @@ public class ViewVaccinationInfoController extends HttpServlet {
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
-            System.out.println("sang trang vaccine");
             RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATION_INFO_LIST_PAGE);
             dispatcher.forward(request, response);
         }
