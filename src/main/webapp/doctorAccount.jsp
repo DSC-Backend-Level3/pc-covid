@@ -35,7 +35,7 @@
                     <tr>
                         <td>${obj.count}</td>
                         <td>${dto.id}</td>
-                        <td>${dto.firstName} + ${dto.lastName}</td>
+                        <td>${dto.firstName} ${dto.lastName}</td>
                         <td>${dto.gender}</td>
                         <td>${dto.email}</td>
                         <td>${dto.phoneNumber}</td>

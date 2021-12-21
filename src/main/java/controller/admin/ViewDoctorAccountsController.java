@@ -24,7 +24,7 @@ public class ViewDoctorAccountsController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         ResidentDao residentDao = new ResidentDaoImpl();
-        List<ResidentDTO> doctorAccounts = null;
+        List<ResidentDTO> doctorAccounts;
 
         doctorAccounts = residentDao.getResidentsByRoleId(Role.DOCTOR);
         request.setAttribute("doctorList", doctorAccounts);

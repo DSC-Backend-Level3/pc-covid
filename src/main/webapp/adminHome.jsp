@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 12/19/2021
-  Time: 8:35 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
@@ -14,9 +7,17 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vaccine</title>
+    <title>ADMIN</title>
 </head>
 <body>
-<h1>Error</h1>
+<h1>ADMIN HOME</h1>
+    <c:url value="viewVaccine" var="View_Vaccine">
+        <c:param name="btAction" value="View Vaccine"/>
+    </c:url>
+    <a href="${View_Vaccine}">Vaccine Information</a>
+    <c:url value="viewDoctor" var="View_Doctor">
+        <c:param name="btAction" value="View Doctor"/>
+    </c:url>
+    <a href="${View_Doctor}">Doctor Information</a>
 </body>
 </html>

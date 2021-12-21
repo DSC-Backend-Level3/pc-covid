@@ -17,6 +17,9 @@ public class Router {
     public static class ADMIN{
         public final static String ADD_VACCINE_CONTROLLER = "AddVaccineController";
         public final static String CREATE_DOCTOR_ACCOUNT_CONTROLLER = "CreateDoctorAccountController";
+        public static final String ADMIN_HOME = "adminHome.jsp";
+        public static final String VIEW_DOCTOR_ACCOUNT_CONTROLLER = "ViewDoctorAccountsController";
+        public static final String VIEW_VACCINE_CONTROLLER = "ViewVaccineController";
     }
 
     //common path
@@ -30,6 +33,7 @@ public class Router {
     public static class DOCTOR{
         public static final String VIEW_VACCINATION_CONTROLLER = "ViewVaccinationInfoController";
         public final static String ADD_VACCINATION_INFO_CONTROLLER = "AddVaccinationInfoController";
+        public static final String LOCATION_CONTROLLER = "LocationController";
     }
 
     //user path

@@ -70,5 +70,9 @@
         <c:if test="${empty result}">
             <h2>Doctors' information is unavailable!</h2>
         </c:if>
+        <c:url value="add" var="Add_Vaccination">
+            <c:param name="btAction" value="Add Vaccination"/>
+        </c:url>
+        <a href="${Add_Vaccination}">Adding New Vaccination</a>
     </body>
 </html>

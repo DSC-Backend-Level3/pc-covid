@@ -35,6 +35,8 @@ public class AddVaccinationInfoController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
+
+
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
 
         String residentID;
@@ -56,12 +58,10 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if (getHandler(request, response)) {
-                request.getRequestDispatcher(Router.DOCTOR_ACCOUNT_FORM).forward(request, response);
+            String link = request.getParameter("btAction");
+            if (getHandler(request, response) && link.equals("Add Vaccination")) {
+                request.getRequestDispatcher(Router.VACCINATION_INFO_FORM).forward(request, response);
             }
-//            else {
-//                request.getRequestDispatcher(Routers.EVENT_MANAGEMENT_CONTROLLER).forward(request, response);
-//            }
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());

@@ -19,17 +19,17 @@
 <body>
     <h1>Vaccination Information Form</h1>
     <form action="DoctorDispatcher" method="POST">
+        <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" value=""/><br/>
         Vaccine Information ID <input type="text" name="id" value=""/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine ID
         <select name="vaccineID">
-        <option></option>
-        <c:set var="vaccineList" value="${requestScope.vaccineList}">
-            <c:forEach var="dto" items="${vaccineList}">
-                <option value="${dto.id}">${dto.name}</option>
-            </c:forEach>
-        </c:set>
+            <option></option>
+            <option>Select Vaccine</option>
+                <c:forEach var="dto" items="${vaccineList}">
+                    <option value="${dto.id}">${dto.name}</option>
+                </c:forEach>
         </select>
         Province
         <select id="province">
@@ -54,20 +54,23 @@
             referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             $.ajax({
                 // check url
-                url: "LocationController",
+                url: "loadLocation",
                 method: "GET",
                 data: {operation: 'province'},
                 success: function (data, textStatus, jqXHR) {
+                    console.log(data);
                     let obj = $.parseJSON(data);
                     $.each(obj, function (key, value) {
                         $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#province').append('<option>province Unavailable</option>');
+
+                    $('#province').append('<option>Province Unavailable</option>');
                 },
                 cache: false
             });
@@ -86,15 +89,16 @@
                 };
 
                 $.ajax({
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: data,
                     success: function (data, textStatus, jqXHR) {
-                        console.log(data);
+//                        console.log(data);
                         let obj = $.parseJSON(data);
                         $.each(obj, function (key, value) {
                             $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
+//                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('#district').append('<option>District Unavailable</option>');
@@ -113,15 +117,19 @@
                     id: did
                 };
 
+                let $;
                 $.ajax({
-                    url: "LocationController",
+                    url: "loadLocation",
                     method: "GET",
                     data: data,
                     success: function (data, textStatus, jqXHR) {
+                       console.log(data);
+                        let $;
                         let obj = $.parseJSON(data);
                         $.each(obj, function (key, value) {
                             $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                         });
+//                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('#ward').append('<option>Ward Unavailable</option>');

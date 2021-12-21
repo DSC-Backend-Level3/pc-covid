@@ -47,6 +47,7 @@ public class ViewVaccinationInfoController extends HttpServlet {
             //get location list
             int wardID = vaccinationInfo.getWardID();
             WardDTO ward = wardDao.getWardByID(wardID);
+            System.out.println(ward.getName());
             String wardName = ward.getName();
             int districtID = ward.getDistrictID();
             DistrictDTO district = districtDao.getDistrictByID(districtID);
