@@ -28,7 +28,6 @@ public class LocationController extends HttpServlet {
         WardDao wardDao = new WardDaoImpl();
         response.setContentType("application/json;charset=utf-8");
 
-        System.out.println("Hello I'm coming");
         //get parameter
         String option = request.getParameter("operation");
         //get province list
@@ -39,17 +38,13 @@ public class LocationController extends HttpServlet {
                     request.setAttribute("provinceError", "Province list is empty");
                     return;
                 }
-                for (ProvinceDTO province: list) {
-                    System.out.println(province.getName());
-                }
+
                 Gson json = new Gson();
                 String provinceList = json.toJson(list);
 
                 response.getWriter().write(provinceList);
-                System.out.println("I get province");
 
             } catch (SQLException | NamingException | IOException ex) {
-                System.out.println("I cannot get province");
                 ex.printStackTrace();
             }
         }

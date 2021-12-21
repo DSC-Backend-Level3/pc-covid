@@ -50,7 +50,6 @@ public class ViewVaccinationInfoController extends HttpServlet {
             //get location list
             int wardID = vaccinationInfo.getWardID();
             WardDTO ward = wardDao.getWardByID(wardID);
-            System.out.println(ward.getName());
             String wardName = ward.getName();
             int districtID = ward.getDistrictID();
             DistrictDTO district = districtDao.getDistrictByID(districtID);
@@ -78,7 +77,6 @@ public class ViewVaccinationInfoController extends HttpServlet {
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
-            System.out.println("sang trang vaccine");
             RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATION_INFO_LIST_PAGE);
             dispatcher.forward(request, response);
         }

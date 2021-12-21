@@ -21,11 +21,10 @@
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" value="" required/><br/>
-        Vaccine Information ID <input type="text" name="id" value="" required/><br/>
+        Vaccination ID <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine ID
         <select name="vaccineID" required>
-            <option value="">Select name</option>
             <option>Select Vaccine</option>
                 <c:forEach var="dto" items="${vaccineList}">
                     <option value="${dto.id}">${dto.name}</option>
