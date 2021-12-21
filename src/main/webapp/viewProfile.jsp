@@ -41,6 +41,8 @@
             ${result.healthInsuranceID}<br>
         Email:<br>
             ${result.email} <br>
+        Nationality: <br>
+            ${result.nationality}<br>
         Province/City: <br>
             ${province.name} <br>
         District: <br>

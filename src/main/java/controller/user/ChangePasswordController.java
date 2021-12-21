@@ -25,9 +25,9 @@ public class ChangePasswordController extends HttpServlet {
             ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        String oldPassword = request.getParameter("txtPassword");
-        String newPassword = request.getParameter("txtNewPassword");
-        String newPasswordConfirm = request.getParameter("txtNewPasswordConfirm");
+        String oldPassword = request.getParameter(Attribute.USER.USER_PASSWORD);
+        String newPassword = request.getParameter(Attribute.USER.NEW_PASSWORD);
+        String newPasswordConfirm = request.getParameter(Attribute.USER.CONFIRM_PASSWORD);
         request.setAttribute("OLD_PASSWORD", oldPassword);
         request.setAttribute("NEW_PASSWORD", newPassword);
         boolean checkValid = false;

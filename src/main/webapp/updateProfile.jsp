@@ -29,11 +29,11 @@
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
-        <input type="text" name="txtFirstName" value="${result.firstName}"> <br>
+        <input type="text" name="firstName" value="${result.firstName}"> <br>
         Last name :<br>
-        <input type="text" name="txtLastName" value="${result.lastName}"> <br>
+        <input type="text" name="lastName" value="${result.lastName}"> <br>
         Gender :<br>
-        <select name="cboGender">
+        <select name="gender">
         <c:choose>
             <c:when test="${result.gender == 'F'}">
                 <option>Female</option>
@@ -46,16 +46,17 @@
         </c:choose>
     </select><br>
         Date of birth: <br>
-        <input type="text" name="txtDOB" value="${result.DOB}"><br>
+        <input type="text" name="DOB" value="${result.DOB}"><br>
         Identity card:<br>
         <input type="text" name="txtID" value="${result.id}"><br>
         Phone number: <br>
-        <input type="text" name="txtPhoneNumber" value="${result.phoneNumber}"><br>
+        <input type="text" name="phoneNumber" value="${result.phoneNumber}"><br>
         Health insurance card number:<br>
-        <input type="text" name="txtHealthInsuranceID" value="${result.healthInsuranceID}"><br>
+        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}"><br>
         Email:<br>
-        <input type="text" name="txtEmail" value="${result.email}"><br>
-
+        <input type="text" name="email" value="${result.email}"><br>
+        Nationality: <br>
+        <input type="text" name="nationality" value="${result.nationality}"><br>
         Province/City: <br>
         <select onchange="selectProvince()" name="cboProvince" id="province">
             <option value="${province.id}">${province.name}</option>

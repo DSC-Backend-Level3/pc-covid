@@ -84,17 +84,16 @@ public class UpdateProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         request.setCharacterEncoding("UTF-8");
-        String firstName = request.getParameter("txtFirstName");
-        String lastName = request.getParameter("txtLastName");
-        String phoneNumber = request.getParameter("txtPhoneNumber");
-        String email = request.getParameter("txtEmail");
-        String healthInsuranceID = request.getParameter("txtHealthInsuranceID");
-        String gender = request.getParameter("cboGender");
-        Timestamp DOB = Timestamp.valueOf(request.getParameter("txtDOB"));
-        String nationality = request.getParameter("txtNationality");
+        String firstName = request.getParameter(Attribute.USER.FIRST_NAME);
+        String lastName = request.getParameter(Attribute.USER.LAST_NAME);
+        String phoneNumber = request.getParameter(Attribute.USER.PHONE_NUMBER);
+        String email = request.getParameter(Attribute.USER.EMAIL);
+        String healthInsuranceID = request.getParameter(Attribute.USER.HEALTH_INSURANCE_ID);
+        String gender = request.getParameter(Attribute.USER.GENDER);
+        Timestamp DOB = Timestamp.valueOf(request.getParameter(Attribute.USER.DOB));
+        String nationality = request.getParameter(Attribute.USER.NATIONALITY);
         String wardRequest = request.getParameter("cboWard");
         String houseNumber = request.getParameter("txtHouseNumber");
-        System.out.println(firstName);
         String genderDB = null;
         if (gender.equals("Female")) {
             genderDB = "F";
@@ -114,10 +113,7 @@ public class UpdateProfileController extends HttpServlet {
                         Integer wardID = Integer.parseInt(wardRequest);
                         dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
                                 DOB, nationality, wardID, houseNumber, roleID, null);
-
-
                         ResidentDaoImpl dao = new ResidentDaoImpl();
-
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
                         url = VIEW_PROFILE_CONTROLLER;

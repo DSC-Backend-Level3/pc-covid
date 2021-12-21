@@ -22,9 +22,9 @@
 <button><a href="homepage">Home Page</a></button>
 <h1>Update Password</h1>
 <form action="update-password" method="post">
-    Current Password: <input type="password" name="txtPassword" value="${oldpassword}"> <br>
-    New Password: <input type="password" name="txtNewPassword" value="${newpassword}"> <br>
-    Re-type New Password: <input type="password" name="txtNewPasswordConfirm" value="${newpassword}"> <br>
+    Current Password: <input type="password" name="password" value="${oldpassword}"> <br>
+    New Password: <input type="password" name="newPassword" value="${newpassword}"> <br>
+    Re-type New Password: <input type="password" name="confirmPassword" value="${newpassword}"> <br>
     <input type="submit" value="Save Changes" name="btAction" />
     <c:choose>
         <c:when test="${checkValid == false}"><h2 style="color: red">Update failed.</h2></c:when>
