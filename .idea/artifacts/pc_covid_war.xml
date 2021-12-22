@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" external-system-id="Maven" name="pc-covid:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>pc-covid</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="pc-covid.war">
+      <element id="artifact" artifact-name="pc-covid:war exploded" />
+    </root>
+  </artifact>
+</component>
