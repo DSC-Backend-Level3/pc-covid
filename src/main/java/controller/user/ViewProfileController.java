@@ -29,6 +29,7 @@ public class ViewProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control","no-cache, no-store");
+        String error = (String) request.getAttribute("ERROR");
         HttpSession session = request.getSession(false);
         String button = request.getParameter("btAction");
         String url = ERROR_PAGE;

@@ -69,6 +69,7 @@ public class Router {
         public  final static String VACCINATION_INFO_LIST_PAGE = "vaccinationInfoList.jsp";
         public static final String DOCTOR_ACCOUNT_FORM = "addDoctorAccount.jsp";
         public  final static String DOCTOR_ACCOUNT_PAGE = "doctorAccount.jsp";
+        public static final String VACCINATION_INFO_INVALID_FORM = "addVaccinationInfoInvalid.jsp";
     }
 
 

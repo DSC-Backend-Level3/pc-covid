@@ -30,18 +30,21 @@
 <c:if test="${not empty result}">
     <p>
         Full name: <br>
-        ${result.firstName} ${result.lastName} <br>
+            ${result.firstName} ${result.lastName} <br>
         Gender :<br>
         <c:choose>
-        <c:when test="${result.gender == 'F'}">Female</c:when>
-        <c:otherwise>Male</c:otherwise>
-    </c:choose> <br>
+            <c:when test="${result.gender == 'F'}">Female</c:when>
+            <c:otherwise>Male</c:otherwise>
+        </c:choose> <br>
         Date of birth:<br>
         <%
             ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
             Timestamp date = dto.getDOB();
-            LocalDateTime localDateTime = date.toLocalDateTime();
-            String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            String formattedDate = "";
+            if (date != null) {
+                LocalDateTime localDateTime = date.toLocalDateTime();
+                formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            }
         %>
         <%= formattedDate %>
         <br>

@@ -31,7 +31,6 @@
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
 <c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
 <c:set var="listWard" value="${requestScope.WARD_LIST}"/>
-<c:set var="error" value="${requestScope.ERROR}"/>
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
@@ -55,15 +54,15 @@
         <%
             ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
             Timestamp date = dto.getDOB();
-            LocalDateTime localDateTime = date.toLocalDateTime();
-            String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            String formattedDate = "";
+            if (date != null ) {
+                LocalDateTime localDateTime = date.toLocalDateTime();
+                formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            }
 
         %>
 
-        <input type="date" name="DOB" value="<%= formattedDate %>"><br>
-        <c:if test="${not empty error}">
-            <p style="color: red">${error}</p>
-        </c:if>
+        <input type="date" name="DOB" value="<%= formattedDate %>" required><br>
         Identity card:<br>
         <input type="text" name="txtID" value="${result.id}" disabled><br>
         Phone number: <br>
@@ -114,7 +113,7 @@
         House number: <br>
         <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
-    <input type="submit" value="Save Changes" name="btAction">
+    <input type="submit" value="SaveChanges" name="btAction">
 </form>
 
 <script>

@@ -95,7 +95,6 @@ public class UpdateProfileController extends HttpServlet {
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
         String wardRequest = request.getParameter("cboWard");
-
         String houseNumber = request.getParameter("txtHouseNumber");
         String genderDB = null;
         if (gender.equals("Female")) {
@@ -108,6 +107,7 @@ public class UpdateProfileController extends HttpServlet {
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+
                 if (id != null) {
                     Timestamp date = Helper.convertDate(DOB);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
@@ -138,7 +138,6 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-
             response.sendRedirect(url);
         }
     }
