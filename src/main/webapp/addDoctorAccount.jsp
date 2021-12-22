@@ -29,7 +29,6 @@
             Date of birth <input type="date" name="DOB" value="${param.DOB}" required/><br/>
             Nationality <input type="text" name="nationality" value="${param.nationality}" required/><br/>
             Gmail <input type="email" name="email" value="${param.email}" required/><br/>
-            <%--    using drop-down list--%>
             Gender
             <select name="gender" id="" required>
                 <option value="">Select Gender</option>
