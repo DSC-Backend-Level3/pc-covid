@@ -19,12 +19,11 @@
     <body>
         <h1>Doctor Account Form</h1>
         <c:set var="error" value="${requestScope.ERROR}"/>
-        <c:set var="firstName" value="${requestScope.FIRSTNAME}"/>
         <form action="create" method="POST">
             Doctor ID <input type="text" name="id" value="" required/><br/>
             Doctor Password <input type="password" name="password" value="" required/><br/>
             <%--    default  --%>
-            First Name <input type="text" name="firstName" value="${firstName}" required/><br/>
+            First Name <input type="text" name="firstName" value="" required/><br/>
             Last Name <input type="text" name="lastName" value="" required/><br/>
             Phone Number <input type="text" name="phoneNumber" value="" required/><br/>
             Health Insurance ID <input type="text" name="healthInsuranceID" value="" required/><br/>

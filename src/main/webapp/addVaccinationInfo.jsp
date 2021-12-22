@@ -18,6 +18,7 @@
 </head>
 <body>
     <h1>Vaccination Information Form</h1>
+    <c:set var="error" value="${requestScope.ERROR}"/>
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" value="" required/><br/>

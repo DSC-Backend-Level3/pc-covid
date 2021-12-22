@@ -25,6 +25,11 @@
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         <c:set var="residentList" value="${requestScope.residentList}"/>
         <c:set var="locationList" value="${requestScope.locationList}"/>
+        <c:set var="userName" value="${sessionScope.name}"/>
+        <div>
+            <h1>HOME PAGE</h1>
+            <h2>Welcome ${userName} </h2>
+        </div>
         <c:if test="${not empty result}">
             <table border="1">
                 <thead>
@@ -77,6 +82,6 @@
         <c:url value="add" var="Add_Vaccination">
             <c:param name="btAction" value="Add Vaccination"/>
         </c:url>
-        <a href="${Add_Vaccination}">Adding New Vaccination</a>
+        <button><a href="${Add_Vaccination}">Adding New Vaccination</a></button>
     </body>
 </html>

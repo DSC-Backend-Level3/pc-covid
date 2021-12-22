@@ -56,6 +56,7 @@ public class CreateDoctorAccountController extends HttpServlet {
 
         Timestamp date = Helper.convertDate(DOB);
         ResidentDTO residentDTO = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, date, nationality, wardID, houseNumber, 3, password);
+
         return residentDao.addNewResident(residentDTO);
     }
     @Override

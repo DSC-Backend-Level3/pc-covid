@@ -75,6 +75,6 @@ public class LoginController extends HttpServlet {
         //set user attribute to session
         session.setAttribute(Attribute.USER.USER_ID, residentDTO.getId());
         session.setAttribute(Attribute.USER.ROLE, residentDTO.getRoleID());
-        session.setAttribute(Attribute.USER.USER_NAME, residentDTO.getFirstName() + residentDTO.getLastName());
+        session.setAttribute(Attribute.USER.USER_NAME, residentDTO.getFirstName() +" " + residentDTO.getLastName());
     }
 }
