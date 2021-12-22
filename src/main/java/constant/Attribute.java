@@ -20,6 +20,14 @@ public class Attribute {
          */
         public final static String USER_PASSWORD = "password";
         /**
+         *
+         */
+        public final static String FIRST_NAME = "firstName";
+        /**
+         *
+         */
+        public final static String LAST_NAME = "lastName";
+        /**
          * User confirm password
          */
         public final static String CONFIRM_PASSWORD = "confirmPassword";

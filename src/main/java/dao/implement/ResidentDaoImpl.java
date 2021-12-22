@@ -119,7 +119,7 @@ public class ResidentDaoImpl implements ResidentDao {
             con = DBHelper.makeConnection();
             //2. Create SQL Statement
             if (con != null) {
-                //3. Create Statement to set SQL
+                //3. Create Statement to s2et SQL
                 String sql = "INSERT INTO Resident(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB, " +
                         "nationality, wardID, houseNumber, roleID, password) " +
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

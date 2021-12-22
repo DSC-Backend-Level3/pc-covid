@@ -48,12 +48,13 @@ public class LoginController extends HttpServlet {
         //get parameter
         String idNumber = request.getParameter(Attribute.USER.USER_ID);
         String password = request.getParameter(Attribute.USER.USER_PASSWORD);
-        String hashedPassword = Helper.hashString(password);
+
         //if parameter is missing
         if (idNumber == null || password == null) {
             request.setAttribute(Attribute.ERROR.MISSING_PARAMETER, "ID number or password can not be empty");
             throw new IllegalArgumentException();
         }
+
         //get user
         ResidentDTO residentDTO = residentDao.getResidentById(idNumber);
         //check if user is exist
@@ -61,9 +62,8 @@ public class LoginController extends HttpServlet {
             request.setAttribute(Attribute.ERROR.OBJECT_NOT_FOUND, Attribute.ERROR_MESSAGE.OBJECT_NOT_FOUND("User"));
             throw new IllegalArgumentException();
         }
-        //hashing password
-        //password = hashingMethod(password);
-        //comparing password
+        String hashedPassword = Helper.hashString(password);
+
         if (!hashedPassword.equalsIgnoreCase(residentDTO.getPassword())) {
             request.setAttribute("wrongPasswordError", "Wrong password");
             throw new IllegalArgumentException();
