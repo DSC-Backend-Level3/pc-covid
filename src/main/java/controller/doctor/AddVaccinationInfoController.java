@@ -6,6 +6,7 @@ import dao.*;
 import dao.implement.*;
 import dto.*;
 import utils.Helper;
+import utils.Validator;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
@@ -16,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static constant.Router.PAGE.VACCINATION_INFO_FORM;
@@ -37,11 +39,13 @@ public class AddVaccinationInfoController extends HttpServlet {
         return true;
     }
 
-    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException {
+    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
+        VaccineDao vaccineDao = new VaccineDaoImpl();
+        boolean result = false;
 
         String residentID;
         int id;
@@ -55,10 +59,26 @@ public class AddVaccinationInfoController extends HttpServlet {
         wardID = Integer.parseInt(request.getParameter("wardID"));
         date = request.getParameter("date");
 
-        Timestamp injectionDate = Helper.convertDate(date);
+        int districtID = Integer.parseInt(request.getParameter("districtID"));
+        int provinceID = Integer.parseInt(request.getParameter("provinceID"));
+        WardDao wardDao = new WardDaoImpl();
+        request.setAttribute("ward", wardDao.getWardByID(wardID));
+        System.out.println(wardDao.getWardByID(wardID).getName());
+        DistrictDao districtDao = new DistrictDaoImpl();
+        request.setAttribute("district", districtDao.getDistrictByID(districtID));
+        System.out.println(districtDao.getDistrictByID(districtID).getName());
+        ProvinceDao provinceDao = new ProvinceDaoImpl();
+        request.setAttribute("province", provinceDao.getProvinceByID(provinceID));
+        System.out.println(provinceDao.getProvinceByID(provinceID));
+        request.setAttribute("vaccine", vaccineDao.getVaccineByID(vaccineID));
 
-        VaccinationInfoDTO vaccinationInfo= new VaccinationInfoDTO(id, residentID, vaccineID, wardID, injectionDate);
-        return vaccinationInfoDao.addNewVaccinationInfo(vaccinationInfo);
+        VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
+        VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
+        if (vaccinationInfo != null) {
+            return Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
+        }
+
+        return vaccinationInfoDao.addNewVaccinationInfo(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,9 +97,15 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DateTimeParseException {
         try {
-            if (postHandler(request, response)) {
+            String link = request.getParameter("btAction");
+            if (postHandler(request, response) && link.equals("Add Vaccination")) {
                 response.sendRedirect("homepage?result=success");
+//                request.getRequestDispatcher("homepage?result=success").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "Date is not suitable for the next injection!");
+                request.getRequestDispatcher("addVaccinationInfoInvalid.jsp").forward(request,response);
             }
+        } catch (Exception ex) {
 
         } catch (DateTimeParseException e){
             request.setAttribute("ERROR", "Invalid date.");

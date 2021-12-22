@@ -91,6 +91,35 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     }
 
     @Override
+    public VaccinationInfoDTO getTheLatestVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
+        VaccinationInfoDTO vaccineInfo = null;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String sql = "SELECT TOP 1 [id], [residentID], [vaccineID], [wardID], [date]"
+                        + " FROM [VaccinationInfo]"
+                        + " WHERE [residentID] = ?"
+                        + " ORDER BY [date] DESC";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, residentID);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    int vaccineID = resultSet.getInt("vaccineID");
+                    int wardID = resultSet.getInt("wardID");
+                    Timestamp date = resultSet.getTimestamp("date");
+
+                    vaccineInfo = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return vaccineInfo;
+    }
+
+    @Override
     public List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
         List<VaccinationInfoDTO> list = null;
         try {
@@ -113,7 +142,6 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                     }
                     list.add(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
                 }
-
             }
         } finally {
             closeConnection();
