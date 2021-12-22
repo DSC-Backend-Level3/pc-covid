@@ -21,6 +21,7 @@
 </head>
 <body>
 <button><a href="homepage">Home Page</a></button>
+<button><a href="logout">Logout</a></button>
 <h1>Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
@@ -68,10 +69,9 @@
 <%--    <input type="submit" value="Update Profile" name="btAction">--%>
 <%--</form>--%>
 <c:url value="view" var="Update_Profile">
-    <c:param name="btAction" value="Update Profile"/>
+    <c:param name="btAction" value="UpdateProfile"/>
 </c:url>
 <button><a href="${Update_Profile}">Update Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
-
 </body>
 </html>

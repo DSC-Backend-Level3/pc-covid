@@ -17,6 +17,7 @@
       <title>Doctor Account</title>
     </head>
     <body>
+        <button><a href="logout">Logout</a></button>
         <h1>Doctor Account Form</h1>
         <c:set var="error" value="${requestScope.ERROR}"/>
         <form action="create" method="POST">
@@ -56,6 +57,7 @@
 
             <input type="submit" value="Add Doctor" name="btAction">
         </form>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
                 integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
                 crossorigin="anonymous"

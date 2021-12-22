@@ -13,13 +13,14 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get current session
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         //remove exist attribute
-        session.removeAttribute(Attribute.USER.USER_ID);
-        session.removeAttribute(Attribute.USER.ROLE);
-        //invalidate session
-        session.invalidate();
-        //forward to login page
-        request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request,response);
+        if(session != null){
+            //invalidate session
+            session.invalidate();
+
+        }
+
+        response.sendRedirect("/pc_covid");
     }
 }

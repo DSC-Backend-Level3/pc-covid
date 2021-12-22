@@ -22,6 +22,7 @@
 <body>
 
 <button><a href="homepage">Home Page</a></button>
+<button><a href="logout">Logout</a></button>
 <h1>Update Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
@@ -34,9 +35,9 @@
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
-        <input type="text" name="firstName" value="${result.firstName}"> <br>
+        <input type="text" name="firstName" value="${result.firstName}" maxlength="50"> <br>
         Last name :<br>
-        <input type="text" name="lastName" value="${result.lastName}"> <br>
+        <input type="text" name="lastName" value="${result.lastName}" maxlength="50"> <br>
         Gender :<br>
         <select name="gender">
         <c:choose>
@@ -72,7 +73,7 @@
         Email:<br>
         <input type="email" name="email" value="${result.email}"><br>
         Nationality: <br>
-        <input type="text" name="nationality" value="${result.nationality}"><br>
+        <input type="text" name="nationality" value="${result.nationality}" maxlength="25"><br>
         Province/City: <br>
         <select onchange="selectProvince()" name="cboProvince" id="province">
             <option value="${province.id}">${province.name}</option>
@@ -115,6 +116,7 @@
     </c:if>
     <input type="submit" value="Save Changes" name="btAction">
 </form>
+
 <script>
     function  selectProvince(){
         var e = document.getElementById("province");

@@ -17,7 +17,8 @@
         <title>Vaccine</title>
     </head>
     <body>
-        <c:set var="result" value="${requestScope.vaccineList}"/>
+    <button><a href="logout">Logout</a></button>
+    <c:set var="result" value="${requestScope.vaccineList}"/>
         <c:if test="${not empty result}">
             <table>
                 <thead>
@@ -49,7 +50,7 @@
             <h2>Vaccine' information is unavailable!</h2>
         </c:if>
 
-        <a href="addVaccine.html">Adding New Vaccine</a>
-        <a href="adminHome.jsp">Home Page</a>
+        <button><a href="addVaccine.html">Adding New Vaccine</a></button>
+        <button><a href="adminHome.jsp">Home Page</a></button>
     </body>
 </html>

@@ -33,8 +33,10 @@ public class ViewProfileController extends HttpServlet {
         String button = request.getParameter("btAction");
         String url = ERROR_PAGE;
         try {
+
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+
                 if (id != null) {
                     ResidentDaoImpl dao = new ResidentDaoImpl();
                     ResidentDTO dto = dao.getResidentById(id);
@@ -47,6 +49,7 @@ public class ViewProfileController extends HttpServlet {
 
                     ProvinceDaoImpl provinceDao = new ProvinceDaoImpl();
                     ProvinceDTO province = provinceDao.getProvinceByID(district.getProvinceID());
+
                     List<ProvinceDTO> listrProvince = provinceDao.getAllProvinces();
 
                     request.setAttribute("PROFILE_PAGE", dto);
@@ -54,9 +57,11 @@ public class ViewProfileController extends HttpServlet {
                     request.setAttribute("PROFILE_DISTRICT", district);
                     request.setAttribute("PROFILE_WARD", ward);
                     request.setAttribute("PROVINCE_LIST", listrProvince);
-                    if (button.equals("Update Profile")) {
+
+                    if (button.equals("UpdateProfile")) {
                         url = UPDATE_USER_PROFILE;
                     } else {
+                        System.out.println("hello");
                         url = VIEW_USER_PROFILE;
                     }
 
@@ -67,6 +72,7 @@ public class ViewProfileController extends HttpServlet {
         } catch (NamingException e) {
             e.printStackTrace();
         } finally {
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

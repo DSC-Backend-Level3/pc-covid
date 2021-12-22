@@ -95,6 +95,7 @@ public class UpdateProfileController extends HttpServlet {
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
         String wardRequest = request.getParameter("cboWard");
+        System.out.println(wardRequest);
         String houseNumber = request.getParameter("txtHouseNumber");
         String genderDB = null;
         if (gender.equals("Female")) {
@@ -103,7 +104,7 @@ public class UpdateProfileController extends HttpServlet {
             genderDB = "M";
         }
         ResidentDTO dto = null;
-        String url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
+        String url =  "view?btAction=UpdateProfile";
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
@@ -111,15 +112,16 @@ public class UpdateProfileController extends HttpServlet {
                     Timestamp date = Helper.convertDate(DOB);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
                     ResidentDTO resident = residentDao.getResidentById(id);
+                    Integer wardID = resident.getWardID();
                     int roleID = resident.getRoleID();
-                    if (wardRequest != null) {
-                        Integer wardID = Integer.parseInt(wardRequest);
+                    if (wardRequest != null && !wardRequest.equalsIgnoreCase("Select ward")) {
+                        wardID = Integer.parseInt(wardRequest);
                         dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
                                 date, nationality, wardID, houseNumber, roleID, null);
                         ResidentDaoImpl dao = new ResidentDaoImpl();
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
-                        url = VIEW_PROFILE_CONTROLLER;
+                        url = "view?btAction=ViewProfile";
                     }
 
                 }
@@ -127,7 +129,7 @@ public class UpdateProfileController extends HttpServlet {
 
         }catch (DateTimeParseException e){
                 request.setAttribute("ERROR", "Invalid date.");
-                url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
+                url = "view?btAction=UpdateProfile";
 
         }catch (SQLException e) {
             url = ERROR_PAGE;
@@ -136,8 +138,8 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            System.out.println("Hello" + url);
+            response.sendRedirect(url);
         }
     }
 

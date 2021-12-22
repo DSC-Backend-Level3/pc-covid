@@ -31,6 +31,7 @@ public class UserVaccinationInfoController extends HttpServlet {
             if (session != null) {
                 String idNumber = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (idNumber != null) {
+
                     ResidentDaoImpl userDao = new ResidentDaoImpl();
                     ResidentDTO resident = userDao.getResidentById(idNumber);
 
@@ -49,16 +50,19 @@ public class UserVaccinationInfoController extends HttpServlet {
                     WardDaoImpl daoWard = new WardDaoImpl();
                     ArrayList<WardDTO> listWard = new ArrayList<>();
 
-                    for (VaccinationInfoDTO dto : list) {
-                        listVaccine.add(daoVaccine.getVaccineByID(dto.getVaccineID()));
-                        listWard.add(daoWard.getWardByID(dto.getWardID()));
+                    if(list != null){
+                        for (VaccinationInfoDTO dto : list) {
+                            listVaccine.add(daoVaccine.getVaccineByID(dto.getVaccineID()));
+                            listWard.add(daoWard.getWardByID(dto.getWardID()));
+                        }
+                        for (WardDTO wardDto : listWard) {
+                            listDistrict.add(daoDistrict.getDistrictByID(wardDto.getDistrictID()));
+                        }
+                        for (DistrictDTO districtDto : listDistrict) {
+                            listProvince.add(daoProvince.getProvinceByID(districtDto.getProvinceID()));
+                        }
                     }
-                    for (WardDTO wardDto : listWard) {
-                        listDistrict.add(daoDistrict.getDistrictByID(wardDto.getDistrictID()));
-                    }
-                    for (DistrictDTO districtDto : listDistrict) {
-                        listProvince.add(daoProvince.getProvinceByID(districtDto.getProvinceID()));
-                    }
+
 
                     request.setAttribute("USER_INFO", resident);
                     request.setAttribute("VACCINES", listVaccine);
@@ -66,14 +70,16 @@ public class UserVaccinationInfoController extends HttpServlet {
                     request.setAttribute("PROVINCES", listProvince);
                     request.setAttribute("DISTRICTS", listDistrict);
                     request.setAttribute("WARDS", listWard);
+
                     url = VIEW_VACCINATION_INFO;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log(e.getMessage());
         } catch (NamingException e) {
-            e.printStackTrace();
+            log(e.getMessage());
         } finally {
+            
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

@@ -11,6 +11,7 @@
     </head>
     <body>
     <c:set var="userName" value="${sessionScope.name}"/>
+    <button><a href="logout">Logout</a></button>
     <div>
         <h1>ADMIN HOME</h1>
         <h2>Welcome ${userName} </h2>

@@ -26,6 +26,8 @@
         <c:set var="residentList" value="${requestScope.residentList}"/>
         <c:set var="locationList" value="${requestScope.locationList}"/>
         <c:set var="userName" value="${sessionScope.name}"/>
+
+        <button><a href="logout">Logout</a></button>
         <div>
             <h1>HOME PAGE</h1>
             <h2>Welcome ${userName} </h2>

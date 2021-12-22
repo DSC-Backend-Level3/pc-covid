@@ -1,8 +1,13 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="dto.ResidentDTO" %>
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: DELL
-  Date: 12/17/2021
-  Time: 11:28 AM
+  Date: 12/16/2021
+  Time: 3:39 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,10 +18,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Update Page</title>
+    <title>Error</title>
 </head>
 <body>
+<h1>Error page</h1>
 
-Error
 </body>
 </html>
