@@ -61,7 +61,6 @@ public class ViewProfileController extends HttpServlet {
                     if (button.equals("UpdateProfile")) {
                         url = UPDATE_USER_PROFILE;
                     } else {
-                        System.out.println("hello");
                         url = VIEW_USER_PROFILE;
                     }
 

@@ -95,7 +95,7 @@ public class UpdateProfileController extends HttpServlet {
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
         String wardRequest = request.getParameter("cboWard");
-        System.out.println(wardRequest);
+
         String houseNumber = request.getParameter("txtHouseNumber");
         String genderDB = null;
         if (gender.equals("Female")) {
@@ -138,7 +138,7 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-            System.out.println("Hello" + url);
+
             response.sendRedirect(url);
         }
     }

@@ -41,7 +41,6 @@ public class AuthenticationFilter implements Filter {
                     if (id == null) {
                         session.setAttribute(Attribute.USER.ROLE, 0);
                     }else{
-                        System.out.println(path);
                         if (path.equals("/")){
                             path = "/" + HOME_PAGE;
                             request.setAttribute(Attribute.PATH, path);
