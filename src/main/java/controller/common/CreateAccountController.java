@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 
 /**
@@ -54,7 +57,9 @@ public class CreateAccountController extends HttpServlet {
                 _lastName, // user last name
                 _id, // user id number
                 _password, // user password
-                _confirmPassword; // user confirm password
+                _confirmPassword, // user confirm password
+                _dob; //user date of birth
+
 
         //get parameter
         _firstName = request.getParameter(Attribute.USER.FIRST_NAME);
@@ -62,8 +67,10 @@ public class CreateAccountController extends HttpServlet {
         _id = request.getParameter(Attribute.USER.USER_ID);
         _password = request.getParameter(Attribute.USER.USER_PASSWORD);
         _confirmPassword = request.getParameter(Attribute.USER.CONFIRM_PASSWORD);
+        _dob = request.getParameter(Attribute.USER.DOB);
         //validate variable
-        if (_id == null || _password == null || _confirmPassword == null || _firstName == null || _lastName == null) {
+        if (_id == null || _password == null || _confirmPassword == null ||
+                _firstName == null || _lastName == null || _dob == null) {
             throw new IllegalArgumentException("Missing parameter");
         }
 
@@ -75,13 +82,24 @@ public class CreateAccountController extends HttpServlet {
             throw new IllegalArgumentException("Confirm password must be the same with password");
         }
 
+        //convert dob from String type to Timestamp type
+        Timestamp dob = Helper.convertDate(_dob);
+        //get date in past
+        Timestamp previous = Timestamp.valueOf("1900-01-01 00:00:00");
+        //get current date
+        Timestamp instant = Timestamp.from(Instant.now());
+        //validate dob
+        if(dob.before(previous) || dob.after(instant)){
+            throw new IllegalArgumentException("Invalid date of birth");
+        }
+
         if (residentDao.getResidentById(_id) != null) {
             throw new IllegalArgumentException("This user is already exist!");
         }
         //add new account to database
         String hashedPassword = Helper.hashString(_password);
 
-        if (!residentDao.addNewResident(new ResidentDTO(_id, _firstName, _lastName, null, null, null, "M", null, "Việt Nam", 1, null, 2, hashedPassword))) {
+        if (!residentDao.addNewResident(new ResidentDTO(_id, _firstName, _lastName, null, null, null, "M", dob, "Việt Nam", 1, null, 2, hashedPassword))) {
             throw new SQLException("Internal exception");
         }
         //return to login page with success notification
