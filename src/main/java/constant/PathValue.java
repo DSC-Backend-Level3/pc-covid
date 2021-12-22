@@ -53,10 +53,13 @@ public class PathValue {
          *
          */
         public final static String CREATE_DOCTOR_ACCOUNT = "/create";
+        public final static String VIEW_VACCINE_LIST = "/viewVaccine";
+        public static final String VIEW_DOCTOR_LIST = "/viewDoctor";
     }
 
     public static class DOCTOR {
         public final static String ADD_NEW_VACCINATION_INFO = "/add";
+        public static final String LOAD_LOCATION = "/loadLocation";
     }
     public final  static String HOME_PAGE = "homepage";
 }

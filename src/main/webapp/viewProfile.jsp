@@ -9,9 +9,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Page</title>
 </head>
 <body>
+<button><a href="homepage">Home Page</a></button>
 <h1>Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
@@ -36,19 +41,26 @@
             ${result.healthInsuranceID}<br>
         Email:<br>
             ${result.email} <br>
+        Nationality: <br>
+            ${result.nationality}<br>
         Province/City: <br>
             ${province.name} <br>
         District: <br>
             ${district.name}<br>
-        Ward/Commune: <br>
+        Ward: <br>
             ${ward.name} <br>
         House number: <br>
             ${result.houseNumber}
     </p>
 </c:if>
-<form action="view">
-    <input type="submit" value="Update Profile" name="btAction">
-</form>
+<%--<form action="view">--%>
+<%--    <input type="submit" value="Update Profile" name="btAction">--%>
+<%--</form>--%>
+<c:url value="view" var="Update_Profile">
+    <c:param name="btAction" value="Update Profile"/>
+</c:url>
+<button><a href="${Update_Profile}">Update Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
+
 </body>
 </html>

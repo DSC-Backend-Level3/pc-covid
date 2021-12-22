@@ -41,7 +41,7 @@
       <groupId>javax.servlet.jsp.jstl</groupId>
       <artifactId>javax.servlet.jsp.jstl-api</artifactId>
       <version>1.2.1</version>
-      <scope>compile</scope>
+        <scope>compile</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
     <dependency>
@@ -54,6 +54,23 @@
       <artifactId>mssql-jdbc</artifactId>
       <version>8.4.1.jre8</version>
     </dependency>
+    <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.8.6</version>
+    </dependency>
+      <dependency>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>javax.servlet.jsp.jstl</groupId>
+          <artifactId>jstl-api</artifactId>
+          <version>1.2-rev-1</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
 

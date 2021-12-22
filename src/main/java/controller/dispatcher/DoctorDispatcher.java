@@ -24,10 +24,18 @@ public class DoctorDispatcher extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = request.getServletPath();
+
+        String path = (String) request.getAttribute(Attribute.PATH);
         switch (path) {
             case PathValue.DOCTOR.ADD_NEW_VACCINATION_INFO:
                 request.getRequestDispatcher(Router.DOCTOR.ADD_VACCINATION_INFO_CONTROLLER).forward(request,response);
+                break;
+            case PathValue.DOCTOR.LOAD_LOCATION:
+
+                request.getRequestDispatcher(Router.DOCTOR.LOCATION_CONTROLLER).forward(request,response);
+                break;
+            case "/" + PathValue.HOME_PAGE:
+                request.getRequestDispatcher(Router.DOCTOR.VIEW_VACCINATION_CONTROLLER).forward(request, response);
                 break;
             default:
                 request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, Attribute.ERROR_MESSAGE.NOT_SUPPORTED_ACTION);

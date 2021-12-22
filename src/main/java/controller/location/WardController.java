@@ -1,4 +1,4 @@
-package controller.helper;
+package controller.location;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

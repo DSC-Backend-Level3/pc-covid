@@ -9,6 +9,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vaccination Information Page</title>
 </head>
 <body>
@@ -40,9 +44,10 @@
                 <td>
                     <c:forEach items="${vaccines}" var="vaccineDTO" varStatus="i">
                         <c:if test="${vaccineDTO.id eq dto.vaccineID}">
-                            ${vaccineDTO.vaccineName}
+                            <c:set var="vaccineName" value="${vaccineDTO}"/>
                         </c:if>
                     </c:forEach>
+                    ${vaccineName.name}
                 </td>
                 <td>
                         ${dto.date}
@@ -65,17 +70,19 @@
                             <c:set var="province" value="${provinceDTO}"/>
                         </c:if>
                     </c:forEach>
-                    ${province.name}, ${district.name}, ${ward.name}
+                        ${province.name}, ${district.name}, ${ward.name}
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </c:if>
+
 <br>
-<form action="view">
-    <input type="submit" value="View Profile" name="btAction">
-</form>
+<c:url value="view" var="View_Profile">
+    <c:param name="btAction" value="View Profile"/>
+</c:url>
+<button><a href="${View_Profile}">View Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
 </body>
 </html>

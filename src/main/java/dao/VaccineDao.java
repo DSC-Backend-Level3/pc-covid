@@ -22,4 +22,5 @@ public interface VaccineDao {
      */
     public VaccineDTO getVaccineByID(int vaccineID) throws SQLException, NamingException;
 
+    public boolean addNewVaccine(VaccineDTO vaccine) throws SQLException, NamingException;
 }

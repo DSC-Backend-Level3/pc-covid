@@ -1,4 +1,4 @@
-package controller.helper;
+package controller.location;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,5 +14,4 @@ public class DistrictController extends HttpServlet {
         //get district list based on province id
         request.setAttribute("districtList", null);
     }
-
 }

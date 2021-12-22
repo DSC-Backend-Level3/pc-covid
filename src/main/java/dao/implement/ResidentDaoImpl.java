@@ -43,8 +43,8 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.setString(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    String firstName = rs.getString(2);
-                    String lastName = rs.getString(3);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
                     String phoneNumber = rs.getString(4);
                     String email = rs.getString(5);
                     String healthInsuranceID = rs.getString(6);
@@ -65,7 +65,6 @@ public class ResidentDaoImpl implements ResidentDao {
             closeConnection();
         }
         return null;
-
     }
 
     @Override
@@ -85,8 +84,8 @@ public class ResidentDaoImpl implements ResidentDao {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String id = rs.getString(1);
-                    String firstName = rs.getString(2);
-                    String lastName = rs.getString(3);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
                     String phoneNumber = rs.getString(4);
                     String email = rs.getString(5);
                     String healthInsuranceID = rs.getString(6);
@@ -112,6 +111,49 @@ public class ResidentDaoImpl implements ResidentDao {
     }
 
     @Override
+    public List<ResidentDTO> getResidentsByRoleId(int roleID) throws SQLException, NamingException {
+        List<ResidentDTO> residentList = new ArrayList<>();
+        try {
+            //1. Connect DB
+            con = DBHelper.makeConnection();
+            //2. Create SQL Statement
+            if (con != null) {
+                //3. Create Statement to set SQL
+                String sql = "SELECT id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB, "
+                        + "nationality, wardID, houseNumber, password "
+                        + "FROM Resident "
+                        + "WHERE roleID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, roleID);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String id = rs.getString(1);
+                    String firstName = rs.getNString(2);
+                    String lastName = rs.getNString(3);
+                    String phoneNumber = rs.getString(4);
+                    String email = rs.getString(5);
+                    String healthInsuranceID = rs.getString(6);
+                    String gender = rs.getString(7);
+                    Timestamp DOB = rs.getTimestamp(8);
+                    String nationality = rs.getString(9);
+                    int wardID = rs.getInt(10);
+                    String houseNumber = rs.getString(11);
+                    String password = rs.getString(12);
+                    ResidentDTO dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, DOB,
+                            nationality, wardID, houseNumber, roleID, password);
+                    residentList.add(dto);
+
+                }
+                return residentList;
+            }
+
+        } finally {
+            closeConnection();
+        }
+        return null;
+    }
+
+    @Override
     public boolean addNewResident(ResidentDTO residentDTO)
             throws SQLException, NamingException {
         try {
@@ -125,8 +167,8 @@ public class ResidentDaoImpl implements ResidentDao {
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, residentDTO.getId());
-                stm.setString(2, residentDTO.getFirstName());
-                stm.setString(3, residentDTO.getLastName());
+                stm.setNString(2, residentDTO.getFirstName());
+                stm.setNString(3, residentDTO.getLastName());
                 stm.setString(4, residentDTO.getPhoneNumber());
                 stm.setString(5, residentDTO.getEmail());
                 stm.setString(6, residentDTO.getHealthInsuranceID());
@@ -152,10 +194,13 @@ public class ResidentDaoImpl implements ResidentDao {
     public void updateResidentInformation(ResidentDTO residentDTO)
             throws SQLException, NamingException {
         try {
+
             //1. Connect DB
             con = DBHelper.makeConnection();
+
             //2. Create SQL Statement
             if (con != null) {
+
                 //3. Create Statement to set SQL
                 String sql = "UPDATE Resident " +
                         "SET firstName = ISNULL(?, firstName) , lastName = ISNULL(?, lastName), phoneNumber = ISNULL(?, phoneNumber), " +
@@ -164,8 +209,8 @@ public class ResidentDaoImpl implements ResidentDao {
                         "wardID = ISNULL(?, wardID), houseNumber = ISNULL(?, houseNumber), roleID = ISNULL(?, roleID), password = ISNULL(?, password) " +
                         "WHERE id = ?";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, residentDTO.getFirstName());
-                stm.setString(2, residentDTO.getLastName());
+                stm.setNString(1, residentDTO.getFirstName());
+                stm.setNString(2, residentDTO.getLastName());
                 stm.setString(3, residentDTO.getPhoneNumber());
                 stm.setString(4, residentDTO.getEmail());
                 stm.setString(5, residentDTO.getHealthInsuranceID());
@@ -240,8 +285,8 @@ public class ResidentDaoImpl implements ResidentDao {
             con = DBHelper.makeConnection();
             if (con != null){
                 String sql = "SELECT id " +
-                            "FROM Resident " +
-                            "WHERE id = ? AND password = ?";
+                        "FROM Resident " +
+                        "WHERE id = ? AND password = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, id);
                 stm.setString(2, password);

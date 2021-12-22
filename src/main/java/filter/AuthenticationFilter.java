@@ -45,6 +45,7 @@ public class AuthenticationFilter implements Filter {
                 }
             }
         } catch (ServletException | IOException | MethodNotFoundException ex) {
+            ex.printStackTrace();
             //forward to error page
             request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }

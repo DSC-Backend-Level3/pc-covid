@@ -1,6 +1,9 @@
 package constant;
 
 public class Router {
+
+
+
     //dispatcher path
     public static class DISPATCHER{
         public final static String REQUEST_DISPATCHER = "RequestDispatcher";
@@ -14,6 +17,9 @@ public class Router {
     public static class ADMIN{
         public final static String ADD_VACCINE_CONTROLLER = "AddVaccineController";
         public final static String CREATE_DOCTOR_ACCOUNT_CONTROLLER = "CreateDoctorAccountController";
+        public static final String ADMIN_HOME = "adminHome.jsp";
+        public static final String VIEW_DOCTOR_ACCOUNT_CONTROLLER = "ViewDoctorAccountsController";
+        public static final String VIEW_VACCINE_CONTROLLER = "ViewVaccineController";
     }
 
     //common path
@@ -25,8 +31,9 @@ public class Router {
 
     //doctor path
     public static class DOCTOR{
-
+        public static final String VIEW_VACCINATION_CONTROLLER = "ViewVaccinationInfoController";
         public final static String ADD_VACCINATION_INFO_CONTROLLER = "AddVaccinationInfoController";
+        public static final String LOCATION_CONTROLLER = "LocationController";
     }
 
     //user path
@@ -51,13 +58,18 @@ public class Router {
         public final static String LOGIN_PAGE = "login.jsp";
         public final static String ERROR_PAGE = "error.jsp";
         //public final static String HOME_PAGE = "homepage";
+        public  final  static  String VIEW_VACCINATION_INFO = "viewVaccinationInfo.jsp";
+        public final static String VIEW_USER_PROFILE = "viewProfile.jsp";
+        public  final static String UPDATE_USER_PROFILE = "updateProfile.jsp";
+        public  final static String UPDATE_PASSWORD_SUCCESS = "changePassword.jsp";
+        public static final String VACCINATE_FORM = "addVaccine.html";
+        public  final static String VACCINATE_LIST_PAGE = "vaccineList.jsp";
+        public static final String VACCINATION_INFO_FORM = "addVaccinationInfo.jsp";
+        public  final static String VACCINATION_INFO_LIST_PAGE = "vaccinationInfoList.jsp";
+        public static final String DOCTOR_ACCOUNT_FORM = "addDoctorAccount.jsp";
+        public  final static String DOCTOR_ACCOUNT_PAGE = "doctorAccount.jsp";
     }
 
-    public final static String LOGIN_PAGE = "login.jsp";
-    public final static String ERROR_PAGE = "error.jsp";
-    public  final  static  String VIEW_VACCINATION_INFO = "viewVaccinationInfo.jsp";
-    public final static String VIEW_USER_PROFILE = "viewProfile.jsp";
-    public  final static String UPDATE_USER_PROFILE = "updateProfile.jsp";
-    public  final static String UPDATE_PASSWORD_SUCCESS = "changePassword.jsp";
+
 
 }

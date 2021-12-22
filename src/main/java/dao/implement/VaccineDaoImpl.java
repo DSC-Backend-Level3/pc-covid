@@ -104,4 +104,31 @@ public class VaccineDaoImpl implements VaccineDao {
         }
         return vaccine;
     }
+
+    @Override
+    public boolean addNewVaccine(VaccineDTO vaccine) throws SQLException, NamingException {
+        try {
+            //1. Connect DB
+            connection = DBHelper.makeConnection();
+            //2. Create SQL Statement
+            if (connection != null) {
+                //3. Create Statement to set SQL
+                String sql = "INSERT INTO [Vaccine]([id], [name], [firm], [country], [interval]) "
+                        + " VALUES (?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, vaccine.getId());
+                preparedStatement.setString(2, vaccine.getName());
+                preparedStatement.setString(3, vaccine.getFirm());
+                preparedStatement.setString(4, vaccine.getCountry());
+                preparedStatement.setInt(5, vaccine.getInterval());
+                int row = preparedStatement.executeUpdate();
+                if (row > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
 }
