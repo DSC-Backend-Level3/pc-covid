@@ -12,34 +12,36 @@
     <title>addVaccinationInfoInvalid</title>
 </head>
 <body>
-    <c:set var="vaccine" value="${requestScope.vaccine}"/>
-    <c:set var="province" value="${requestScope.province}"/>
-    <c:set var="district" value="${requestScope.district}"/>
-    <c:set var="ward" value="${requestScope.ward}"/>
+<c:set var="vaccine" value="${requestScope.vaccine}"/>
+<c:set var="province" value="${requestScope.province}"/>
+<c:set var="district" value="${requestScope.district}"/>
+<c:set var="ward" value="${requestScope.ward}"/>
+<button><a href="logout">Logout</a></button>
 <h1>Vaccination Information Form</h1>
 <form action="add" method="POST">
     Resident ID <input type="text" name="residentID" value="${param.residentID}" required/><br/>
+    ${requestScope.notExistedError}<br/>
     Vaccination ID <input type="text" name="id" value="${param.id}" required/><br/>
-    <%--        using drop-down list to presentation--%>
-    Vaccine ID
+    ${requestScope.ExistedError}<br/>
+    Vaccine Name
     <select name="vaccineID"  required>
         <option value="${param.vaccineID}">${vaccine.name}</option>
     </select>
     Province
-    <select id="province" required>
+    <select id="province" name="provinceID" required>
         <option value="${province.id}">${province.name}</option>
     </select>
     District
-    <select id="district" required>
+    <select id="district" name="districtID" required>
         <option value="${district.id}">${district.name}</option>
     </select>
     Ward
     <select id="ward" name="wardID"  required>
         <option value="${ward.id}">${ward.name}</option>
     </select>
-
-    Injection's Date <input type="date" name="date" value="${param.date}" required/>${requestScope.errorMessage}<br/>
-<%--    <input type="submit" value="Add Vaccination" name="btAction">--%>
+    Injection's Date <input type="date" name="date" value="${param.date}" required/>${requestScope.dateErrorMessage}<br/>
+    <input type="submit" value="Add Vaccination" name="btAction">
 </form>
+<button><a href="homepage">View List</a></button>
 </body>
 </html>

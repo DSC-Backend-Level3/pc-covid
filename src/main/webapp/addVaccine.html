@@ -6,13 +6,15 @@
 </head>
 <body>
     <button><a href="logout">Logout</a></button>
+    <button><a href="homepage">Home Page</a></button>
+
     <h1>Vaccine Form</h1>
     <form action="add" method="POST">
-        Vaccine ID <input type="text" name="id" value="" required/><br/>
-        Vaccine Name <input type="text" name="name" value="" required/><br/>
-        Origin <input type="text" name="country" value="" required/><br/>
-        Organization <input type="text" name="firm" value="" required/><br/>
-        Time for 2rd dose <input type="text" name="interval" value="" required/><br/>
+        Vaccine ID <input type="text" name="id" value="" maxlength="10" required/><br/>
+        Vaccine Name <input type="text" name="name" value="" maxlength="20" required/><br/>
+        Origin <input type="text" name="country" value="" maxlength="50" required/><br/>
+        Organization <input type="text" name="firm" value="" maxlength="20" required/><br/>
+        Time for 2rd dose <input type="text" name="interval" value="" maxlength="10" required/><br/>
         <input type="submit" value="Add Vaccine" name="btAction">
     </form>
 

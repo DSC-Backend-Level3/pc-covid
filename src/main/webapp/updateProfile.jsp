@@ -39,17 +39,17 @@
         <input type="text" name="lastName" value="${result.lastName}" maxlength="50"> <br>
         Gender :<br>
         <select name="gender">
-        <c:choose>
-            <c:when test="${result.gender == 'F'}">
-                <option>Female</option>
-                <option>Male</option>
-            </c:when>
-            <c:otherwise>
-                <option>Male</option>
-                <option>Female</option>
-            </c:otherwise>
-        </c:choose>
-    </select><br>
+            <c:choose>
+                <c:when test="${result.gender == 'F'}">
+                    <option>Female</option>
+                    <option>Male</option>
+                </c:when>
+                <c:otherwise>
+                    <option>Male</option>
+                    <option>Female</option>
+                </c:otherwise>
+            </c:choose>
+        </select><br>
         Date of birth: <br>
         <%
             ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
@@ -59,7 +59,6 @@
                 LocalDateTime localDateTime = date.toLocalDateTime();
                 formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
             }
-
         %>
 
         <input type="date" name="DOB" value="<%= formattedDate %>" required><br>
@@ -113,7 +112,7 @@
         House number: <br>
         <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
-    <input type="submit" value="SaveChanges" name="btAction">
+    <input type="submit" value="Save Changes" name="btAction">
 </form>
 
 <script>
