@@ -1,5 +1,7 @@
 package utils;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -85,6 +87,14 @@ public class Validator {
             return false;
         }
         if (dateEndInput.after(dateStartCheck) && dateEndInput.before(dateEndCheck)) {
+            return false;
+        }
+        return true;
+    }
+    public static boolean checkTwoDate(Timestamp startDate, Timestamp endDate, int interval) {
+        LocalDateTime startLocalDateTime = startDate.toLocalDateTime();
+        LocalDateTime endDatLocalDateTime = endDate.toLocalDateTime();
+        if ((startLocalDateTime.plusDays(interval)).isAfter(endDatLocalDateTime)) {
             return false;
         }
         return true;
