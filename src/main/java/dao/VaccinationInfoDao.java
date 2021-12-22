@@ -23,6 +23,8 @@ public interface VaccinationInfoDao {
      */
     VaccinationInfoDTO getVaccinationInfoByID(int id) throws NamingException, SQLException;
 
+    VaccinationInfoDTO getTheLatestVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException;
+
     List<VaccinationInfoDTO> getVaccinationInfoByIdUser(String residentID) throws  NamingException, SQLException;
     /**
      * Check if the resident is available for the 2nd injection.
