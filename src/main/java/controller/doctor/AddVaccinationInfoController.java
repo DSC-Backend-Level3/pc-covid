@@ -55,10 +55,16 @@ public class AddVaccinationInfoController extends HttpServlet {
         VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
         VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
         if (vaccinationInfo != null) {
+            System.out.println("Start Date:" + vaccinationInfo.getDate());
+            System.out.println("End Date:" + date);
+            System.out.println(Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval()) + " Hello My Name is Ha");
             return Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
         }
+        VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
+        System.out.println(result.getDate());
+        boolean add  = vaccinationInfoDao.addNewVaccinationInfo(result);
 
-        return vaccinationInfoDao.addNewVaccinationInfo(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
+        return add;
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,7 +87,7 @@ public class AddVaccinationInfoController extends HttpServlet {
                 response.sendRedirect("homepage?result=success");
 //                request.getRequestDispatcher("homepage?result=success").forward(request, response);
             } else {
-                request.setAttribute("errorMessage", "Date is not suita");
+                request.setAttribute("errorMessage", "Date is not suitable for the next injection!");
                 request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request,response);
             }
         } catch (Exception ex) {

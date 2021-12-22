@@ -99,7 +99,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                 String sql = "SELECT TOP 1 [id], [residentID], [vaccineID], [wardID], [date]"
                         + " FROM [VaccinationInfo]"
                         + " WHERE [residentID] = ?"
-                        + " GROUP BY [vaccineID]";
+                        + " ORDER BY [date] DESC";
 
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, residentID);

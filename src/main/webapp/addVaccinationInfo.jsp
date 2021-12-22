@@ -43,7 +43,7 @@
             <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value="" required/><br/>
+        Injection's Date <input type="text" name="date" value="" required/>${requestScope.errorMessage}<br/>
         <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 
