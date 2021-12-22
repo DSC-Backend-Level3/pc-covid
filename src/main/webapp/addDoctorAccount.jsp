@@ -19,10 +19,9 @@
     <body>
         <h1>Doctor Account Form</h1>
         <form action="create" method="POST">
-            Doctor ID <input type="text" name="id" value="${param.id}" pattern="[0-9]{12}" title="Input must be 12 numbers" required/><br/>
-            ${requestScope.ExistedError}<br/>
+            Doctor ID <input type="text" name="id" value="${param.id}" pattern="[0-9]{12}" title="Input must be 12 numbers" required/>${requestScope.ExistedError}<br/>
             Doctor Password <input type="password" name="password" value="${param.password}" required/><br/>
-            <%--    default  --%>
+            Confirm Password <input type="password" name="confirmPassword" value="${param.confirmPassword}" required>${requestScope.passwordError}<br/>
             First Name <input type="text" name="firstName" value="${param.firstName}" required/><br/>
             Last Name <input type="text" name="lastName" value="${param.lastName}" required/><br/>
             Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="${param.phoneNumber}" required/><br/>
@@ -39,15 +38,15 @@
             </select>
             Province
             <select id="province" required>
-                <option value="">Select province</option>
+                <option value="">Select Province</option>
             </select>
             District
             <select id="district" required>
-                <option value="">Select district</option>
+                <option value="">Select District</option>
             </select>
             Ward
             <select id="ward" name="wardID" required>
-                <option value="">Select ward</option>
+                <option value="">Select Ward</option>
             </select>
             House Number <input type="text" name="houseNumber" value="${param.houseNumber}" required/><br/>
 

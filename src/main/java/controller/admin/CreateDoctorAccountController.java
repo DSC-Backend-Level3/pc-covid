@@ -42,6 +42,7 @@ public class CreateDoctorAccountController extends HttpServlet {
         int wardID;
         String houseNumber;
         String password;
+        String confirmPassword;
 
         id = request.getParameter("id");
         firstName = request.getParameter("firstName");
@@ -53,10 +54,15 @@ public class CreateDoctorAccountController extends HttpServlet {
         wardID = Integer.parseInt(request.getParameter("wardID"));
         houseNumber = request.getParameter("houseNumber");
         password = Helper.hashString(request.getParameter("password"));
+        confirmPassword = Helper.hashString(request.getParameter("confirmPassword"));
         email = request.getParameter("email");
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
+        if (confirmPassword.equals(password) == false) {
+            request.setAttribute("passwordError", "Password must be the same!");
+            return false;
+        }
         ResidentDTO residentDTO = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, date, nationality, wardID, houseNumber, 3, password);
 
         return residentDao.addNewResident(residentDTO);
@@ -69,7 +75,9 @@ public class CreateDoctorAccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            postHandler(request, response);
+            if (postHandler(request, response) == false) {
+                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+            }
         }catch (SQLException | NamingException | NoSuchAlgorithmException ex) {
             String errorMessage = ex.getMessage();
             if (ex.getMessage().contains("PRIMARY KEY")) {
