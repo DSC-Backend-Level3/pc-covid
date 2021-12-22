@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "AddVaccineController", value = "/AddVaccineController")
 public class AddVaccineController extends HttpServlet {
-    private final String PAGE_RETURN = "viewVaccine?btAction=View+Vaccine";
+    private final String PAGE_RETURN = "viewVaccine?btAction=viewVaccine";
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, UnsupportedEncodingException {
 
         VaccineDao vaccineDao = new VaccineDaoImpl();
@@ -53,10 +53,13 @@ public class AddVaccineController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             postHandler(request, response);
+            response.sendRedirect(PAGE_RETURN);
         } catch (SQLException | NamingException e) {
             e.printStackTrace();
-        } finally {
-            response.sendRedirect(PAGE_RETURN);
+            if (e.getMessage().contains("PRIMARY KEY")) {
+                request.setAttribute("errorMessage", "The vaccine ID is available!");
+            }
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
         }
     }
 }

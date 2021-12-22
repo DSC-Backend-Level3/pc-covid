@@ -49,7 +49,7 @@
             <h2>Vaccine' information is unavailable!</h2>
         </c:if>
 
-        <a href="addVaccine.html">Adding New Vaccine</a>
+        <a href="addVaccine.jsp">Adding New Vaccine</a>
         <a href="adminHome.jsp">Home Page</a>
     </body>
 </html>

@@ -100,12 +100,5 @@ public class Validator {
         return true;
     }
 
-    public static boolean checkTwoDate(Timestamp startDate, Timestamp endDate, int interval) {
-        LocalDateTime startLocalDateTime = startDate.toLocalDateTime();
-        LocalDateTime endDatLocalDateTime = endDate.toLocalDateTime();
-        if ((startLocalDateTime.plusDays(interval)).isAfter(endDatLocalDateTime)) {
-            return false;
-        }
-        return true;
-    }
+
 }

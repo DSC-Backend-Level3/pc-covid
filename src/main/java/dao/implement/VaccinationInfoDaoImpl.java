@@ -200,32 +200,4 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
         }
         return false;
     }
-    @Override
-    public VaccinationInfoDTO getTheLatestVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
-        VaccinationInfoDTO vaccineInfo = null;
-        try {
-            connection = DBHelper.makeConnection();
-            if (connection != null) {
-                String sql = "SELECT TOP 1 [id], [residentID], [vaccineID], [wardID], [date]"
-                        + " FROM [VaccinationInfo]"
-                        + " WHERE [residentID] = ?"
-                        + " GROUP BY [vaccineID]";
-
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, residentID);
-                resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    int vaccineID = resultSet.getInt("vaccineID");
-                    int wardID = resultSet.getInt("wardID");
-                    Timestamp date = resultSet.getTimestamp("date");
-
-                    vaccineInfo = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
-                }
-            }
-        } finally {
-            closeConnection();
-        }
-        return vaccineInfo;
-    }
 }

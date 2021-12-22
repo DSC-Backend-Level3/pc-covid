@@ -12,16 +12,18 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.format.DateTimeParseException;
 
 import static constant.Router.PAGE.DOCTOR_ACCOUNT_FORM;
+import static constant.Router.PAGE.ERROR_PAGE;
 
 @WebServlet(name = "CreateDoctorAccountController", value = "/CreateDoctorAccountController")
 public class CreateDoctorAccountController extends HttpServlet {
-    private final String PAGE_RETURN = "viewDoctor?btAction=View+Doctor";
-    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException {
+    private final String PAGE_RETURN = "viewDoctor?btAction=viewDoctor";
+    protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException, NoSuchAlgorithmException {
 
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -50,7 +52,7 @@ public class CreateDoctorAccountController extends HttpServlet {
         nationality = request.getParameter("nationality");
         wardID = Integer.parseInt(request.getParameter("wardID"));
         houseNumber = request.getParameter("houseNumber");
-        password = request.getParameter("password");
+        password = Helper.hashString(request.getParameter("password"));
         email = request.getParameter("email");
         gender = request.getParameter("gender");
 
@@ -68,12 +70,15 @@ public class CreateDoctorAccountController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             postHandler(request, response);
-        }catch (DateTimeParseException e){
-            request.setAttribute("ERROR", "Invalid date.");
-            RequestDispatcher rd = request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM);
-            rd.forward(request, response);
-        }catch (SQLException | NamingException e) {
-            e.printStackTrace();
+        }catch (SQLException | NamingException | NoSuchAlgorithmException ex) {
+            String errorMessage = ex.getMessage();
+            if (ex.getMessage().contains("PRIMARY KEY")) {
+                errorMessage = "ID is available!";
+                request.setAttribute("ExistedError", errorMessage);
+                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+            }
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } finally {
             response.sendRedirect(PAGE_RETURN);
         }

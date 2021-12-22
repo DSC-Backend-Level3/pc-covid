@@ -18,12 +18,12 @@
 
     <div>
         <c:url value="viewVaccine" var="View_Vaccine">
-            <c:param name="btAction" value="View Vaccine"/>
+            <c:param name="btAction" value="viewVaccine"/>
         </c:url>
 
         <button><a href="${View_Vaccine}">Vaccine Information</a></button>
         <c:url value="viewDoctor" var="View_Doctor">
-            <c:param name="btAction" value="View Doctor"/>
+            <c:param name="btAction" value="viewDoctor"/>
         </c:url>
         <button><a href="${View_Doctor}">Doctor Information</a></button>
     </div>

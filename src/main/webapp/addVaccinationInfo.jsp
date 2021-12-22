@@ -21,22 +21,22 @@
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" pattern="[0-9]{12}" title="Input must be 12 numbers" value="" required/><br/>
-        Vaccination Name <input type="text" name="id" value="" required/><br/>
+        Vaccination ID <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
-        Vaccine ID
+        Vaccine Name
         <select name="vaccineID" required>
-            <option>Select Vaccine</option>
+            <option value="">Select Vaccine</option>
                 <c:forEach var="dto" items="${vaccineList}">
                     <option value="${dto.id}">${dto.name}</option>
                 </c:forEach>
         </select>
         Province
         <select id="province" name="provinceID" required>
-            <option>Select province</option>
+            <option value="">Select province</option>
         </select>
         District
         <select id="district" name="districtID" required>
-            <option>Select district</option>
+            <option value="">Select district</option>
         </select>
         Ward
         <select id="ward" name="wardID" required>
@@ -77,9 +77,9 @@
 
             $('#province').change(function () {
                 $('#district').find('option').remove();
-                $('#district').append('<option>Select District</option>');
+                $('#district').append('<option value="">Select District</option>');
                 $('#ward').find('option').remove();
-                $('#ward').append('<option>Select Ward</option>');
+                $('#ward').append('<option value="">Select Ward</option>');
 
                 let pid = $('#province').val();
                 let data = {
@@ -99,7 +99,7 @@
 //                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        $('#district').append('<option>District Unavailable</option>');
+                        $('#district').append('<option value="">District Unavailable</option>');
                     },
                     cache: false
                 });
@@ -107,7 +107,7 @@
 
             $('#district').change(function () {
                 $('#ward').find('option').remove();
-                $('#ward').append('<option>Select Ward</option>');
+                $('#ward').append('<option value="">Select Ward</option>');
 
                 let did = $('#district').val();
                 let data = {
@@ -127,7 +127,7 @@
 //                        $('select').formSelect();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        $('#ward').append('<option>Ward Unavailable</option>');
+                        $('#ward').append('<option value="">Ward Unavailable</option>');
                     },
                     cache: false
                 });

@@ -16,7 +16,6 @@
     <title>Update Page</title>
 </head>
 <body>
-
-Error
+${requestScope.errorMessage}
 </body>
 </html>

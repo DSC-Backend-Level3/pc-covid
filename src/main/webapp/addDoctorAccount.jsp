@@ -19,16 +19,17 @@
     <body>
         <h1>Doctor Account Form</h1>
         <form action="create" method="POST">
-            Doctor ID <input type="text" name="id" value="" pattern="[0-9]{12}" title="Input must be 12 numbers" required/><br/>
-            Doctor Password <input type="password" name="password" value="" required/><br/>
+            Doctor ID <input type="text" name="id" value="${param.id}" pattern="[0-9]{12}" title="Input must be 12 numbers" required/><br/>
+            ${requestScope.ExistedError}<br/>
+            Doctor Password <input type="password" name="password" value="${param.password}" required/><br/>
             <%--    default  --%>
-            First Name <input type="text" name="firstName" value="" required/><br/>
-            Last Name <input type="text" name="lastName" value="" required/><br/>
-            Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="" required/><br/>
-            Health Insurance ID <input type="text" name="healthInsuranceID" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters" value="" placeholder="Ex: ab0000000000000" required/><br/>
-            Date of birth <input type="date" name="DOB" value="" required/><br/>
-            Nationality <input type="text" name="nationality" value="" required/><br/>
-            Gmail <input type="email" name="email" value="" required/><br/>
+            First Name <input type="text" name="firstName" value="${param.firstName}" required/><br/>
+            Last Name <input type="text" name="lastName" value="${param.lastName}" required/><br/>
+            Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="${param.phoneNumber}" required/><br/>
+            Health Insurance ID <input type="text" name="healthInsuranceID" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters" value="${param.healthInsuranceID}" placeholder="Ex: ab0000000000000" required/><br/>
+            Date of birth <input type="date" name="DOB" value="${param.DOB}" required/><br/>
+            Nationality <input type="text" name="nationality" value="${param.nationality}" required/><br/>
+            Gmail <input type="email" name="email" value="${param.email}" required/><br/>
             <%--    using drop-down list--%>
             Gender
             <select name="gender" id="" required>
@@ -48,7 +49,7 @@
             <select id="ward" name="wardID" required>
                 <option value="">Select ward</option>
             </select>
-            House Number <input type="text" name="houseNumber" value="" required/><br/>
+            House Number <input type="text" name="houseNumber" value="${param.houseNumber}" required/><br/>
 
             <input type="submit" value="Add Doctor" name="btAction">
         </form>
@@ -70,16 +71,16 @@
                         });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        $('#province').append('<option>province Unavailable</option>');
+                        $('#province').append('<option value="">province Unavailable</option>');
                     },
                     cache: false
                 });
 
                 $('#province').change(function () {
                     $('#district').find('option').remove();
-                    $('#district').append('<option>Select District</option>');
+                    $('#district').append('<option value="">Select District</option>');
                     $('#ward').find('option').remove();
-                    $('#ward').append('<option>Select Ward</option>');
+                    $('#ward').append('<option value="">Select Ward</option>');
 
                     let pid = $('#province').val();
                     let data = {
@@ -97,7 +98,7 @@
                             });
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            $('#district').append('<option>District Unavailable</option>');
+                            $('#district').append('<option value="">District Unavailable</option>');
                         },
                         cache: false
                     });
@@ -105,7 +106,7 @@
 
                 $('#district').change(function () {
                     $('#ward').find('option').remove();
-                    $('#ward').append('<option>Select Ward</option>');
+                    $('#ward').append('<option value="">Select Ward</option>');
 
                     let did = $('#district').val();
                     let data = {
@@ -123,7 +124,7 @@
                             });
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            $('#ward').append('<option>Ward Unavailable</option>');
+                            $('#ward').append('<option value="">Ward Unavailable</option>');
                         },
                         cache: false
                     });
