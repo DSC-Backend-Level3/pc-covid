@@ -16,6 +16,7 @@
 <c:set var="province" value="${requestScope.province}"/>
 <c:set var="district" value="${requestScope.district}"/>
 <c:set var="ward" value="${requestScope.ward}"/>
+<button><a href="logout">Logout</a></button>
 <h1>Vaccination Information Form</h1>
 <form action="add" method="POST">
     Resident ID <input type="text" name="residentID" value="${param.residentID}" required/><br/>
@@ -38,10 +39,9 @@
     <select id="ward" name="wardID"  required>
         <option value="${ward.id}">${ward.name}</option>
     </select>
-    Injection's Date <input type="date" name="date" value="${param.date}" required/><br/>${requestScope.dateErrorMessage}
-    <br>
-    <input type="submit" value="Add Vaccination" name="btAction">
+    Injection's Date <input type="date" name="date" value="${param.date}" required/>${requestScope.dateErrorMessage}<br/>
     <input type="submit" value="Add Vaccination" name="btAction">
 </form>
+<button><a href="homepage">View List</a></button>
 </body>
 </html>

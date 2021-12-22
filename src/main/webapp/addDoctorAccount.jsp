@@ -17,19 +17,21 @@
     <title>Doctor Account</title>
 </head>
 <body>
+<button><a href="logout">Logout</a></button>
+<button><a href="homepage">Home Page</a></button>
+
 <h1>Doctor Account Form</h1>
 <form action="create" method="POST">
     Doctor ID <input type="text" name="id" value="${param.id}" pattern="[0-9]{12}" title="Input must be 12 numbers" required/>${requestScope.ExistedError}<br/>
     Doctor Password <input type="password" name="password" value="${param.password}" required/><br/>
     Confirm Password <input type="password" name="confirmPassword" value="${param.confirmPassword}" required>${requestScope.passwordError}<br/>
-    First Name <input type="text" name="firstName" value="${param.firstName}" required/><br/>
-    Last Name <input type="text" name="lastName" value="${param.lastName}" required/><br/>
+    First Name <input type="text" name="firstName" value="${param.firstName}" maxlength="50" required/><br/>
+    Last Name <input type="text" name="lastName" value="${param.lastName}" maxlength="50" required/><br/>
     Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="${param.phoneNumber}" required/><br/>
     Health Insurance ID <input type="text" name="healthInsuranceID" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters" value="${param.healthInsuranceID}" placeholder="Ex: ab0000000000000" required/><br/>
     Date of birth <input type="date" name="DOB" value="${param.DOB}" required/><br/>
-    Nationality <input type="text" name="nationality" value="${param.nationality}" required/><br/>
+    Nationality <input type="text" name="nationality" value="${param.nationality}" maxlength="25" required/><br/>
     Gmail <input type="email" name="email" value="${param.email}" required/><br/>
-    <%--    using drop-down list--%>
     Gender
     <select name="gender" id="" required>
         <option value="">Select Gender</option>
