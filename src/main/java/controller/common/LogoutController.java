@@ -12,14 +12,16 @@ import java.io.IOException;
 public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Cache-Control","no-cache, no-store");
         //get current session
         HttpSession session = request.getSession();
         //remove exist attribute
         session.removeAttribute(Attribute.USER.USER_ID);
         session.removeAttribute(Attribute.USER.ROLE);
+        session.removeAttribute(Attribute.USER.USER_NAME);
         //invalidate session
         session.invalidate();
         //forward to login page
-        request.getRequestDispatcher(Router.PAGE.LOGIN_PAGE).forward(request,response);
+        response.sendRedirect(Router.PAGE.LOGIN_PAGE);
     }
 }

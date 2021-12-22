@@ -17,6 +17,7 @@
     <title>Vaccine</title>
 </head>
 <body>
-<h1>Error</h1>${requestScope.errorMessage}
+<h1>Error</h1>
+${requestScope.errorMessage}
 </body>
 </html>
