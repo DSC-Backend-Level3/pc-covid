@@ -51,6 +51,7 @@ public class CreateDoctorAccountController extends HttpServlet {
         healthInsuranceID = request.getParameter("healthInsuranceID");
         DOB = request.getParameter("DOB");
         nationality = request.getParameter("nationality");
+        System.out.println(request.getParameter("wardID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
         houseNumber = request.getParameter("houseNumber");
         password = Helper.hashString(request.getParameter("password"));
@@ -77,6 +78,8 @@ public class CreateDoctorAccountController extends HttpServlet {
         try {
             if (postHandler(request, response) == false) {
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+            }else {
+                response.sendRedirect(PAGE_RETURN);
             }
         }catch (SQLException | NamingException | NoSuchAlgorithmException ex) {
             String errorMessage = ex.getMessage();
@@ -87,8 +90,6 @@ public class CreateDoctorAccountController extends HttpServlet {
             }
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-        } finally {
-            response.sendRedirect(PAGE_RETURN);
         }
     }
 }

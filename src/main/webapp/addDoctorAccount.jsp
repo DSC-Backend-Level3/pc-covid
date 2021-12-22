@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="ward">Ward:</label>
-                                    <select class="form-control" id="ward" name="ward"
+                                    <select class="form-control" id="ward" name="wardID"
                                             required>
                                         <option value="">Select ward</option>
                                     </select>
