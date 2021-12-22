@@ -34,6 +34,9 @@ public class DoctorDispatcher extends HttpServlet {
 
                 request.getRequestDispatcher(Router.DOCTOR.LOCATION_CONTROLLER).forward(request,response);
                 break;
+            case PathValue.GUEST.LOGOUT:
+                request.getRequestDispatcher(Router.COMMON.LOGOUT_CONTROLLER).forward(request, response);
+                break;
             case "/" + PathValue.HOME_PAGE:
                 request.getRequestDispatcher(Router.DOCTOR.VIEW_VACCINATION_CONTROLLER).forward(request, response);
                 break;

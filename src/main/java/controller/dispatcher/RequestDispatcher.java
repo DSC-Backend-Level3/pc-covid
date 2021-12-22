@@ -28,9 +28,6 @@ public class RequestDispatcher extends HttpServlet {
         HttpSession session = request.getSession();
         int role = (int) session.getAttribute(Attribute.USER.ROLE);
         switch (role) {
-            case Role.GUEST :
-                request.getRequestDispatcher(Router.DISPATCHER.GUEST_DISPATCHER).forward(request,response);
-                break;
             case Role.ADMIN:
                 request.getRequestDispatcher(Router.DISPATCHER.ADMIN_DISPATCHER).forward(request, response);
                 break;
@@ -40,6 +37,8 @@ public class RequestDispatcher extends HttpServlet {
             case Role.USER:
                 request.getRequestDispatcher(Router.DISPATCHER.USER_DISPATCHER).forward(request, response);
                 break;
+            default:
+                request.getRequestDispatcher(Router.DISPATCHER.GUEST_DISPATCHER).forward(request, response);
         }
     }
 }

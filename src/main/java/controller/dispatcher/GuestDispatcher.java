@@ -30,9 +30,6 @@ public class GuestDispatcher extends HttpServlet {
             case PathValue.GUEST.LOGIN:
                 request.getRequestDispatcher(Router.COMMON.LOGIN_CONTROLLER).forward(request, response);
                 break;
-            case PathValue.GUEST.LOGOUT:
-                request.getRequestDispatcher(Router.COMMON.LOGOUT_CONTROLLER).forward(request, response);
-                break;
             case PathValue.GUEST.CREATE:
                 request.getRequestDispatcher(Router.COMMON.CREATE_ACCOUNT_CONTROLLER).forward(request, response);
                 break;
