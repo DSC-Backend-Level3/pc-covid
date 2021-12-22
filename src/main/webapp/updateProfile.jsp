@@ -1,4 +1,8 @@
-<%--
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="dto.ResidentDTO" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/17/2021
@@ -18,6 +22,7 @@
 <body>
 
 <button><a href="homepage">Home Page</a></button>
+<button><a href="logout">Logout</a></button>
 <h1>Update Personal Information</h1>
 <c:set var="result" value="${requestScope.PROFILE_PAGE}"/>
 <c:set var="province" value="${requestScope.PROFILE_PROVINCE}"/>
@@ -29,9 +34,9 @@
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
-        <input type="text" name="firstName" value="${result.firstName}"> <br>
+        <input type="text" name="firstName" value="${result.firstName}" maxlength="50"> <br>
         Last name :<br>
-        <input type="text" name="lastName" value="${result.lastName}"> <br>
+        <input type="text" name="lastName" value="${result.lastName}" maxlength="50"> <br>
         Gender :<br>
         <select name="gender">
         <c:choose>
@@ -46,17 +51,28 @@
         </c:choose>
     </select><br>
         Date of birth: <br>
-        <input type="text" name="DOB" value="${result.DOB}"><br>
+        <%
+            ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
+            Timestamp date = dto.getDOB();
+            String formattedDate = "";
+            if (date != null ) {
+                LocalDateTime localDateTime = date.toLocalDateTime();
+                formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            }
+
+        %>
+
+        <input type="date" name="DOB" value="<%= formattedDate %>" required><br>
         Identity card:<br>
-        <input type="text" name="txtID" value="${result.id}"><br>
+        <input type="text" name="txtID" value="${result.id}" disabled><br>
         Phone number: <br>
-        <input type="text" name="phoneNumber" value="${result.phoneNumber}"><br>
+        <input type="text" name="phoneNumber" value="${result.phoneNumber}" pattern="[0-9]{10}" title="Phone numbers must include 10 numbers."><br>
         Health insurance card number:<br>
-        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}"><br>
+        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Health insurance ID must contain 15 characters including 2 first letters and 13 numbers."><br>
         Email:<br>
-        <input type="text" name="email" value="${result.email}"><br>
+        <input type="email" name="email" value="${result.email}"><br>
         Nationality: <br>
-        <input type="text" name="nationality" value="${result.nationality}"><br>
+        <input type="text" name="nationality" value="${result.nationality}" maxlength="25"><br>
         Province/City: <br>
         <select onchange="selectProvince()" name="cboProvince" id="province">
             <option value="${province.id}">${province.name}</option>
@@ -97,8 +113,9 @@
         House number: <br>
         <input type="text" name="txtHouseNumber" value="${result.houseNumber}"><br>
     </c:if>
-    <input type="submit" value="Save Changes" name="btAction">
+    <input type="submit" value="SaveChanges" name="btAction">
 </form>
+
 <script>
     function  selectProvince(){
         var e = document.getElementById("province");

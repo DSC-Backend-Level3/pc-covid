@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 @WebServlet(name = "AddVaccineController", value = "/AddVaccineController")
 public class AddVaccineController extends HttpServlet {
@@ -35,12 +36,16 @@ public class AddVaccineController extends HttpServlet {
         firm = request.getParameter("firm");
         interval = Integer.parseInt(request.getParameter("interval"));
 
-        VaccineDTO vaccine = new VaccineDTO(id, name, firm, country, interval);
+        VaccineDTO vaccine = vaccineDao.getVaccineByID(id);
+        if (vaccine != null) {
+            request.setAttribute("errorMessage", "ID is existed!");
+        }
 
-        return vaccineDao.addNewVaccine(vaccine);
+        return vaccineDao.addNewVaccine(new VaccineDTO(id, name, firm, country, interval));
     }
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
     }
 

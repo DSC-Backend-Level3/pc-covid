@@ -14,7 +14,7 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control","no-cache, no-store");
         //get current session
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         //remove exist attribute
         session.removeAttribute(Attribute.USER.USER_ID);
         session.removeAttribute(Attribute.USER.ROLE);

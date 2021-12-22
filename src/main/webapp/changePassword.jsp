@@ -20,6 +20,7 @@
 <c:set var="newpassword" value="${requestScope.NEW_PASSWORD}"/>
 <c:set var="checkValid" value="${requestScope.CHECK_VALID}"/>
 <button><a href="homepage">Home Page</a></button>
+<button><a href="logout">Logout</a></button>
 <h1>Update Password</h1>
 <form action="update-password" method="post">
     Current Password: <input type="password" name="password" value="${oldpassword}"> <br>

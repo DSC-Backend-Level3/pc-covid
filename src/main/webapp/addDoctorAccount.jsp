@@ -17,18 +17,20 @@
       <title>Doctor Account</title>
     </head>
     <body>
+        <button><a href="logout">Logout</a></button>
         <h1>Doctor Account Form</h1>
+        <c:set var="error" value="${requestScope.ERROR}"/>
         <form action="create" method="POST">
-            Doctor ID <input type="text" name="id" value="" required/><br/>
+            Doctor ID <input type="text" name="id" value="" pattern="[0-9]{12}" title="Input must be 12 numbers" required/><br/>
             Doctor Password <input type="password" name="password" value="" required/><br/>
             <%--    default  --%>
             First Name <input type="text" name="firstName" value="" required/><br/>
             Last Name <input type="text" name="lastName" value="" required/><br/>
-            Phone Number <input type="text" name="phoneNumber" value="" required/><br/>
-            Health Insurance ID <input type="text" name="healthInsuranceID" value="" required/><br/>
-            Date of birth <input type="text" name="DOB" value="" required/><br/>
+            Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="" required/><br/>
+            Health Insurance ID <input type="text" name="healthInsuranceID" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters" value="" placeholder="Ex: ab0000000000000" required/><br/>
+            Date of birth <input type="date" name="DOB" value="" required/><br/>
             Nationality <input type="text" name="nationality" value="" required/><br/>
-            Gmail <input type="text", name="email" value="" required/><br/>
+            Gmail <input type="email" name="email" value="" required/><br/>
             <%--    using drop-down list--%>
             Gender
             <select name="gender" id="" required>

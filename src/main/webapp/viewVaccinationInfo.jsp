@@ -1,4 +1,9 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="dto.ResidentDTO" %>
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/16/2021
@@ -16,6 +21,7 @@
     <title>Vaccination Information Page</title>
 </head>
 <body>
+<button><a href="logout">Logout</a></button>
 <h1>Vaccination Information</h1>
 
 <c:set var="resident" value="${requestScope.USER_INFO}"/>
@@ -40,6 +46,7 @@
             <tr>
                 <td>
                         ${obj.count}
+                        <c:set var="count" value="${obj.count}"/>
                 </td>
                 <td>
                     <c:forEach items="${vaccines}" var="vaccineDTO" varStatus="i">
@@ -50,7 +57,14 @@
                     ${vaccineName.name}
                 </td>
                 <td>
-                        ${dto.date}
+                    <%
+                        VaccinationInfoDTO dto = (VaccinationInfoDTO) pageContext.getAttribute("dto");
+                        Timestamp date = dto.getDate();
+                        LocalDateTime localDateTime = date.toLocalDateTime();
+                        String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+                    %>
+                    <%= formattedDate %>
                 </td>
                 <td>
 
@@ -76,11 +90,22 @@
         </c:forEach>
         </tbody>
     </table>
-</c:if>
+    <c:choose>
+        <c:when test="${count == 1}">
+            <h2 style="color: #0f6848">Vaccinated with 1 dose.</h2>
+        </c:when>
+        <c:otherwise>
+            <h2 style="color: #0f6848">Vaccinated with ${count} doses.</h2>
+        </c:otherwise>
+    </c:choose>
 
+</c:if>
+<c:if test="${empty result}">
+    <h2 style="color: #be2617">You have not been vaccinated.</h2>
+</c:if>
 <br>
 <c:url value="view" var="View_Profile">
-    <c:param name="btAction" value="View Profile"/>
+    <c:param name="btAction" value="ViewProfile"/>
 </c:url>
 <button><a href="${View_Profile}">View Profile</a></button>
 <button><a href="changePassword.html">Change Password</a></button>
