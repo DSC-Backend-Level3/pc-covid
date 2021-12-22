@@ -5,6 +5,7 @@ import constant.Router;
 import dao.*;
 import dao.implement.*;
 import dto.*;
+import utils.Validator;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
@@ -37,6 +38,7 @@ public class AddVaccinationInfoController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
+        VaccineDao vaccineDao = new VaccineDaoImpl();
 
         String residentID;
         int id;
@@ -50,9 +52,13 @@ public class AddVaccinationInfoController extends HttpServlet {
         wardID = Integer.parseInt(request.getParameter("wardID"));
         date = Timestamp.valueOf(request.getParameter("date"));
 
-        VaccinationInfoDTO vaccinationInfo= new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
-        System.out.println("Resident:" + residentID + "Vaccination" + id + "Vaccine" + vaccineID + "Ward" + wardID + "date" + date);
-        return vaccinationInfoDao.addNewVaccinationInfo(vaccinationInfo);
+        VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
+        VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
+        if (vaccinationInfo != null) {
+            return Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
+        }
+
+        return vaccinationInfoDao.addNewVaccinationInfo(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,10 +80,10 @@ public class AddVaccinationInfoController extends HttpServlet {
             if (postHandler(request, response)) {
                 response.sendRedirect("homepage?result=success");
 //                request.getRequestDispatcher("homepage?result=success").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "Date is not suita");
+                request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request,response);
             }
-//            else {
-//                request.getRequestDispatcher(Routers.EVENT_MANAGEMENT_CONTROLLER).forward(request, response);
-//            }
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
