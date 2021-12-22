@@ -58,7 +58,6 @@ public class ChangePasswordController extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-
         }
     }
 }

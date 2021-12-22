@@ -149,8 +149,8 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ward">Ward:</label>
-                                    <select class="form-control" id="ward" name="ward"
+                                    <label for="wardID">Ward:</label>
+                                    <select class="form-control" id="wardID" name="wardID"
                                             required>
                                         <option value="">Select ward</option>
                                     </select>
