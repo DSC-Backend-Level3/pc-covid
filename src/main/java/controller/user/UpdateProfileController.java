@@ -66,7 +66,6 @@ public class UpdateProfileController extends HttpServlet {
                         WardDaoImpl wardDao = new WardDaoImpl();
                         List<WardDTO> listWard = wardDao.getWardByDistrictID(districtID);
                         request.setAttribute("WARD_LIST", listWard);
-
                     }//If select district
 
                     url = UPDATE_USER_PROFILE;
@@ -122,13 +121,16 @@ public class UpdateProfileController extends HttpServlet {
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
                         url = "view?btAction=ViewProfile";
+                        System.out.println(url);
                     }
 
                 }
             }
 
         }catch (DateTimeParseException e){
-                url = "view?btAction=UpdateProfile";
+            System.out.println("Hello");
+            request.setAttribute("ERROR", "Invalid date.");
+            url = "view?btAction=UpdateProfile";
 
         }catch (SQLException e) {
             url = ERROR_PAGE;
@@ -137,6 +139,7 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
+            System.out.println(url);
             response.sendRedirect(url);
         }
     }

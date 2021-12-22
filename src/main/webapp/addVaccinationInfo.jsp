@@ -22,7 +22,7 @@
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" pattern="[0-9]{12}" title="Input must be 12 numbers" value="" required/><br/>
-        Vaccination Name <input type="text" name="id" value="" required/><br/>
+        Vaccination ID: <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine name:
         <select name="vaccineID" required>
