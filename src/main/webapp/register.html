@@ -37,27 +37,12 @@
                         </div>
                         <form class="user needs-validation" action="create" method="post" novalidate>
                             <div class="form-group">
-                                <label for="firstName">First name:</label>
-                                <input type="text" class="form-control form-control-user" id="firstName"
-                                       name="firstName" placeholder="Ex: Andrew" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName">Last name:</label>
-                                <input type="text" class="form-control form-control-user"
-                                       id="lastName" name="lastName" placeholder="Ex: Thompson" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
                                 <label for="idNumber">ID number:</label>
                                 <input type="text" class="form-control form-control-user" id="idNumber"
                                        name="idNumber" placeholder="Ex: 123456789123" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
-
                             <div class="form-group ">
                                 <label for="password">Password:</label>
                                 <input type="password" class="form-control form-control-user"
@@ -72,6 +57,29 @@
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
+                            <hr/>
+                            <div class="form-group">
+                                <label for="firstName">First name:</label>
+                                <input type="text" class="form-control form-control-user" id="firstName"
+                                       name="firstName" placeholder="Ex: Andrew" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last name:</label>
+                                <input type="text" class="form-control form-control-user"
+                                       id="lastName" name="lastName" placeholder="Ex: Thompson" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of birth:</label>
+                                <input type="DOB" class="form-control form-control-user"
+                                id="DOB" name="DOB" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <hr/>
                             <button class="btn btn-primary btn-user btn-block" type="submit">
                                 Register
                             </button>
