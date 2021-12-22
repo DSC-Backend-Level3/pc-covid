@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name = "AddVaccinationInfoController", value = "/AddVaccinationInfoController")
@@ -39,32 +40,40 @@ public class AddVaccinationInfoController extends HttpServlet {
 
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
         VaccineDao vaccineDao = new VaccineDaoImpl();
+        boolean result = false;
 
         String residentID;
         int id;
         int vaccineID;
         int wardID;
-        Timestamp date;
+        String date;
 
         residentID = request.getParameter("residentID");
         id = Integer.parseInt(request.getParameter("id"));
         vaccineID = Integer.parseInt(request.getParameter("vaccineID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
-        date = Timestamp.valueOf(request.getParameter("date"));
+        date = request.getParameter("date");
+
+        int districtID = Integer.parseInt(request.getParameter("districtID"));
+        int provinceID = Integer.parseInt(request.getParameter("provinceID"));
+        WardDao wardDao = new WardDaoImpl();
+        request.setAttribute("ward", wardDao.getWardByID(wardID));
+        System.out.println(wardDao.getWardByID(wardID).getName());
+        DistrictDao districtDao = new DistrictDaoImpl();
+        request.setAttribute("district", districtDao.getDistrictByID(districtID));
+        System.out.println(districtDao.getDistrictByID(districtID).getName());
+        ProvinceDao provinceDao = new ProvinceDaoImpl();
+        request.setAttribute("province", provinceDao.getProvinceByID(provinceID));
+        System.out.println(provinceDao.getProvinceByID(provinceID));
+        request.setAttribute("vaccine", vaccineDao.getVaccineByID(vaccineID));
 
         VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
         VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
         if (vaccinationInfo != null) {
-            System.out.println("Start Date:" + vaccinationInfo.getDate());
-            System.out.println("End Date:" + date);
-            System.out.println(Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval()) + " Hello My Name is Ha");
             return Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
         }
-        VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
-        System.out.println(result.getDate());
-        boolean add  = vaccinationInfoDao.addNewVaccinationInfo(result);
 
-        return add;
+        return vaccinationInfoDao.addNewVaccinationInfo(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,12 +92,13 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if (postHandler(request, response)) {
+            String link = request.getParameter("btAction");
+            if (postHandler(request, response) && link.equals("Add Vaccination")) {
                 response.sendRedirect("homepage?result=success");
 //                request.getRequestDispatcher("homepage?result=success").forward(request, response);
             } else {
                 request.setAttribute("errorMessage", "Date is not suitable for the next injection!");
-                request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request,response);
+                request.getRequestDispatcher("addVaccinationInfoInvalid.jsp").forward(request,response);
             }
         } catch (Exception ex) {
             log(ex.getMessage());

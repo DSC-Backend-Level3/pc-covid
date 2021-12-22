@@ -20,8 +20,8 @@
     <h1>Vaccination Information Form</h1>
     <form action="add" method="POST">
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
-        Resident ID <input type="text" name="residentID" value="" required/><br/>
-        Vaccination ID <input type="text" name="id" value="" required/><br/>
+        Resident ID <input type="text" name="residentID" pattern="[0-9]{12}" title="Input must be 12 numbers" value="" required/><br/>
+        Vaccination Name <input type="text" name="id" value="" required/><br/>
 <%--        using drop-down list to presentation--%>
         Vaccine ID
         <select name="vaccineID" required>
@@ -31,11 +31,11 @@
                 </c:forEach>
         </select>
         Province
-        <select id="province" required>
+        <select id="province" name="provinceID" required>
             <option>Select province</option>
         </select>
         District
-        <select id="district" required>
+        <select id="district" name="districtID" required>
             <option>Select district</option>
         </select>
         Ward
@@ -43,7 +43,7 @@
             <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value="" required/>${requestScope.errorMessage}<br/>
+        Injection's Date <input type="date" name="date" value="" required/><br/>
         <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 
