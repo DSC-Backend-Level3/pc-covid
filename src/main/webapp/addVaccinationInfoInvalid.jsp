@@ -39,7 +39,7 @@
     </select>
 
     Injection's Date <input type="date" name="date" value="${param.date}" required/>${requestScope.errorMessage}<br/>
-<%--    <input type="submit" value="Add Vaccination" name="btAction">--%>
+   <input type="submit" value="Add Vaccination" name="btAction">
 </form>
 </body>
 </html>

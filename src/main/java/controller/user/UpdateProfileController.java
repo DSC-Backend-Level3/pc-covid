@@ -128,7 +128,6 @@ public class UpdateProfileController extends HttpServlet {
             }
 
         }catch (DateTimeParseException e){
-                request.setAttribute("ERROR", "Invalid date.");
                 url = "view?btAction=UpdateProfile";
 
         }catch (SQLException e) {

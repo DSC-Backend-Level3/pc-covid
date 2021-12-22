@@ -31,6 +31,7 @@
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
 <c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
 <c:set var="listWard" value="${requestScope.WARD_LIST}"/>
+<c
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
@@ -54,7 +55,7 @@
         <%
             ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
             Timestamp date = dto.getDOB();
-            String formattedDate = "";
+            String formattedDate = null;
             if (date != null ) {
                 LocalDateTime localDateTime = date.toLocalDateTime();
                 formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -62,7 +63,7 @@
 
         %>
 
-        <input type="date" name="DOB" value="<%= formattedDate %>" required><br>
+        <input type="date" name="DOB" value="<%= formattedDate %>" ><br>
         Identity card:<br>
         <input type="text" name="txtID" value="${result.id}" disabled><br>
         Phone number: <br>
