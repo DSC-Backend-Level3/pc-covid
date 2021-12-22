@@ -18,8 +18,6 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -27,7 +25,6 @@ import static constant.Router.*;
 import static constant.Router.PAGE.ERROR_PAGE;
 import static constant.Router.PAGE.UPDATE_USER_PROFILE;
 import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 @WebServlet(name = "UpdateProfileController", value = "/UpdateProfileController")
 public class UpdateProfileController extends HttpServlet {
@@ -106,12 +103,11 @@ public class UpdateProfileController extends HttpServlet {
             genderDB = "M";
         }
         ResidentDTO dto = null;
-        String url = ERROR_PAGE;
+        String url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (id != null) {
-
                     Timestamp date = Helper.convertDate(DOB);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
                     ResidentDTO resident = residentDao.getResidentById(id);
@@ -134,8 +130,10 @@ public class UpdateProfileController extends HttpServlet {
                 url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
 
         }catch (SQLException e) {
+            url = ERROR_PAGE;
             e.printStackTrace();
         } catch (NamingException e) {
+            url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

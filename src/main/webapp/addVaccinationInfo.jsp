@@ -43,8 +43,7 @@
             <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value="" placeholder="yyyy-MM-dd"
-                                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" required/><br/>
+        Injection's Date <input type="date" name="date" value="" required/><br/>
         <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 

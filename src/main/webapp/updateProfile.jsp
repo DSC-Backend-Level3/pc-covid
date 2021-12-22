@@ -59,19 +59,18 @@
 
         %>
 
-        <input type="text" name="DOB" value="<%= formattedDate %>" placeholder="yyyy-MM-dd"
-               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"><br>
+        <input type="date" name="DOB" value="<%= formattedDate %>"><br>
         <c:if test="${not empty error}">
             <p style="color: red">${error}</p>
         </c:if>
         Identity card:<br>
-        <input type="text" name="txtID" value="${result.id}"><br>
+        <input type="text" name="txtID" value="${result.id}" disabled><br>
         Phone number: <br>
-        <input type="text" name="phoneNumber" value="${result.phoneNumber}"><br>
+        <input type="text" name="phoneNumber" value="${result.phoneNumber}" pattern="[0-9]{10}" title="Phone numbers must include 10 numbers."><br>
         Health insurance card number:<br>
-        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}"><br>
+        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Health insurance ID must contain 15 characters including 2 first letters and 13 numbers."><br>
         Email:<br>
-        <input type="text" name="email" value="${result.email}"><br>
+        <input type="email" name="email" value="${result.email}"><br>
         Nationality: <br>
         <input type="text" name="nationality" value="${result.nationality}"><br>
         Province/City: <br>
