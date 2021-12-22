@@ -1,4 +1,9 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="dto.ResidentDTO" %>
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/16/2021
@@ -50,7 +55,14 @@
                     ${vaccineName.name}
                 </td>
                 <td>
-                        ${dto.date}
+                    <%
+                        VaccinationInfoDTO dto = (VaccinationInfoDTO) pageContext.getAttribute("dto");
+                        Timestamp date = dto.getDate();
+                        LocalDateTime localDateTime = date.toLocalDateTime();
+                        String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+                    %>
+                    <%= formattedDate %>
                 </td>
                 <td>
 

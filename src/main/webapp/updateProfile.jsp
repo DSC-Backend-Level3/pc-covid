@@ -1,4 +1,8 @@
-<%--
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="dto.ResidentDTO" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/17/2021
@@ -26,6 +30,7 @@
 <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
 <c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
 <c:set var="listWard" value="${requestScope.WARD_LIST}"/>
+<c:set var="error" value="${requestScope.ERROR}"/>
 <form action="update-info" method="post">
     <c:if test="${not empty result}">
         First name:<br>
@@ -46,15 +51,26 @@
         </c:choose>
     </select><br>
         Date of birth: <br>
-        <input type="text" name="DOB" value="${result.DOB}"><br>
+        <%
+            ResidentDTO dto = (ResidentDTO) pageContext.getAttribute("result");
+            Timestamp date = dto.getDOB();
+            LocalDateTime localDateTime = date.toLocalDateTime();
+            String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        %>
+
+        <input type="date" name="DOB" value="<%= formattedDate %>"><br>
+        <c:if test="${not empty error}">
+            <p style="color: red">${error}</p>
+        </c:if>
         Identity card:<br>
-        <input type="text" name="txtID" value="${result.id}"><br>
+        <input type="text" name="txtID" value="${result.id}" disabled><br>
         Phone number: <br>
-        <input type="text" name="phoneNumber" value="${result.phoneNumber}"><br>
+        <input type="text" name="phoneNumber" value="${result.phoneNumber}" pattern="[0-9]{10}" title="Phone numbers must include 10 numbers."><br>
         Health insurance card number:<br>
-        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}"><br>
+        <input type="text" name="healthInsuranceID" value="${result.healthInsuranceID}" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Health insurance ID must contain 15 characters including 2 first letters and 13 numbers."><br>
         Email:<br>
-        <input type="text" name="email" value="${result.email}"><br>
+        <input type="email" name="email" value="${result.email}"><br>
         Nationality: <br>
         <input type="text" name="nationality" value="${result.nationality}"><br>
         Province/City: <br>

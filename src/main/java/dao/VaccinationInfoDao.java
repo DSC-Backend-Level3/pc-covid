@@ -34,4 +34,5 @@ public interface VaccinationInfoDao {
      */
     boolean isAvailableFor2ndInjection(int id) throws NamingException, SQLException;
     boolean addNewVaccinationInfo(VaccinationInfoDTO vaccinationInfo) throws SQLException, NamingException;
+    VaccinationInfoDTO getTheLatestVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException;
 }
