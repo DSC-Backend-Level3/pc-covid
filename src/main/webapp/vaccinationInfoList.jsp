@@ -1,4 +1,8 @@
-<%--
+<%@ page import="dto.VaccinationInfoDTO" %>
+<%@ page import="dto.ResidentDTO" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/19/2021
@@ -45,22 +49,22 @@
                         <td>${dto.residentID}</td>
                         <td><c:out value="${residentList[obj.index].firstName}"/></td>
                         <td><c:out value="${residentList[obj.index].lastName}"/></td>
-<%--                            <td><c:forEach var="resident" items="${residentList}">--%>
-<%--                                <c:if test="${resident.id == dto.id}">--%>
-<%--                                    ${resident.lastName}--%>
-<%--                                </c:if>--%>
-<%--                            </c:forEach></td>--%>
+
                         <td><c:out value="${vaccineList[obj.index].name}"/></td>
 
-<%--                            <td><c:forEach var="vaccine" items="${vaccineList}">--%>
-<%--                                <c:if test="${vaccine.id == dto.vaccineID}">--%>
-<%--                                    ${vaccine.name}--%>
-<%--                                </c:if>--%>
-<%--                            </c:forEach></td>--%>
                         <td><c:out value="${locationList[obj.index].provinceName}"/></td>
                         <td><c:out value="${locationList[obj.index].districtName}"/></td>
                         <td><c:out value="${locationList[obj.index].wardName}"/></td>
-                        <td>${dto.date}</td>
+                        <td>
+                            <%
+                                VaccinationInfoDTO dto = (VaccinationInfoDTO) pageContext.getAttribute("dto");
+                                Timestamp date = dto.getDate();
+                                LocalDateTime localDateTime = date.toLocalDateTime();
+                                String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+                            %>
+                            <%= formattedDate %>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

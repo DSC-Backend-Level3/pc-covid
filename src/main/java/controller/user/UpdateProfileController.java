@@ -9,6 +9,7 @@ import dto.DistrictDTO;
 import dto.ProvinceDTO;
 import dto.ResidentDTO;
 import dto.WardDTO;
+import utils.Helper;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
@@ -111,8 +112,7 @@ public class UpdateProfileController extends HttpServlet {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
                 if (id != null) {
 
-                    LocalDateTime parsedDate = LocalDate.parse(DOB, ISO_LOCAL_DATE).atStartOfDay();
-                    Timestamp date = Timestamp.valueOf(parsedDate);
+                    Timestamp date = Helper.convertDate(DOB);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
                     ResidentDTO resident = residentDao.getResidentById(id);
                     int roleID = resident.getRoleID();

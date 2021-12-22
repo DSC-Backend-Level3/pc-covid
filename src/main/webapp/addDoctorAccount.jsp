@@ -18,15 +18,21 @@
     </head>
     <body>
         <h1>Doctor Account Form</h1>
+        <c:set var="error" value="${requestScope.ERROR}"/>
+        <c:set var="firstName" value="${requestScope.FIRSTNAME}"/>
         <form action="create" method="POST">
             Doctor ID <input type="text" name="id" value="" required/><br/>
             Doctor Password <input type="password" name="password" value="" required/><br/>
             <%--    default  --%>
-            First Name <input type="text" name="firstName" value="" required/><br/>
+            First Name <input type="text" name="firstName" value="${firstName}" required/><br/>
             Last Name <input type="text" name="lastName" value="" required/><br/>
             Phone Number <input type="text" name="phoneNumber" value="" required/><br/>
             Health Insurance ID <input type="text" name="healthInsuranceID" value="" required/><br/>
-            Date of birth <input type="text" name="DOB" value="" required/><br/>
+            Date of birth <input type="text" name="DOB" value="" placeholder="yyyy-MM-dd"
+                                 pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" required/><br>
+            <c:if test="${not empty error}">
+                <p style="color: red">${error}</p>
+            </c:if>
             Nationality <input type="text" name="nationality" value="" required/><br/>
             Gmail <input type="text", name="email" value="" required/><br/>
             <%--    using drop-down list--%>

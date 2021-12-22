@@ -42,6 +42,7 @@ public class LoginController extends HttpServlet {
 
 
     private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, NoSuchAlgorithmException {
+
         response.setContentType("text/html;charset=UTF-8");
         //initialize resource
         ResidentDao residentDao = new ResidentDaoImpl();

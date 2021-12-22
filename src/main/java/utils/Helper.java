@@ -6,10 +6,16 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 public class Helper {
 
@@ -160,5 +166,10 @@ public class Helper {
         byte[] digest = md.digest();
         String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
         return myHash;
+    }
+    public  static Timestamp convertDate(String date) throws DateTimeParseException {
+        LocalDateTime parsedDate = LocalDate.parse(date, ISO_LOCAL_DATE).atStartOfDay();
+        Timestamp result = Timestamp.valueOf(parsedDate);
+        return result;
     }
 }

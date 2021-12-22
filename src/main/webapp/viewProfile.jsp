@@ -41,7 +41,6 @@
             Timestamp date = dto.getDOB();
             LocalDateTime localDateTime = date.toLocalDateTime();
             String formattedDate = localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);
-
         %>
         <%= formattedDate %>
         <br>

@@ -22,8 +22,7 @@
         <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
         Resident ID <input type="text" name="residentID" value="" required/><br/>
         Vaccination ID <input type="text" name="id" value="" required/><br/>
-<%--        using drop-down list to presentation--%>
-        Vaccine ID
+        Vaccine name:
         <select name="vaccineID" required>
             <option>Select Vaccine</option>
                 <c:forEach var="dto" items="${vaccineList}">
@@ -43,7 +42,8 @@
             <option value="">Select ward</option>
         </select>
 
-        Injection's Date <input type="text" name="date" value="" required/><br/>
+        Injection's Date <input type="text" name="date" value="" placeholder="yyyy-MM-dd"
+                                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" required/><br/>
         <input type="submit" value="Add Vaccination" name="btAction">
     </form>
 
