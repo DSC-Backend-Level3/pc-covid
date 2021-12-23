@@ -1,6 +1,7 @@
 package utils;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -100,5 +101,11 @@ public class Validator {
     public static boolean isBeforeCurrentDate(Timestamp date) {
         Timestamp today = new Timestamp(System.currentTimeMillis());
         return date.before(today);
+    }
+
+    public static boolean isValidAge(Timestamp date) {
+        LocalDateTime checkDate = date.toLocalDateTime();
+        LocalDateTime today = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
+        return checkDate.plusYears(18).isBefore(today) && checkDate.plusYears(65).isAfter(today);
     }
 }

@@ -62,14 +62,17 @@ public class CreateDoctorAccountController extends HttpServlet {
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
-        if (Validator.isBeforeCurrentDate(date) == false) {
-            request.setAttribute("dateError", "Date of birth can not over today!");
-            return false;
+        if (residentDao.getResidentById(id) != null) {
+            request.setAttribute("existedError", "ID is duplicated!!");
+            throw new IllegalArgumentException();
         }
-        System.out.println("date is valid");
+        if (Validator.isValidAge(date) == false) {
+            request.setAttribute("dateError", "Your age is not suitable!");
+            throw new IllegalArgumentException();
+        }
         if (confirmPassword.equals(password) == false) {
             request.setAttribute("passwordError", "Password must be the same!");
-            return false;
+            throw new IllegalArgumentException();
         }
         ResidentDTO residentDTO = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, date, nationality, wardID, houseNumber, 3, password);
 
@@ -90,39 +93,14 @@ public class CreateDoctorAccountController extends HttpServlet {
             } else {
                 response.sendRedirect(PAGE_RETURN);
             }
-        }catch (SQLException ex) {
-            errorMessage = ex.getMessage();
-            System.out.println(errorMessage);
-            if (errorMessage.contains("PRIMARY KEY")) {
-                errorMessage = "ID is duplicated!";
-                request.setAttribute("existedError", errorMessage);
-                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
-            } else {
-                if (errorMessage.contains("out-of-range value")) {
-                    System.out.println("problem is here");
-                    errorMessage = "Date is invalid!";
-                    request.setAttribute("dateError", errorMessage);
-                    request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
-                } else {
-                    request.setAttribute("errorMessage", errorMessage);
-                    request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-                }
-            }
-        } catch (NamingException | NoSuchAlgorithmException | NumberFormatException ex) {
+        } catch (SQLException | NamingException | NoSuchAlgorithmException | NumberFormatException ex) {
             errorMessage = ex.getMessage();
             System.out.println(errorMessage);
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } catch (DateTimeParseException ex) {
-            errorMessage = ex.getMessage();
-            if (ex.getMessage().contains("could not be parsed")) {
-                errorMessage = "Date is invalid!";
-                request.setAttribute("dateError", errorMessage);
-                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
-            } else {
-                request.setAttribute("errorMessage", errorMessage);
-                request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-            }
+            request.setAttribute("dateError", "Date is invalid!");
+            request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
         }
     }
 }
