@@ -39,7 +39,7 @@
                     <div class="col-lg-6 mx-auto">
                         <div class="p-5">
                             <div class="text-center py-1">
-                                <h1 class="h4 text-gray-900 mb-4">Welcome Back, ${sessionScope.name}!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Welcome, <br> ${sessionScope.name}!</h1>
                             </div>
                             <hr/>
                             <div class="text-center py-2">

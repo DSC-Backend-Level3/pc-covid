@@ -41,7 +41,11 @@
                 <div class="p-2">
                     <h4 class="text-center text-gray-900">Welcome back, ${sessionScope.name}</h4>
                     <a href="logout" class="btn btn-outline-danger">log out</a>
-                    <a href="addVaccine.html" class="btn btn-outline-primary">add new vaccination</a>
+                    <c:url value="add" var="Add_Vaccination">
+                        <c:param name="btAction" value="Add Vaccination"/>
+                    </c:url>
+                    <a href="${Add_Vaccination}" class="btn btn-outline-primary">Adding New Vaccination</a>
+
                 </div>
                 <div class="card-body">
                     <c:if test="${not empty requestScope.vaccinationInfoList}">
