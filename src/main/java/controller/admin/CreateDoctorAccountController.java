@@ -1,6 +1,5 @@
 package controller.admin;
 
-import constant.Router;
 import dao.ResidentDao;
 import dao.implement.ResidentDaoImpl;
 import dto.ResidentDTO;
@@ -8,9 +7,11 @@ import utils.Helper;
 import utils.Validator;
 
 import javax.naming.NamingException;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +25,7 @@ import static constant.Router.PAGE.ERROR_PAGE;
 @WebServlet(name = "CreateDoctorAccountController", value = "/CreateDoctorAccountController")
 public class CreateDoctorAccountController extends HttpServlet {
     private final String PAGE_RETURN = "viewDoctor?btAction=viewDoctor";
+
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException, NoSuchAlgorithmException {
 
         request.setCharacterEncoding("UTF-8");
@@ -60,6 +62,10 @@ public class CreateDoctorAccountController extends HttpServlet {
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
+        if (confirmPassword.equals(password) == false) {
+            request.setAttribute("passwordError", "Password must be the same!");
+            return false;
+        }
         if (Validator.isBeforeCurrentDate(date) == false) {
             request.setAttribute("dateErrorMessage", "Date of birth can not over today!");
             return false;
@@ -73,6 +79,7 @@ public class CreateDoctorAccountController extends HttpServlet {
 
         return residentDao.addNewResident(residentDTO);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -66,7 +66,6 @@ public class UpdateProfileController extends HttpServlet {
                         WardDaoImpl wardDao = new WardDaoImpl();
                         List<WardDTO> listWard = wardDao.getWardByDistrictID(districtID);
                         request.setAttribute("WARD_LIST", listWard);
-
                     }//If select district
 
                     url = UPDATE_USER_PROFILE;
@@ -89,8 +88,14 @@ public class UpdateProfileController extends HttpServlet {
         String firstName = request.getParameter(Attribute.USER.FIRST_NAME);
         String lastName = request.getParameter(Attribute.USER.LAST_NAME);
         String phoneNumber = request.getParameter(Attribute.USER.PHONE_NUMBER);
+        if(phoneNumber.length() < 10){
+            phoneNumber = null;
+        }
         String email = request.getParameter(Attribute.USER.EMAIL);
         String healthInsuranceID = request.getParameter(Attribute.USER.HEALTH_INSURANCE_ID);
+        if(healthInsuranceID.length() < 15){
+            healthInsuranceID = null;
+        }
         String gender = request.getParameter(Attribute.USER.GENDER);
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
@@ -103,31 +108,33 @@ public class UpdateProfileController extends HttpServlet {
             genderDB = "M";
         }
         ResidentDTO dto = null;
-        String url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
+        String url =  "view?btAction=UpdateProfile";
         try {
             if (session != null) {
                 String id = (String) session.getAttribute(Attribute.USER.USER_ID);
+
                 if (id != null) {
                     Timestamp date = Helper.convertDate(DOB);
                     ResidentDaoImpl residentDao = new ResidentDaoImpl();
                     ResidentDTO resident = residentDao.getResidentById(id);
+                    Integer wardID = resident.getWardID();
                     int roleID = resident.getRoleID();
-                    if (wardRequest != null) {
-                        Integer wardID = Integer.parseInt(wardRequest);
+                    if (wardRequest != null && !wardRequest.equalsIgnoreCase("Select ward")) {
+                        wardID = Integer.parseInt(wardRequest);
                         dto = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, genderDB,
                                 date, nationality, wardID, houseNumber, roleID, null);
                         ResidentDaoImpl dao = new ResidentDaoImpl();
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
-                        url = VIEW_PROFILE_CONTROLLER;
+                        url = "view?btAction=ViewProfile";
                     }
 
                 }
             }
 
+
         }catch (DateTimeParseException e){
-                request.setAttribute("ERROR", "Invalid date.");
-                url = VIEW_PROFILE_CONTROLLER + "?btAction=Update Profile";
+            url = "view?btAction=UpdateProfile";
 
         }catch (SQLException e) {
             url = ERROR_PAGE;
@@ -136,8 +143,7 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

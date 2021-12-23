@@ -29,7 +29,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     }
 
     @Override
-    public List<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException{
+    public List<VaccinationInfoDTO> getAllVaccinationInfo() throws NamingException, SQLException {
         List<VaccinationInfoDTO> list = null;
         try {
             connection = DBHelper.makeConnection();
@@ -62,7 +62,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
 
 
     @Override
-    public VaccinationInfoDTO getVaccinationInfoByID(int id) throws NamingException, SQLException{
+    public VaccinationInfoDTO getVaccinationInfoByID(int id) throws NamingException, SQLException {
         VaccinationInfoDTO vaccineInfo = null;
         try {
             connection = DBHelper.makeConnection();
@@ -137,7 +137,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
                     int vaccineID = resultSet.getInt("vaccineID");
                     int wardID = resultSet.getInt("wardID");
                     Timestamp date = resultSet.getTimestamp("date");
-                    if(list == null){
+                    if (list == null) {
                         list = new ArrayList<>();
                     }
                     list.add(new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date));
@@ -150,7 +150,7 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
     }
 
     @Override
-    public boolean isAvailableFor2ndInjection(int residentID) throws NamingException, SQLException{
+    public boolean isAvailableFor2ndInjection(int residentID) throws NamingException, SQLException {
         int numOfInjection = 0;
         try {
             connection = DBHelper.makeConnection();
@@ -199,5 +199,33 @@ public class VaccinationInfoDaoImpl implements VaccinationInfoDao {
             closeConnection();
         }
         return false;
+    }
+    @Override
+    public VaccinationInfoDTO getTheLatestVaccinationInfoByIdUser(String residentID) throws NamingException, SQLException {
+        VaccinationInfoDTO vaccineInfo = null;
+        try {
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                String sql = "SELECT TOP 1 [id], [residentID], [vaccineID], [wardID], [date]"
+                        + " FROM [VaccinationInfo]"
+                        + " WHERE [residentID] = ?"
+                        + " GROUP BY [vaccineID]";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, residentID);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    int vaccineID = resultSet.getInt("vaccineID");
+                    int wardID = resultSet.getInt("wardID");
+                    Timestamp date = resultSet.getTimestamp("date");
+
+                    vaccineInfo = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
+                }
+            }
+        } finally {
+            closeConnection();
+        }
+        return vaccineInfo;
     }
 }

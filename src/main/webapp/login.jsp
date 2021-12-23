@@ -41,6 +41,9 @@
 
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
+                    <div class="card-header py-3">
+                        <h3 class="text-center text-gray-900">PC-COVID</h3>
+                    </div>
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -52,20 +55,24 @@
                                 <c:if test="${not empty requestScope.missingParameterError}">
                                     <div class="text-center">
                                         <h3 class="h3 text-danger-500 mb-4">
-                                            ${requestScope.missingParameterError}
+                                                ${requestScope.missingParameterError}
                                         </h3>
                                     </div>
                                 </c:if>
-                                <form class="user" action="login" method="post">
+                                <form class="user needs-validation" action="login" method="post" novalidate>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
                                                id="idNumber" aria-describedby="emailHelp"
-                                               name="idNumber" placeholder="Enter ID number...">
+                                               name="idNumber" placeholder="Enter ID number..." required>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
                                                id="password" name="password"
-                                               placeholder="Password">
+                                               placeholder="Password" required>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                     <hr/>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
@@ -78,6 +85,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -96,6 +104,83 @@
 
 <!-- Custom scripts for all pages-->
 <script src="./static/js/sb-admin-2.min.js"></script>
+<script>
+    // Disable form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.missingParameterError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.missingParameterError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.objectNotFoundError}">
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '${requestScope.objectNotFoundError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.wrongPasswordError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Try again',
+            text: '${requestScope.wrongPasswordError}'
+        })
+    </script>
+</c:if>
+<c:if test="${param.create eq 'success'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Create new account successfully'
+        })
+    </script>
+</c:if>
+<c:if test="${param.logout eq 'success'}">
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Logout successfully'
+        })
+    </script>
+</c:if>
 
 </body>
 

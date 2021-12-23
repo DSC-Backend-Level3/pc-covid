@@ -60,6 +60,14 @@ public class AddVaccinationInfoController extends HttpServlet {
         id = Integer.parseInt(request.getParameter("id"));
         vaccineID = Integer.parseInt(request.getParameter("vaccineID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
+        date = request.getParameter("date");
+
+<<<<<<<<< Temporary merge branch 1
+        Timestamp injectionDate = Helper.convertDate(date);
+
+        VaccinationInfoDTO vaccinationInfo= new VaccinationInfoDTO(id, residentID, vaccineID, wardID, injectionDate);
+        return vaccinationInfoDao.addNewVaccinationInfo(vaccinationInfo);
+=========
         int districtID = Integer.parseInt(request.getParameter("districtID"));
         int provinceID = Integer.parseInt(request.getParameter("provinceID"));
 
@@ -72,8 +80,7 @@ public class AddVaccinationInfoController extends HttpServlet {
         VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
         VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
         if (vaccinationInfo != null) {
-            boolean isValidDate = (Validator.isValidInterval(vaccinationInfo.getDate(), date, vaccine.getInterval()))
-                                && (Validator.isBeforeCurrentDate(date));
+            boolean isValidDate = Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
             if (isValidDate == false) {
                 return false;
             }
@@ -84,8 +91,7 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String link = request.getParameter("btAction");
-            if (getHandler(request, response) && link.equals("Add Vaccination")) {
+            if (getHandler(request, response)) {
                 request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
             }
         } catch (Exception ex) {
@@ -97,7 +103,6 @@ public class AddVaccinationInfoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String errorMessage;
         try {
             String link = request.getParameter("btAction");
             if (postHandler(request, response) && link.equals("Add Vaccination")) {
@@ -111,22 +116,11 @@ public class AddVaccinationInfoController extends HttpServlet {
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         } catch (DateTimeException ex) {
-            errorMessage = ex.getMessage();
-            if (ex.getMessage().contains("could not be parsed")) {
-                errorMessage = "Date is invalid!";
-                request.setAttribute("dateErrorMessage", errorMessage);
-                request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
-            } else {
-                request.setAttribute("errorMessage", errorMessage);
-                request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-            }
-        } catch (NumberFormatException ex) {
-            errorMessage = ex.getMessage();
-            request.setAttribute("errorMessage", errorMessage);
-            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+            request.setAttribute("dateErrorMessage", "Date is invalid!");
+            request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_INVALID_FORM).forward(request,response);
         } catch (SQLException ex) {
             log(ex.getMessage());
-            errorMessage = ex.getMessage();
+            String errorMessage = ex.getMessage();
             if (ex.getMessage().contains("FOREIGN KEY")) {
                 errorMessage = "ID is not available!";
                 request.setAttribute("notExistedError", errorMessage);
@@ -136,18 +130,10 @@ public class AddVaccinationInfoController extends HttpServlet {
                     errorMessage = "ID is available!";
                     request.setAttribute("ExistedError", errorMessage);
                     request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_INVALID_FORM).forward(request, response);
-                } else {
-                    if (errorMessage.contains("out-of-range value")) {
-                        System.out.println("problem is here");
-                        errorMessage = "Date is invalid!";
-                        request.setAttribute("dateErrorMessage", errorMessage);
-                        request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
-                    } else {
-                        request.setAttribute("errorMessage", errorMessage);
-                        request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-                    }
                 }
             }
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         }
     }
 }

@@ -44,6 +44,9 @@ public class AdminDispatcher extends HttpServlet {
 
                 request.getRequestDispatcher(Router.ADMIN.VIEW_VACCINE_CONTROLLER).forward(request,response);
                 break;
+            case PathValue.GUEST.LOGOUT:
+                request.getRequestDispatcher(Router.COMMON.LOGOUT_CONTROLLER).forward(request, response);
+                break;
             case "/" + PathValue.HOME_PAGE:
                 request.getRequestDispatcher(Router.ADMIN.ADMIN_HOME).forward(request, response);
                 break;

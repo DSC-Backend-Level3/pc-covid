@@ -30,7 +30,7 @@ public class ChangePasswordController extends HttpServlet {
         String newPasswordConfirm = request.getParameter(Attribute.USER.CONFIRM_PASSWORD);
         request.setAttribute("OLD_PASSWORD", oldPassword);
         request.setAttribute("NEW_PASSWORD", newPassword);
-        boolean checkValid = false;
+        String checkValid = "Updated Successfully";
         String url = ERROR_PAGE;
         try {
             if(session != null) {
@@ -43,8 +43,11 @@ public class ChangePasswordController extends HttpServlet {
                 if (check) {
                     if (hashedNewPassword.equalsIgnoreCase(hashedNewPasswordConfirm)) {
                         dao.updateResidentPassword(id, hashedNewPassword);
-                        checkValid = true;
+                    }else{
+                        checkValid = "Updated Failed. Password does not match.";
                     }
+                }else{
+                    checkValid = "Updated Failed. Enter the wrong password";
                 }
                 request.setAttribute("CHECK_VALID", checkValid);
                 url = UPDATE_PASSWORD_SUCCESS;
@@ -58,7 +61,6 @@ public class ChangePasswordController extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-
         }
     }
 }
