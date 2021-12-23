@@ -53,7 +53,6 @@ public class CreateDoctorAccountController extends HttpServlet {
         healthInsuranceID = request.getParameter("healthInsuranceID");
         DOB = request.getParameter("DOB");
         nationality = request.getParameter("nationality");
-        System.out.println(request.getParameter("wardID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
         houseNumber = request.getParameter("houseNumber");
         password = Helper.hashString(request.getParameter("password"));
@@ -90,9 +89,11 @@ public class CreateDoctorAccountController extends HttpServlet {
                 errorMessage = "ID is available!";
                 request.setAttribute("ExistedError", errorMessage);
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", errorMessage);
+                request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
             }
-            request.setAttribute("errorMessage", errorMessage);
-            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+
 
         }
     }

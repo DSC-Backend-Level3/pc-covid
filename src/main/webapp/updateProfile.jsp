@@ -43,6 +43,8 @@
                             <c:set var="provinceList" value="${requestScope.PROVINCE_LIST}"/>
                             <c:set var="listDictrict" value="${requestScope.DISTRICT_LIST}"/>
                             <c:set var="listWard" value="${requestScope.WARD_LIST}"/>
+                            <c:set var="listDistrictByProvince" value="${requestScope.PROFILE_DISTRICT_LIST}"/>
+                            <c:set var="listWardByDistrict" value="${requestScope.PROFILE_WARD_LIST}"/>
                             <form class="user needs-validation" action="update-info" method="post" novalidate>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -50,7 +52,7 @@
                                         <input name="firstName" id="firstName"
                                                type="text" class="form-control form-control-user"
                                                maxlength="50" value="${result.firstName}"
-                                               placeholder="Ex: Andrew" required/>
+                                               placeholder="Ex: Andrew" />
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -59,7 +61,7 @@
                                         <input name="lastName" id="lastName"
                                                maxlength="50" value="${result.lastName}"
                                                type="text" class="form-control form-control-user"
-                                               placeholder="Ex: Edison" required/>
+                                               placeholder="Ex: Edison" />
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
@@ -69,13 +71,13 @@
                                         <label for="DOB">Date of birth:</label>
                                         <input name="DOB" id="DOB"
                                                type="date" class="form-control form-control-user"
-                                               value="${dob}" required/>
+                                               value="${dob}"/>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-check-label" for="gender">Gender:</label>
-                                        <select class="form-control" id="gender" name="gender" required>
+                                        <select class="form-control" id="gender" name="gender" >
                                             <c:choose>
                                                 <c:when test="${result.gender eq 'F'}">
                                                     <option value="F" selected>Female</option>
@@ -96,7 +98,7 @@
                                     <label for="txtID">Identity card:</label>
                                     <input name="txtID" id="txtID" value="${result.id}"
                                            type="text" class="form-control form-control-user"
-                                           disabled readonly required>
+                                           disabled readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number:</label>
@@ -104,7 +106,7 @@
                                            pattern="[0-9]{10}" title="Input must be 10 numbers"
                                            type="tel" class="form-control form-control-user"
                                            placeholder="Ex: 0937456123"
-                                           value="${result.phoneNumber}" required/>
+                                           value="${result.phoneNumber}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
@@ -113,7 +115,7 @@
                                     <input name="email" id="email"
                                            type="email" class="form-control form-control-user"
                                            placeholder="Ex: abc123@domain.xyz"
-                                           value="${result.email}" required/>
+                                           value="${result.email}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
@@ -123,7 +125,7 @@
                                            pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: ex1234567891234"
-                                           value="${result.healthInsuranceID}" required/>
+                                           value="${result.healthInsuranceID}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
@@ -133,7 +135,7 @@
                                     <input name="nationality" id="nationality"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: Việt Nam"
-                                           value="${result.nationality}" required/>
+                                           value="${result.nationality}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
@@ -141,7 +143,7 @@
                                     <label for="province">Province:</label>
                                     <select class="form-control" id="province"
                                             name="cboProvince"
-                                            onchange="selectProvince()" required>
+                                            onchange="selectProvince()" >
                                         <option value="${province.id}">${province.name}</option>
                                         <c:forEach items="${provinceList}" var="provinceVar">
                                             <c:if test="${provinceVar.id ne province.id}">
@@ -156,7 +158,7 @@
                                     <label for="district">District:</label>
                                     <select class="form-control" id="district"
                                             name="cboDistrict"
-                                            onchange="selectDistrict()" required>
+                                            onchange="selectDistrict()" >
                                         <c:choose>
                                             <c:when test="${not empty district}">
                                                 <option value="${district.id}">${district.name}</option>
@@ -165,6 +167,11 @@
                                                 <option>Select district</option>
                                             </c:otherwise>
                                         </c:choose>
+                                        <c:if test="${empty listDictrict}">
+                                            <c:forEach items="${listDistrictByProvince}" var="d">
+                                                <option value="${d.id}">${d.name}</option>
+                                            </c:forEach>
+                                        </c:if>
                                         <c:forEach items="${listDictrict}" var="districtVar">
                                             <option value="${districtVar.id}">${districtVar.name}</option>
                                         </c:forEach>
@@ -175,7 +182,7 @@
                                 <div class="form-group">
                                     <label for="ward">Ward:</label>
                                     <select class="form-control" id="ward"
-                                            name="cboWard" required>
+                                            name="cboWard" >
                                         <c:choose>
                                             <c:when test="${not empty ward}">
                                                 <option value="${ward.id}">${ward.name}</option>
@@ -184,6 +191,11 @@
                                                 <option>Select ward</option>
                                             </c:otherwise>
                                         </c:choose>
+                                        <c:if test="${empty listWard}">
+                                            <c:forEach items="${listWardByDistrict}" var="w">
+                                                <option value="${w.id}">${w.name}</option>
+                                            </c:forEach>
+                                        </c:if>
                                         <c:forEach items="${listWard}" var="wardVar">
                                             <option value="${wardVar.id}">${wardVar.name}</option>
                                         </c:forEach>
@@ -196,7 +208,7 @@
                                     <input name="houseNumber" id="houseNumber"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: 245/12 Phạm Văn Đồng"
-                                           value="${result.houseNumber}" required/>
+                                           value="${result.houseNumber}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>

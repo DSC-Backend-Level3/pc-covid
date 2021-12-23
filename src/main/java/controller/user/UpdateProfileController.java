@@ -88,8 +88,14 @@ public class UpdateProfileController extends HttpServlet {
         String firstName = request.getParameter(Attribute.USER.FIRST_NAME);
         String lastName = request.getParameter(Attribute.USER.LAST_NAME);
         String phoneNumber = request.getParameter(Attribute.USER.PHONE_NUMBER);
+        if(phoneNumber.length() < 10){
+            phoneNumber = null;
+        }
         String email = request.getParameter(Attribute.USER.EMAIL);
         String healthInsuranceID = request.getParameter(Attribute.USER.HEALTH_INSURANCE_ID);
+        if(healthInsuranceID.length() < 15){
+            healthInsuranceID = null;
+        }
         String gender = request.getParameter(Attribute.USER.GENDER);
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
@@ -121,15 +127,13 @@ public class UpdateProfileController extends HttpServlet {
                         request.setAttribute("PROFILE_PAGE", dto);
                         dao.updateResidentInformation(dto);
                         url = "view?btAction=ViewProfile";
-                        System.out.println(url);
                     }
 
                 }
             }
 
+
         }catch (DateTimeParseException e){
-            System.out.println("Hello");
-            request.setAttribute("ERROR", "Invalid date.");
             url = "view?btAction=UpdateProfile";
 
         }catch (SQLException e) {
@@ -139,7 +143,6 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-            System.out.println(url);
             response.sendRedirect(url);
         }
     }

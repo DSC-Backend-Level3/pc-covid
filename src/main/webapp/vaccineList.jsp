@@ -48,7 +48,7 @@
                                         <th>Vaccine name</th>
                                         <th>Origin</th>
                                         <th>Organization</th>
-                                        <th>Time for 2rd dose</th>
+                                        <th>Interval</th>
                                     </tr>
                                     </thead>
                                     <tbody>
