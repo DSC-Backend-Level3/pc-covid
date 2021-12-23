@@ -89,7 +89,7 @@ public class CreateAccountController extends HttpServlet {
         //get current date
         Timestamp instant = Timestamp.from(Instant.now());
         //validate dob
-        if(dob.before(previous) || dob.after(instant)){
+        if(dob.after(previous) || dob.before(instant)){
             throw new IllegalArgumentException("Invalid date of birth");
         }
 
