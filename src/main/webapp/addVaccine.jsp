@@ -138,12 +138,12 @@
     </script>
 </c:if>
 
-<c:if test="${not empty requestScope.nameError}">
+<c:if test="${not empty requestScope.numberError}">
     <script>
         Swal.fire({
             icon: 'warning',
             title: 'Oops...',
-            text: '${requestScope.nameError}'
+            text: '${requestScope.numberError}'
         })
     </script>
 </c:if>

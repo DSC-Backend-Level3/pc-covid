@@ -36,6 +36,11 @@ public class AddVaccineController extends HttpServlet {
         firm = request.getParameter("firm");
         interval = Integer.parseInt(request.getParameter("interval"));
 
+        if (vaccineDao.getVaccineByID(id) != null) {
+            request.setAttribute("existedError", "ID is available!");
+            throw new IllegalArgumentException();
+        }
+
         return vaccineDao.addNewVaccine(new VaccineDTO(id, name, firm, country, interval));
     }
     @Override
@@ -47,17 +52,16 @@ public class AddVaccineController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            postHandler(request, response);
-            response.sendRedirect(PAGE_RETURN);
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (e.getMessage().contains("PRIMARY KEY")) {
-                request.setAttribute("existedError", "The vaccine ID is available!");
+            if (postHandler(request, response) == true) {
+                response.sendRedirect(PAGE_RETURN);
             } else {
-                if (e.getMessage().contains("Truncated value")) {
-                    request.setAttribute("nameError", "You should use English name!");
-                }
+                request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
             }
+        } catch (SQLException | NamingException | UnsupportedEncodingException ex) {
+            ex.printStackTrace();
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
+        } catch (NumberFormatException ex) {
+            request.setAttribute("numberError", "You should enter a number string!");
             request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
         }
     }
