@@ -72,7 +72,8 @@ public class AddVaccinationInfoController extends HttpServlet {
         VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
         VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
         if (vaccinationInfo != null) {
-            boolean isValidDate = Validator.checkTwoDate(vaccinationInfo.getDate(), date, vaccine.getInterval());
+            boolean isValidDate = (Validator.isValidInterval(vaccinationInfo.getDate(), date, vaccine.getInterval()))
+                                && (Validator.isBeforeCurrentDate(date));
             if (isValidDate == false) {
                 return false;
             }
@@ -119,6 +120,10 @@ public class AddVaccinationInfoController extends HttpServlet {
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
             }
+        } catch (NumberFormatException ex) {
+            errorMessage = ex.getMessage();
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } catch (SQLException ex) {
             log(ex.getMessage());
             errorMessage = ex.getMessage();
@@ -136,7 +141,7 @@ public class AddVaccinationInfoController extends HttpServlet {
                         System.out.println("problem is here");
                         errorMessage = "Date is invalid!";
                         request.setAttribute("dateErrorMessage", errorMessage);
-                        request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+                        request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
                     } else {
                         request.setAttribute("errorMessage", errorMessage);
                         request.getRequestDispatcher(ERROR_PAGE).forward(request, response);

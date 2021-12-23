@@ -91,14 +91,14 @@ public class Validator {
         }
         return true;
     }
-    public static boolean checkTwoDate(Timestamp startDate, Timestamp endDate, int interval) {
+    public static boolean isValidInterval(Timestamp startDate, Timestamp endDate, int interval) {
         LocalDateTime startLocalDateTime = startDate.toLocalDateTime();
         LocalDateTime endDatLocalDateTime = endDate.toLocalDateTime();
-        if ((startLocalDateTime.plusDays(interval)).isAfter(endDatLocalDateTime)) {
-            return false;
-        }
-        return true;
+        return (startLocalDateTime.plusDays(interval)).isBefore(endDatLocalDateTime);
     }
 
-
+    public static boolean isBeforeCurrentDate(Timestamp date) {
+        Timestamp today = new Timestamp(System.currentTimeMillis());
+        return date.before(today);
+    }
 }

@@ -5,6 +5,7 @@ import dao.ResidentDao;
 import dao.implement.ResidentDaoImpl;
 import dto.ResidentDTO;
 import utils.Helper;
+import utils.Validator;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
@@ -59,6 +60,10 @@ public class CreateDoctorAccountController extends HttpServlet {
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
+        if (Validator.isBeforeCurrentDate(date) == false) {
+            request.setAttribute("dateErrorMessage", "Date of birth can not over today!");
+            return false;
+        }
         System.out.println("date is valid");
         if (confirmPassword.equals(password) == false) {
             request.setAttribute("passwordError", "Password must be the same!");
@@ -100,7 +105,7 @@ public class CreateDoctorAccountController extends HttpServlet {
                     request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
                 }
             }
-        } catch (NamingException | NoSuchAlgorithmException ex) {
+        } catch (NamingException | NoSuchAlgorithmException | NumberFormatException ex) {
             errorMessage = ex.getMessage();
             System.out.println(errorMessage);
             request.setAttribute("errorMessage", errorMessage);
