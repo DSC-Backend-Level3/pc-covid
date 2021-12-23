@@ -26,7 +26,7 @@
             Last Name <input type="text" name="lastName" value="${param.lastName}" required/><br/>
             Phone Number <input type="text" name="phoneNumber" pattern="[0-9]{10}" title="Input must be 10 numbers" value="${param.phoneNumber}" required/><br/>
             Health Insurance ID <input type="text" name="healthInsuranceID" pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters" value="${param.healthInsuranceID}" placeholder="Ex: ab0000000000000" required/><br/>
-            Date of birth <input type="date" name="DOB" value="${param.DOB}" required/><br/>
+            Date of birth <input type="date" name="DOB" value="${param.DOB}" required/>${requestScope.dateErrorMessage}<br/>
             Nationality <input type="text" name="nationality" value="${param.nationality}" required/><br/>
             Gmail <input type="email" name="email" value="${param.email}" required/><br/>
             Gender
