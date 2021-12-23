@@ -1,15 +1,16 @@
 package controller.admin;
 
-import constant.Router;
 import dao.ResidentDao;
 import dao.implement.ResidentDaoImpl;
 import dto.ResidentDTO;
 import utils.Helper;
 
 import javax.naming.NamingException;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +24,7 @@ import static constant.Router.PAGE.ERROR_PAGE;
 @WebServlet(name = "CreateDoctorAccountController", value = "/CreateDoctorAccountController")
 public class CreateDoctorAccountController extends HttpServlet {
     private final String PAGE_RETURN = "viewDoctor?btAction=viewDoctor";
+
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException, NoSuchAlgorithmException {
 
         request.setCharacterEncoding("UTF-8");
@@ -68,6 +70,7 @@ public class CreateDoctorAccountController extends HttpServlet {
 
         return residentDao.addNewResident(residentDTO);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -78,10 +81,10 @@ public class CreateDoctorAccountController extends HttpServlet {
         try {
             if (postHandler(request, response) == false) {
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
-            }else {
+            } else {
                 response.sendRedirect(PAGE_RETURN);
             }
-        }catch (SQLException | NamingException | NoSuchAlgorithmException ex) {
+        } catch (SQLException | NamingException | NoSuchAlgorithmException ex) {
             String errorMessage = ex.getMessage();
             if (ex.getMessage().contains("PRIMARY KEY")) {
                 errorMessage = "ID is available!";
@@ -90,6 +93,7 @@ public class CreateDoctorAccountController extends HttpServlet {
             }
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
+
         }
     }
 }

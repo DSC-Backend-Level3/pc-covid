@@ -52,7 +52,7 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmPassword">Password:</label>
+                                    <label for="confirmPassword">Confirm password:</label>
                                     <input name="confirmPassword" id="confirmPassword"
                                            type="password" class="form-control form-control-user"
                                            required/>
@@ -166,6 +166,18 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <hr>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <a href="homepage" class="btn btn-outline-danger btn-user btn-block">
+                                            Cancel
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="reset" class="btn btn-outline-warning btn-user btn-block">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Submit
                                 </button>

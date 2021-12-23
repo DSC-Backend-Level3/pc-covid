@@ -6,6 +6,6 @@
               type="javax.sql.DataSource"
               url="jdbc:sqlserver://localhost:1433;database=VaccineManagement;"
               username="sa"
-              password="20122001"
+              password="sa"
     />
 </Context>
