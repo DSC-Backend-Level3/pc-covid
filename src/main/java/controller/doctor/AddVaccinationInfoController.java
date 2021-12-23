@@ -103,7 +103,7 @@ public class AddVaccinationInfoController extends HttpServlet {
                 response.sendRedirect(PathValue.HOME_PAGE);
             } else {
                 request.setAttribute("dateError", "Date is not suitable for the next injection!");
-                request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request,response);
+                doGet(request, response);
             }
         } catch (UnsupportedEncodingException | NamingException ex) {
             log(ex.getMessage());
