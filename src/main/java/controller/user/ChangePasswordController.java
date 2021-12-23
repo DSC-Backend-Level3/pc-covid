@@ -44,12 +44,15 @@ public class ChangePasswordController extends HttpServlet {
                     if (hashedNewPassword.equalsIgnoreCase(hashedNewPasswordConfirm)) {
                         dao.updateResidentPassword(id, hashedNewPassword);
                     }else{
-                        checkValid = "Updated Failed. Password does not match.";
+                        String checkInValid = "Updated Failed. Password does not match.";
+                        request.setAttribute("CHECK_INVALUD", checkInValid);
                     }
                 }else{
-                    checkValid = "Updated Failed. Enter the wrong password";
+                    String checkInValid = "Updated Failed. Enter the wrong password";
+                    request.setAttribute("CHECK_INVALUD", checkInValid);
                 }
                 request.setAttribute("CHECK_VALID", checkValid);
+
                 url = UPDATE_PASSWORD_SUCCESS;
             }
         } catch (SQLException e) {

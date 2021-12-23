@@ -95,7 +95,25 @@
 
 <!-- Custom scripts for all pages-->
 <script src="./static/js/sb-admin-2.min.js"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.CHECK_INVALID}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.CHECK_INVALID}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.CHECK_VALID}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Yeahhh',
+            text: '${requestScope.CHECK_VALID}'
+        })
+    </script>
+</c:if>
 <script>
     // Disable form submissions if there are invalid fields
     (function () {
