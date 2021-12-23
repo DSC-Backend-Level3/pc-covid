@@ -131,10 +131,12 @@ public class UpdateProfileController extends HttpServlet {
 
                 }
             }
+            response.sendRedirect(url);
 
 
         }catch (DateTimeParseException e){
             url = "view?btAction=UpdateProfile";
+
 
         }catch (SQLException e) {
             url = ERROR_PAGE;
@@ -143,7 +145,7 @@ public class UpdateProfileController extends HttpServlet {
             url = ERROR_PAGE;
             e.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+
         }
     }
 

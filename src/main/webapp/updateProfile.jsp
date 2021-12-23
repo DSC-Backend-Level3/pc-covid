@@ -103,7 +103,6 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number:</label>
                                     <input name="phoneNumber" id="phoneNumber"
-                                           pattern="[0-9]{10}" title="Input must be 10 numbers"
                                            type="tel" class="form-control form-control-user"
                                            placeholder="Ex: 0937456123"
                                            value="${result.phoneNumber}" />

@@ -31,8 +31,7 @@ public class ViewProfileController extends HttpServlet {
         response.setHeader("Cache-Control","no-cache, no-store");
         HttpSession session = request.getSession(false);
         String button = request.getParameter("btAction");
-        String error = request.getParameter("error");
-        System.out.println(error);
+
         String url = ERROR_PAGE;
         try {
 
