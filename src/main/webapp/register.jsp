@@ -136,7 +136,16 @@
         }, false);
     })();
 </script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.errorMessage}">
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '${requestScope.errorMessage}'
+        })
+    </script>
+</c:if>
 </body>
 
 
