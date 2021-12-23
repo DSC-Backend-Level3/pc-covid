@@ -203,10 +203,10 @@ public class ResidentDaoImpl implements ResidentDao {
 
                 //3. Create Statement to set SQL
                 String sql = "UPDATE Resident " +
-                        "SET firstName = ISNULL(?, firstName) , lastName = ISNULL(?, lastName), phoneNumber = ISNULL(?, phoneNumber), " +
-                        "email = ISNULL(?, email), healthInsuranceID = ISNULL(?, healthInsuranceID), gender = ISNULL(?, gender), DOB = ISNULL(?, DOB), " +
-                        "nationality = ISNULL(?, nationality), " +
-                        "wardID = ISNULL(?, wardID), houseNumber = ISNULL(?, houseNumber), roleID = ISNULL(?, roleID), password = ISNULL(?, password) " +
+                        "SET firstName = ?, lastName = ?, phoneNumber = ?, " +
+                        "email = ?, healthInsuranceID = ?, gender = ? , DOB = ?, " +
+                        "nationality = ?, " +
+                        "wardID = ?, houseNumber = ?, roleID = ? " +
                         "WHERE id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, residentDTO.getFirstName());
@@ -220,8 +220,7 @@ public class ResidentDaoImpl implements ResidentDao {
                 stm.setInt(9, residentDTO.getWardID());
                 stm.setString(10, residentDTO.getHouseNumber());
                 stm.setInt(11, residentDTO.getRoleID());
-                stm.setString(12, residentDTO.getPassword());
-                stm.setString(13, residentDTO.getId());
+                stm.setString(12, residentDTO.getId());
                 stm.executeUpdate();
             }
         } finally {

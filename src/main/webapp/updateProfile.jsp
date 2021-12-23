@@ -51,7 +51,7 @@
                                         <label for="firstName">First name:</label>
                                         <input name="firstName" id="firstName"
                                                type="text" class="form-control form-control-user"
-                                               maxlength="50" value="${result.firstName}"
+                                               value="${result.firstName}"
                                                placeholder="Ex: Andrew" />
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
@@ -59,7 +59,7 @@
                                     <div class="col-sm-6">
                                         <label for="lastName">Last name:</label>
                                         <input name="lastName" id="lastName"
-                                               maxlength="50" value="${result.lastName}"
+                                               value="${result.lastName}"
                                                type="text" class="form-control form-control-user"
                                                placeholder="Ex: Edison" />
                                         <div class="valid-feedback">Valid.</div>
@@ -121,7 +121,6 @@
                                 <div class="form-group">
                                     <label for="healthInsuranceID">Health Insurance ID:</label>
                                     <input name="healthInsuranceID" id="healthInsuranceID"
-                                           pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: ex1234567891234"
                                            value="${result.healthInsuranceID}" />
@@ -206,7 +205,7 @@
                                     <label for="houseNumber">House number:</label>
                                     <input name="houseNumber" id="houseNumber"
                                            type="text" class="form-control form-control-user"
-                                           placeholder="Ex: 245/12 Phạm Văn Đồng"
+                                           placeholder="Ex: 245/12"
                                            value="${result.houseNumber}" />
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -284,5 +283,15 @@
         }, false);
     })();
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.errorMessage}">
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '${requestScope.errorMessage}'
+        })
+    </script>
+</c:if>
 </body>
 </html>
