@@ -55,7 +55,7 @@
                                 <c:if test="${not empty requestScope.missingParameterError}">
                                     <div class="text-center">
                                         <h3 class="h3 text-danger-500 mb-4">
-                                            ${requestScope.missingParameterError}
+                                                ${requestScope.missingParameterError}
                                         </h3>
                                     </div>
                                 </c:if>
@@ -124,6 +124,63 @@
         }, false);
     })();
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.missingParameterError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.missingParameterError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.objectNotFoundError}">
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '${requestScope.objectNotFoundError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.wrongPasswordError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Try again',
+            text: '${requestScope.wrongPasswordError}'
+        })
+    </script>
+</c:if>
+<c:if test="${param.create eq 'success'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Create new account successfully'
+        })
+    </script>
+</c:if>
+<c:if test="${param.logout eq 'success'}">
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Logout successfully'
+        })
+    </script>
+</c:if>
 
 </body>
 

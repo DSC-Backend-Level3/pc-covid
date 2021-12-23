@@ -78,8 +78,7 @@ public class AddVaccinationInfoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String link = request.getParameter("btAction");
-            if (getHandler(request, response) && link.equals("Add Vaccination")) {
+            if (getHandler(request, response)) {
                 request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
             }
         } catch (Exception ex) {

@@ -5,7 +5,7 @@
   Time: 12:32 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -24,7 +24,7 @@
     Vaccination ID <input type="text" name="id" value="${param.id}" required/><br/>
     ${requestScope.ExistedError}<br/>
     Vaccine Name
-    <select name="vaccineID"  required>
+    <select name="vaccineID" required>
         <option value="${param.vaccineID}">${vaccine.name}</option>
     </select>
     Province
@@ -36,10 +36,11 @@
         <option value="${district.id}">${district.name}</option>
     </select>
     Ward
-    <select id="ward" name="wardID"  required>
+    <select id="ward" name="wardID" required>
         <option value="${ward.id}">${ward.name}</option>
     </select>
-    Injection's Date <input type="date" name="date" value="${param.date}" required/>${requestScope.dateErrorMessage}<br/>
+    Injection's Date <input type="date" name="date" value="${param.date}"
+                            required/>${requestScope.dateErrorMessage}<br/>
     <input type="submit" value="Add Vaccination" name="btAction">
 </form>
 <button><a href="homepage">View List</a></button>

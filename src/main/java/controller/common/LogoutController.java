@@ -22,6 +22,6 @@ public class LogoutController extends HttpServlet {
         //invalidate session
         session.invalidate();
         //forward to login page
-        response.sendRedirect(Router.PAGE.LOGIN_PAGE);
+        response.sendRedirect(Router.PAGE.LOGIN_PAGE + "?logout=success");
     }
 }

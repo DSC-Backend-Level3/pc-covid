@@ -1,8 +1,4 @@
-<%@ page import="dto.VaccinationInfoDTO" %>
-<%@ page import="dto.ResidentDTO" %>
-<%@ page import="java.sql.Timestamp" %>
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="java.time.format.DateTimeFormatter" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 12/19/2021
@@ -41,7 +37,7 @@
                 <div class="p-2">
                     <h4 class="text-center text-gray-900">Welcome back, ${sessionScope.name}</h4>
                     <a href="logout" class="btn btn-outline-danger">log out</a>
-                    <a href="addVaccine.html" class="btn btn-outline-primary">add new vaccination</a>
+                    <a href="add" class="btn btn-outline-primary">add new vaccination</a>
                 </div>
                 <div class="card-body">
                     <c:if test="${not empty requestScope.vaccinationInfoList}">

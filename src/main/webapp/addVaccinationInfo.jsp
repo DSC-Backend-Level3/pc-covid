@@ -5,51 +5,140 @@
   Time: 6:52 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vaccination Information</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Add vaccination info</title>
+    <!-- Custom fonts for this template-->
+    <link href="./static/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="./static/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body>
-<button><a href="logout">Logout</a></button>
-<h1>Vaccination Information Form</h1>
-<form action="add" method="POST">
-    <c:set var="vaccineList" value="${requestScope.vaccineList}"/>
-    Resident ID <input type="text" name="residentID" pattern="[0-9]{12}" title="Input must be 12 numbers" value="" required/><br/>
-    Vaccination ID <input type="text" name="id" value="" maxlength="10" required/><br/>
-    <%--        using drop-down list to presentation--%>
-    Vaccine Name
-    <select name="vaccineID" required>
-        <option value="">Select Vaccine</option>
-        <c:forEach var="dto" items="${vaccineList}">
-            <option value="${dto.id}">${dto.name}</option>
-        </c:forEach>
-    </select>
-    Province
-    <select id="province" name="provinceID" required>
-        <option value="">Select province</option>
-    </select>
-    District
-    <select id="district" name="districtID" required>
-        <option value="">Select district</option>
-    </select>
-    Ward
-    <select id="ward" name="wardID" required>
-        <option value="">Select ward</option>
-    </select>
+<body class="bg-gradient-primary">
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
 
-    Injection's Date <input type="date" name="date" value="" required/><br/>
-    <input type="submit" value="Add Vaccination" name="btAction">
-</form>
+        <div class="col-xl-8 col-lg-10 col-md-8">
 
-<button><a href="homepage">View List</a></button>
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="card-header py-3">
+                        <h3 class="text-center text-gray-900">VACCINE INFORMATION FORM</h3>
+                    </div>
+                    <div class="col-lg-8 mx-auto">
+                        <div class="user py-3">
+                            <form class="user needs-validation" action="add" method="post" novalidate>
+                                <div class="form-group">
+                                    <label for="residentID">Resident ID:</label>
+                                    <input type="text" name="residentID" id="residentID"
+                                           class="form-control form-control-user"
+                                           pattern="[0-9]{12}" title="Input must be 12 numbers"
+                                           placeholder="1234567789123" required/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id">Vaccination ID:</label>
+                                    <input type="text" name="id" id="id" class="form-control form-control-user"
+                                           max="10" placeholder="12345677891"
+                                           required/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="vaccineID">Vaccination name:</label>
+                                        <select id="vaccineID" name="vaccineID"
+                                                class="form-control" required>
+                                            <c:forEach var="dto" items="${vaccineList}">
+                                                <option value="${dto.id}">${dto.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="date">Injection's Date</label>
+                                        <input type="date" name="date" id="date"
+                                               class="form-control form-control-user"
+                                               required/>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="province">Province:</label>
+                                    <select id="province" name="provinceID"
+                                            class="form-control" required>
+                                        <option disabled selected>Select province</option>
+                                    </select>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="district">District:</label>
+                                    <select id="district" name="districtID"
+                                            class="form-control" required>
+                                        <option disabled selected>Select district</option>
+                                    </select>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ward">Ward:</label>
+                                    <select id="ward" name="wardID"
+                                            class="form-control" required>
+                                        <option disabled selected>Select ward</option>
+                                    </select>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+                                </div>
+                                <hr/>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <a href="homepage" class="btn btn-outline-danger btn-user btn-block">
+                                            Cancel
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="reset" class="btn btn-outline-warning btn-user btn-block">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Bootstrap core JavaScript-->
+<script src="./static/jquery/jquery.min.js"></script>
+<script src="./static/bootstrap/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="./static/jquery/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="./static/js/sb-admin-2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
         integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
         crossorigin="anonymous"
@@ -126,6 +215,26 @@
             });
         });
     });
+</script>
+<script>
+    // Disable form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
 </body>
 </html>
