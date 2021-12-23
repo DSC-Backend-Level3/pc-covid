@@ -62,7 +62,7 @@
                                         <label for="vaccineID">Vaccination name:</label>
                                         <select id="vaccineID" name="vaccineID"
                                                 class="form-control" required>
-                                            <option value="${requestScope.vaccineID}">${requestScope.vaccineName}</option>
+                                            <option value="">Select Vaccine</option>
                                             <c:forEach var="dto" items="${vaccineList}">
                                                 <option value="${dto.id}">${dto.name}</option>
                                             </c:forEach>
@@ -268,6 +268,16 @@
             icon: 'warning',
             title: 'Oops...',
             text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.numberError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.numberError}'
         })
     </script>
 </c:if>

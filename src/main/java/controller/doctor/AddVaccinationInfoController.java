@@ -44,6 +44,7 @@ public class AddVaccinationInfoController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         VaccinationInfoDao vaccinationInfoDao = new VaccinationInfoDaoImpl();
+        ResidentDao residentDao = new ResidentDaoImpl();
         VaccineDao vaccineDao = new VaccineDaoImpl();
         WardDao wardDao = new WardDaoImpl();
         DistrictDao districtDao = new DistrictDaoImpl();
@@ -60,24 +61,28 @@ public class AddVaccinationInfoController extends HttpServlet {
         vaccineID = Integer.parseInt(request.getParameter("vaccineID"));
         wardID = Integer.parseInt(request.getParameter("wardID"));
 
-        int districtID = Integer.parseInt(request.getParameter("districtID"));
-        int provinceID = Integer.parseInt(request.getParameter("provinceID"));
-
-        request.setAttribute("ward", wardDao.getWardByID(wardID));
-        request.setAttribute("district", districtDao.getDistrictByID(districtID));
-        request.setAttribute("province", provinceDao.getProvinceByID(provinceID));
+        VaccinationInfoDTO latestVaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
+        VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getVaccinationInfoByID(id);
+        ResidentDTO resident = residentDao.getResidentById(residentID);
         request.setAttribute("vaccine", vaccineDao.getVaccineByID(vaccineID));
-        VaccineDTO vaccine = vaccineDao.getVaccineByID(vaccineID);
-        request.setAttribute("vaccineName", vaccine.getName());
-        request.setAttribute("vaccineID", vaccine.getId());
         date = Helper.convertDate(request.getParameter("date"));
 
-        VaccinationInfoDTO vaccinationInfo = vaccinationInfoDao.getTheLatestVaccinationInfoByIdUser(residentID);
-
+        if (resident == null) {
+            request.setAttribute("notExistedError", "ID is not available!");
+            throw new IllegalArgumentException();
+        }
         if (vaccinationInfo != null) {
-            boolean isValidDate = Validator.isValidInterval(vaccinationInfo.getDate(), date, vaccine.getInterval());
+            request.setAttribute("existedError", "ID is available");
+            throw new IllegalArgumentException();
+        }
+        if (latestVaccinationInfo != null) {
+            VaccineDTO vaccine = vaccineDao.getVaccineByID(latestVaccinationInfo.getVaccineID());
+            System.out.println(latestVaccinationInfo.getResidentID());
+            boolean isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
+                                && Validator.isBeforeCurrentDate(date);
             if (isValidDate == false) {
-                return false;
+                request.setAttribute("dateError", "Date is not suitable for the next injection!");
+                throw new IllegalArgumentException();
             }
         }
         VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
@@ -88,8 +93,10 @@ public class AddVaccinationInfoController extends HttpServlet {
         try {
             if (getHandler(request, response)) {
                 request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
+            } else {
+                request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
@@ -102,34 +109,20 @@ public class AddVaccinationInfoController extends HttpServlet {
             if (postHandler(request, response)) {
                 response.sendRedirect(PathValue.HOME_PAGE);
             } else {
-                request.setAttribute("dateError", "Date is not suitable for the next injection!");
                 doGet(request, response);
             }
-        } catch (UnsupportedEncodingException | NamingException ex) {
+        } catch (UnsupportedEncodingException | NamingException | SQLException ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
         } catch (DateTimeException ex) {
             request.setAttribute("dateError", "Date is invalid!");
-            request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request,response);
-        } catch (SQLException ex) {
-            log(ex.getMessage());
-            String errorMessage = ex.getMessage();
-            if (ex.getMessage().contains("FOREIGN KEY")) {
-                errorMessage = "ID is not available!";
-                request.setAttribute("notExistedError", errorMessage);
-                request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
-            } else {
-                if (ex.getMessage().contains("PRIMARY KEY")) {
-                    errorMessage = "ID is available!";
-                    request.setAttribute("existedError", errorMessage);
-                    request.getRequestDispatcher(Router.PAGE.VACCINATION_INFO_FORM).forward(request, response);
-                } else {
-                    request.setAttribute("errorMessage", errorMessage);
-                    request.getRequestDispatcher(Router.PAGE.ERROR_PAGE).forward(request, response);
-                }
-            }
-
+            doGet(request, response);
+        } catch (NumberFormatException ex) {
+            request.setAttribute("numberError", "You should enter a number string!");
+            doGet(request, response);
+        } catch (IllegalArgumentException ex) {
+            doGet(request, response);
         }
     }
 }
