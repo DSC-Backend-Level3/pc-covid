@@ -62,6 +62,7 @@
                                         <label for="vaccineID">Vaccination name:</label>
                                         <select id="vaccineID" name="vaccineID"
                                                 class="form-control" required>
+                                            <option value="${requestScope.vaccineID}">${requestScope.vaccineName}</option>
                                             <c:forEach var="dto" items="${vaccineList}">
                                                 <option value="${dto.id}">${dto.name}</option>
                                             </c:forEach>
@@ -240,5 +241,35 @@
         }, false);
     })();
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.dateError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.dateError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.notExistedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.notExistedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.existedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
 </body>
 </html>

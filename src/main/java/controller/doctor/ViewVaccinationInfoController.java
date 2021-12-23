@@ -72,13 +72,12 @@ public class ViewVaccinationInfoController extends HttpServlet {
             throws ServletException, IOException {
         try {
             getHandler(request, response);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATION_INFO_LIST_PAGE);
+            dispatcher.forward(request, response);
         } catch (Exception ex) {
             log(ex.getMessage());
             request.setAttribute("errorMessage", ex.getMessage());
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
-        } finally {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(VACCINATION_INFO_LIST_PAGE);
-            dispatcher.forward(request, response);
         }
     }
 

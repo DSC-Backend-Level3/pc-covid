@@ -149,8 +149,8 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="wardID">Ward:</label>
-                                    <select class="form-control" id="wardID" name="wardID"
+                                    <label for="ward">Ward:</label>
+                                    <select class="form-control" id="ward" name="wardID"
                                             required>
                                         <option value="">Select ward</option>
                                     </select>
@@ -212,69 +212,56 @@
             method: "GET",
             data: {operation: 'province'},
             success: function (data, textStatus, jqXHR) {
+                // let obj = $.parseJSON(data);
+                console.log(data[0].id);
                 $.each(data, function (key, value) {
                     $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#province').append('<option>province Unavailable</option>');
+                $('#province').append('<option>Province Unavailable</option>');
             },
             cache: false
         });
-
-                $('#province').change(function () {
-                    $('#district').find('option').remove();
-                    $('#district').append('<option value="">Select District</option>');
-                    $('#ward').find('option').remove();
-                    $('#ward').append('<option value="">Select Ward</option>');
-
-                    let pid = $('#province').val();
-                    let data = {
-                        operation: "district",
-                        id: pid
-                    };
-
-                    $.ajax({
-                        url: "loadLocation",
-                        method: "GET",
-                        data: data,
-                        success: function (data, textStatus, jqXHR) {
-                            $.each(data, function (key, value) {
-                                $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
-                            });
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            $('#district').append('<option value="">District Unavailable</option>');
-                        },
-                        cache: false
+        $('#province').change(function () {
+            $('#district').find('option').remove();
+            $('#district').append('<option value="">Select District</option>');
+            $('#ward').find('option').remove();
+            $('#ward').append('<option value="">Select Ward</option>');
+            let pid = $('#province').val();
+            let data = {
+                operation: "district",
+                id: pid
+            };
+            $.ajax({
+                url: "loadLocation",
+                method: "GET",
+                data: data,
+                success: function (data, textStatus, jqXHR) {
+//                        console.log(data);
+                    $.each(data, function (key, value) {
+                        $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
-                });
+//                        $('select').formSelect();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#district').append('<option value="">District Unavailable</option>');
+                },
+                cache: false
+            });
+        });
 
-                $('#district').change(function () {
-                    $('#ward').find('option').remove();
-                    $('#ward').append('<option value="">Select Ward</option>');
+        $('#district').change(function () {
+            $('#ward').find('option').remove();
+            $('#ward').append('<option value="">Select Ward</option>');
 
-                    let did = $('#district').val();
-                    let data = {
-                        operation: "ward",
-                        id: did
-                    };
+            let did = $('#district').val();
+            let data = {
+                operation: "ward",
+                id: did
+            };
 
-                    $.ajax({
-                        url: "loadLocation",
-                        method: "GET",
-                        data: data,
-                        success: function (data, textStatus, jqXHR) {
-                            $.each(data, function (key, value) {
-                                $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
-                            });
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            $('#ward').append('<option value="">Ward Unavailable</option>');
-                        },
-                        cache: false
-                    });
-                });
+
             $.ajax({
                 url: "loadLocation",
                 method: "GET",
@@ -283,34 +270,44 @@
                     $.each(data, function (key, value) {
                         $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
+//                        $('select').formSelect();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#ward').append('<option>Ward Unavailable</option>');
+                    $('#ward').append('<option value="">Ward Unavailable</option>');
                 },
                 cache: false
             });
         });
     });
 </script>
-<script>
-    // Disable form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Get the forms we want to add validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.passwordError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.passwordError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.dateError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.dateError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.existedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
 </body>
 </html>

@@ -62,12 +62,8 @@ public class CreateDoctorAccountController extends HttpServlet {
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
-        if (confirmPassword.equals(password) == false) {
-            request.setAttribute("passwordError", "Password must be the same!");
-            return false;
-        }
         if (Validator.isBeforeCurrentDate(date) == false) {
-            request.setAttribute("dateErrorMessage", "Date of birth can not over today!");
+            request.setAttribute("dateError", "Date of birth can not over today!");
             return false;
         }
         System.out.println("date is valid");
@@ -99,13 +95,13 @@ public class CreateDoctorAccountController extends HttpServlet {
             System.out.println(errorMessage);
             if (errorMessage.contains("PRIMARY KEY")) {
                 errorMessage = "ID is duplicated!";
-                request.setAttribute("ExistedError", errorMessage);
+                request.setAttribute("existedError", errorMessage);
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
             } else {
                 if (errorMessage.contains("out-of-range value")) {
                     System.out.println("problem is here");
                     errorMessage = "Date is invalid!";
-                    request.setAttribute("dateErrorMessage", errorMessage);
+                    request.setAttribute("dateError", errorMessage);
                     request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
                 } else {
                     request.setAttribute("errorMessage", errorMessage);
@@ -121,7 +117,7 @@ public class CreateDoctorAccountController extends HttpServlet {
             errorMessage = ex.getMessage();
             if (ex.getMessage().contains("could not be parsed")) {
                 errorMessage = "Date is invalid!";
-                request.setAttribute("dateErrorMessage", errorMessage);
+                request.setAttribute("dateError", errorMessage);
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
             } else {
                 request.setAttribute("errorMessage", errorMessage);
