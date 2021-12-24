@@ -63,6 +63,8 @@ public class AddVaccineController extends HttpServlet {
         } catch (NumberFormatException ex) {
             request.setAttribute("numberError", "You should enter a number string!");
             request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
+        } catch (IllegalArgumentException ex) {
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
         }
     }
 }
