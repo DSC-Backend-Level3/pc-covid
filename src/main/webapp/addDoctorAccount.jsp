@@ -38,7 +38,8 @@
                                 <div class="form-group">
                                     <label for="id">Doctor ID:</label>
                                     <input type="text" name="id" id="id" class="form-control form-control-user"
-                                           pattern="[0-9]{12}" title="Input must be 12 numbers"
+<%--                                           pattern="[0-9]{12}" --%>
+                                           title="Input must be 12 numbers"
                                            placeholder="Ex: 123456789123" required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -98,7 +99,8 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number:</label>
                                     <input name="phoneNumber" id="phoneNumber"
-                                           pattern="[0-9]{10}" title="Input must be 10 numbers"
+<%--                                           pattern="[0-9]{10}" --%>
+                                           title="Input must be 10 numbers"
                                            type="tel" class="form-control form-control-user"
                                            placeholder="Ex: 0937456123" required/>
                                     <div class="valid-feedback">Valid.</div>
@@ -115,7 +117,8 @@
                                 <div class="form-group">
                                     <label for="healthInsuranceID">Health Insurance ID:</label>
                                     <input name="healthInsuranceID" id="healthInsuranceID"
-                                           pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters"
+<%--                                           pattern="[A-Z|a-z]{2}[0-9]{13}" --%>
+                                           title="Input must be 15 characters"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: ex1234567891234" required/>
                                     <div class="valid-feedback">Valid.</div>
@@ -306,6 +309,46 @@
             icon: 'warning',
             title: 'Oops...',
             text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.emailError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.emailError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.healthIDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.healthIDError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.phoneError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.phoneError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.IDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.IDError}'
         })
     </script>
 </c:if>

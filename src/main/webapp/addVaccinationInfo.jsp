@@ -44,15 +44,16 @@
                                     <label for="residentID">Resident ID:</label>
                                     <input type="text" name="residentID" id="residentID"
                                            class="form-control form-control-user"
-                                           pattern="[0-9]{12}" title="Input must be 12 numbers"
+<%--                                           pattern="[0-9]{12}" --%>
+                                           title="Input must be 12 numbers"
                                            placeholder="1234567789123" required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="id">Vaccination ID:</label>
-                                    <input type="text" name="id" id="id" class="form-control form-control-user"
-                                           max="10" placeholder="12345677891"
+                                    <input type="number" name="id" id="id" class="form-control form-control-user"
+                                           placeholder="12345677891"
                                            required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -278,6 +279,16 @@
             icon: 'warning',
             title: 'Oops...',
             text: '${requestScope.numberError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.IDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.IDError}'
         })
     </script>
 </c:if>

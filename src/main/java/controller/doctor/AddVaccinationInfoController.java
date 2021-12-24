@@ -67,6 +67,11 @@ public class AddVaccinationInfoController extends HttpServlet {
         request.setAttribute("vaccine", vaccineDao.getVaccineByID(vaccineID));
         date = Helper.convertDate(request.getParameter("date"));
 
+        if (Validator.isValidNumberString(residentID, "[0-9]{12}") == false) {
+            request.setAttribute("IDError", "ID must have 12-number length!");
+            throw new IllegalArgumentException();
+        }
+
         if (resident == null) {
             request.setAttribute("notExistedError", "ID is not available!");
             throw new IllegalArgumentException();
@@ -85,6 +90,7 @@ public class AddVaccinationInfoController extends HttpServlet {
                 throw new IllegalArgumentException();
             }
         }
+
         VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
         return vaccinationInfoDao.addNewVaccinationInfo(result);
     }

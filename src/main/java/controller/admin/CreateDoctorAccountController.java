@@ -62,6 +62,12 @@ public class CreateDoctorAccountController extends HttpServlet {
         gender = request.getParameter("gender");
 
         Timestamp date = Helper.convertDate(DOB);
+
+        if (Validator.isValidNumberString(id, "[0-9]{12}") == false) {
+            request.setAttribute("IDError", "ID must have 12-number length!");
+            throw new IllegalArgumentException();
+        }
+
         if (residentDao.getResidentById(id) != null) {
             request.setAttribute("existedError", "ID is duplicated!!");
             throw new IllegalArgumentException();
@@ -72,6 +78,20 @@ public class CreateDoctorAccountController extends HttpServlet {
         }
         if (confirmPassword.equals(password) == false) {
             request.setAttribute("passwordError", "Password must be the same!");
+            throw new IllegalArgumentException();
+        }
+
+        if (Validator.isValidGmail(email) == false) {
+            request.setAttribute("emailError", "Email is invalid!");
+            throw new IllegalArgumentException();
+        }
+
+        if (Validator.isValidNumberString(phoneNumber, "[0-9]{10}") == false) {
+            request.setAttribute("phoneError", "Phone number must have 10-number length!");
+            throw new IllegalArgumentException();
+        }
+        if (Validator.isValidNumberString(healthInsuranceID, "[A-Z|a-z]{2}[0-9]{13}") == false) {
+            request.setAttribute("healthIDError", "Health Insurance ID must have 15-character length!");
             throw new IllegalArgumentException();
         }
         ResidentDTO residentDTO = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, date, nationality, wardID, houseNumber, 3, password);
@@ -100,6 +120,9 @@ public class CreateDoctorAccountController extends HttpServlet {
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } catch (DateTimeParseException ex) {
             request.setAttribute("dateError", "Date is invalid!");
+            request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
             request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
         }
     }
