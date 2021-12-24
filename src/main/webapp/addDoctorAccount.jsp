@@ -99,7 +99,6 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number:</label>
                                     <input name="phoneNumber" id="phoneNumber"
-<%--                                           pattern="[0-9]{10}" --%>
                                            title="Input must be 10 numbers"
                                            type="tel" class="form-control form-control-user"
                                            placeholder="Ex: 0937456123" required/>
@@ -117,7 +116,6 @@
                                 <div class="form-group">
                                     <label for="healthInsuranceID">Health Insurance ID:</label>
                                     <input name="healthInsuranceID" id="healthInsuranceID"
-<%--                                           pattern="[A-Z|a-z]{2}[0-9]{13}" --%>
                                            title="Input must be 15 characters"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: ex1234567891234" required/>

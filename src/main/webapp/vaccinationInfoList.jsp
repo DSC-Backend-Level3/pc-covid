@@ -35,7 +35,7 @@
             </div>
             <div class="card-body p-0">
                 <div class="p-2">
-                    <h4 class="text-center text-gray-900">Welcome back, ${sessionScope.name}</h4>
+                    <h4 class="text-center text-gray-900">Welcome, ${sessionScope.name}</h4>
                     <a href="logout" class="btn btn-outline-danger">log out</a>
                     <a href="add" class="btn btn-outline-primary">add new vaccination</a>
                 </div>

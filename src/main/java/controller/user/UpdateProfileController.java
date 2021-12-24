@@ -11,21 +11,20 @@ import dto.ProvinceDTO;
 import dto.ResidentDTO;
 import dto.WardDTO;
 import utils.Helper;
+import utils.Validator;
 
 import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import static constant.Router.*;
 import static constant.Router.PAGE.ERROR_PAGE;
 import static constant.Router.PAGE.UPDATE_USER_PROFILE;
 import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
@@ -55,14 +54,20 @@ public class UpdateProfileController extends HttpServlet {
         }
 
         String email = request.getParameter(Attribute.USER.EMAIL);
-
+        if (Validator.isValidGmail(email) == false) {
+            request.setAttribute("emailError", "Email is invalid!");
+            throw new IllegalArgumentException();
+        }
 
         String healthInsuranceID = request.getParameter(Attribute.USER.HEALTH_INSURANCE_ID);
         if (healthInsuranceID.length() == 0) {
             healthInsuranceID = null;
         } else if (healthInsuranceID.length() != 15) {
             throw new IllegalArgumentException("Heath Insurance ID must have 15 characters!");
+        }else if (healthInsuranceID.matches("[A-Z|a-z]{2}[0-9]{13}") == false){
+            throw new IllegalArgumentException("Heath Insurance wrong format");
         }
+
         String gender = request.getParameter(Attribute.USER.GENDER);
         String DOB = request.getParameter(Attribute.USER.DOB);
         String nationality = request.getParameter(Attribute.USER.NATIONALITY);
@@ -72,14 +77,23 @@ public class UpdateProfileController extends HttpServlet {
 
         String wardRequest = request.getParameter("cboWard");
         String houseNumber = request.getParameter("houseNumber");
-
+        if (houseNumber.length() > 40) {
+            throw new IllegalArgumentException("House number invalid!");
+        }
         ResidentDTO dto = null;
         String url = "view?btAction=UpdateProfile";
         if (session != null) {
             String id = (String) session.getAttribute(Attribute.USER.USER_ID);
-
             if (id != null) {
                 Timestamp date = Helper.convertDate(DOB);
+                //get date in past
+                Timestamp previous = Timestamp.valueOf("1900-01-01 00:00:00");
+                //get current date
+                Timestamp instant = Timestamp.from(Instant.now());
+                //validate dob
+                if(date.before(previous) || date.after(instant)){
+                    throw new IllegalArgumentException("Invalid date of birth");
+                }
                 ResidentDaoImpl residentDao = new ResidentDaoImpl();
                 ResidentDTO resident = residentDao.getResidentById(id);
                 if (resident != null) {

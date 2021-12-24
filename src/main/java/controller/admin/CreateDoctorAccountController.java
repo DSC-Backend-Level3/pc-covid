@@ -94,6 +94,9 @@ public class CreateDoctorAccountController extends HttpServlet {
             request.setAttribute("healthIDError", "Health Insurance ID must have 15-character length!");
             throw new IllegalArgumentException();
         }
+        if (houseNumber.length() > 40) {
+            throw new IllegalArgumentException("House number invalid!");
+        }
         ResidentDTO residentDTO = new ResidentDTO(id, firstName, lastName, phoneNumber, email, healthInsuranceID, gender, date, nationality, wardID, houseNumber, 3, password);
 
         return residentDao.addNewResident(residentDTO);
