@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,5 +127,25 @@
         }, false);
     })();
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.existedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.numberError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.numberError}'
+        })
+    </script>
+</c:if>
 </body>
 </html>

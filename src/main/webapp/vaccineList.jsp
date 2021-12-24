@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="pb-2">
                             <a href="homepage" class="btn btn-outline-warning">home</a>
-                            <a href="addVaccine.html" class="btn btn-outline-primary">add new vaccine</a>
+                            <a href="addVaccine.jsp" class="btn btn-outline-primary">add new vaccine</a>
                         </div>
                         <c:if test="${not empty requestScope.vaccineList}">
                             <div class="table-responsive">

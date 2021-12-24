@@ -1,22 +1,24 @@
 package controller.admin;
 
+import constant.PathValue;
+import constant.Router;
 import dao.VaccineDao;
 import dao.implement.VaccineDaoImpl;
 import dto.VaccineDTO;
 
 import javax.naming.NamingException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.List;
 
 @WebServlet(name = "AddVaccineController", value = "/AddVaccineController")
 public class AddVaccineController extends HttpServlet {
-    private final String PAGE_RETURN = "viewVaccine?btAction=View+Vaccine";
+    private final String PAGE_RETURN = "viewVaccine";
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws SQLException, NamingException, UnsupportedEncodingException {
 
         VaccineDao vaccineDao = new VaccineDaoImpl();
@@ -34,9 +36,9 @@ public class AddVaccineController extends HttpServlet {
         firm = request.getParameter("firm");
         interval = Integer.parseInt(request.getParameter("interval"));
 
-        VaccineDTO vaccine = vaccineDao.getVaccineByID(id);
-        if (vaccine != null) {
-            request.setAttribute("errorMessage", "ID is existed!");
+        if (vaccineDao.getVaccineByID(id) != null) {
+            request.setAttribute("existedError", "ID is available!");
+            throw new IllegalArgumentException();
         }
 
         return vaccineDao.addNewVaccine(new VaccineDTO(id, name, firm, country, interval));
@@ -50,11 +52,19 @@ public class AddVaccineController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            postHandler(request, response);
-        } catch (SQLException | NamingException e) {
-            e.printStackTrace();
-        } finally {
-            response.sendRedirect(PAGE_RETURN);
+            if (postHandler(request, response) == true) {
+                response.sendRedirect(PAGE_RETURN);
+            } else {
+                request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
+            }
+        } catch (SQLException | NamingException | UnsupportedEncodingException ex) {
+            ex.printStackTrace();
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
+        } catch (NumberFormatException ex) {
+            request.setAttribute("numberError", "You should enter a number string!");
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
+        } catch (IllegalArgumentException ex) {
+            request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
         }
     }
 }

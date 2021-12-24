@@ -38,7 +38,8 @@
                                 <div class="form-group">
                                     <label for="id">Doctor ID:</label>
                                     <input type="text" name="id" id="id" class="form-control form-control-user"
-                                           pattern="[0-9]{12}" title="Input must be 12 numbers"
+<%--                                           pattern="[0-9]{12}" --%>
+                                           title="Input must be 12 numbers"
                                            placeholder="Ex: 123456789123" required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -98,7 +99,8 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number:</label>
                                     <input name="phoneNumber" id="phoneNumber"
-                                           pattern="[0-9]{10}" title="Input must be 10 numbers"
+<%--                                           pattern="[0-9]{10}" --%>
+                                           title="Input must be 10 numbers"
                                            type="tel" class="form-control form-control-user"
                                            placeholder="Ex: 0937456123" required/>
                                     <div class="valid-feedback">Valid.</div>
@@ -115,7 +117,8 @@
                                 <div class="form-group">
                                     <label for="healthInsuranceID">Health Insurance ID:</label>
                                     <input name="healthInsuranceID" id="healthInsuranceID"
-                                           pattern="[A-Z|a-z]{2}[0-9]{13}" title="Input must be 15 characters"
+<%--                                           pattern="[A-Z|a-z]{2}[0-9]{13}" --%>
+                                           title="Input must be 15 characters"
                                            type="text" class="form-control form-control-user"
                                            placeholder="Ex: ex1234567891234" required/>
                                     <div class="valid-feedback">Valid.</div>
@@ -149,8 +152,8 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="wardID">Ward:</label>
-                                    <select class="form-control" id="wardID" name="wardID"
+                                    <label for="ward">Ward:</label>
+                                    <select class="form-control" id="ward" name="wardID"
                                             required>
                                         <option value="">Select ward</option>
                                     </select>
@@ -212,39 +215,40 @@
             method: "GET",
             data: {operation: 'province'},
             success: function (data, textStatus, jqXHR) {
+                // let obj = $.parseJSON(data);
+                console.log(data[0].id);
                 $.each(data, function (key, value) {
                     $('#province').append('<option value="' + value.id + '">' + value.name + '</option>')
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#province').append('<option>province Unavailable</option>');
+                $('#province').append('<option>Province Unavailable</option>');
             },
             cache: false
         });
-
         $('#province').change(function () {
             $('#district').find('option').remove();
-            $('#district').append('<option>Select District</option>');
+            $('#district').append('<option value="">Select District</option>');
             $('#ward').find('option').remove();
-            $('#ward').append('<option>Select Ward</option>');
-
+            $('#ward').append('<option value="">Select Ward</option>');
             let pid = $('#province').val();
             let data = {
                 operation: "district",
                 id: pid
             };
-
             $.ajax({
                 url: "loadLocation",
                 method: "GET",
                 data: data,
                 success: function (data, textStatus, jqXHR) {
+//                        console.log(data);
                     $.each(data, function (key, value) {
                         $('#district').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
+//                        $('select').formSelect();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#district').append('<option>District Unavailable</option>');
+                    $('#district').append('<option value="">District Unavailable</option>');
                 },
                 cache: false
             });
@@ -252,13 +256,14 @@
 
         $('#district').change(function () {
             $('#ward').find('option').remove();
-            $('#ward').append('<option>Select Ward</option>');
+            $('#ward').append('<option value="">Select Ward</option>');
 
             let did = $('#district').val();
             let data = {
                 operation: "ward",
                 id: did
             };
+
 
             $.ajax({
                 url: "loadLocation",
@@ -268,34 +273,84 @@
                     $.each(data, function (key, value) {
                         $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>')
                     });
+//                        $('select').formSelect();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $('#ward').append('<option>Ward Unavailable</option>');
+                    $('#ward').append('<option value="">Ward Unavailable</option>');
                 },
                 cache: false
             });
         });
     });
 </script>
-<script>
-    // Disable form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Get the forms we want to add validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.passwordError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.passwordError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.dateError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.dateError}'
+        })
+    </script>
+</c:if>
+<c:if test="${not empty requestScope.existedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.emailError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.emailError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.healthIDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.healthIDError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.phoneError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.phoneError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.IDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.IDError}'
+        })
+    </script>
+</c:if>
 </body>
 </html>

@@ -44,15 +44,16 @@
                                     <label for="residentID">Resident ID:</label>
                                     <input type="text" name="residentID" id="residentID"
                                            class="form-control form-control-user"
-                                           pattern="[0-9]{12}" title="Input must be 12 numbers"
+<%--                                           pattern="[0-9]{12}" --%>
+                                           title="Input must be 12 numbers"
                                            placeholder="1234567789123" required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="id">Vaccination ID:</label>
-                                    <input type="text" name="id" id="id" class="form-control form-control-user"
-                                           max="10" placeholder="12345677891"
+                                    <input type="number" name="id" id="id" class="form-control form-control-user"
+                                           placeholder="12345677891"
                                            required/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -62,6 +63,7 @@
                                         <label for="vaccineID">Vaccination name:</label>
                                         <select id="vaccineID" name="vaccineID"
                                                 class="form-control" required>
+                                            <option value="">Select Vaccine</option>
                                             <c:forEach var="dto" items="${vaccineList}">
                                                 <option value="${dto.id}">${dto.name}</option>
                                             </c:forEach>
@@ -190,14 +192,18 @@
                 cache: false
             });
         });
+
         $('#district').change(function () {
             $('#ward').find('option').remove();
             $('#ward').append('<option value="">Select Ward</option>');
+
             let did = $('#district').val();
             let data = {
                 operation: "ward",
                 id: did
             };
+
+
             $.ajax({
                 url: "loadLocation",
                 method: "GET",
@@ -236,5 +242,55 @@
         }, false);
     })();
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${not empty requestScope.dateError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.dateError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.notExistedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.notExistedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.existedError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.existedError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.numberError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.numberError}'
+        })
+    </script>
+</c:if>
+
+<c:if test="${not empty requestScope.IDError}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '${requestScope.IDError}'
+        })
+    </script>
+</c:if>
 </body>
 </html>
