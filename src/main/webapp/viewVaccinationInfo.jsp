@@ -43,7 +43,7 @@
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <div class="card-header py-3">
-                        <h3 class="text-center text-gray-900">Vaccination info</h3>
+                        <h3 class="text-center text-gray-900">Vaccination Information</h3>
                     </div>
                     <div class="col-lg-8 mx-auto">
                         <div class="my-2">
