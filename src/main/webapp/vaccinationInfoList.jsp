@@ -90,6 +90,17 @@
         </div>
     </div>
 </div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${param.add eq 'success'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Adding successfully'
+        })
+    </script>
+</c:if>
 </body>
 
 <!-- Bootstrap core JavaScript-->

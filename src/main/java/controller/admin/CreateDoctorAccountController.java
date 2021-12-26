@@ -114,7 +114,7 @@ public class CreateDoctorAccountController extends HttpServlet {
             if (postHandler(request, response) == false) {
                 request.getRequestDispatcher(DOCTOR_ACCOUNT_FORM).forward(request, response);
             } else {
-                response.sendRedirect(PAGE_RETURN);
+                response.sendRedirect(PAGE_RETURN + "?create=success");
             }
         } catch (SQLException | NamingException | NoSuchAlgorithmException | NumberFormatException ex) {
             errorMessage = ex.getMessage();

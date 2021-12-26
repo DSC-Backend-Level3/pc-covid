@@ -113,7 +113,7 @@ public class AddVaccinationInfoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if (postHandler(request, response)) {
-                response.sendRedirect(PathValue.HOME_PAGE);
+                response.sendRedirect(PathValue.HOME_PAGE + "?add=success");
             } else {
                 doGet(request, response);
             }
