@@ -24,7 +24,7 @@ import static constant.Router.PAGE.ERROR_PAGE;
 
 @WebServlet(name = "CreateDoctorAccountController", value = "/CreateDoctorAccountController")
 public class CreateDoctorAccountController extends HttpServlet {
-    private final String PAGE_RETURN = "viewDoctor?btAction=viewDoctor";
+    private final String PAGE_RETURN = "viewDoctor";
 
     protected boolean postHandler(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, SQLException, NamingException, DateTimeParseException, NoSuchAlgorithmException {
 
