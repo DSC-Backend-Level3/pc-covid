@@ -83,6 +83,17 @@
     </div>
 </div>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<c:if test="${param.create eq 'success'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Create new account successfully'
+        })
+    </script>
+</c:if>
+
 <!-- Bootstrap core JavaScript-->
 <script src="./static/jquery/jquery.min.js"></script>
 <script src="./static/bootstrap/bootstrap.bundle.min.js"></script>

@@ -53,7 +53,7 @@ public class AddVaccineController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if (postHandler(request, response) == true) {
-                response.sendRedirect(PAGE_RETURN);
+                response.sendRedirect(PAGE_RETURN + "?add=success");
             } else {
                 request.getRequestDispatcher(Router.PAGE.VACCINATE_FORM).forward(request, response);
             }
