@@ -28,6 +28,7 @@
 
 </head>
 <body class="bg-gradient-primary">
+<c:set var="status" value="${param.status}"/>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-xl-8 col-lg-10 col-md-8">
@@ -96,21 +97,30 @@
 <!-- Custom scripts for all pages-->
 <script src="./static/js/sb-admin-2.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<c:if test="${not empty requestScope.CHECK_INVALID}">
+<c:if test="${status eq 'false1'}">
     <script>
         Swal.fire({
             icon: 'warning',
             title: 'Oops...',
-            text: '${requestScope.CHECK_INVALID}'
+            text: 'Updated Failed. Password does not match.'
         })
     </script>
 </c:if>
-<c:if test="${not empty requestScope.CHECK_VALID}">
+<c:if test="${status eq 'false2'}">
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Updated Failed. Enter the wrong password'
+        })
+    </script>
+</c:if>
+<c:if test="${status eq 'true'}">
     <script>
         Swal.fire({
             icon: 'success',
             title: 'Yeahhh',
-            text: '${requestScope.CHECK_VALID}'
+            text: 'Updated Successfully'
         })
     </script>
 </c:if>
