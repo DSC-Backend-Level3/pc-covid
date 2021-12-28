@@ -55,6 +55,7 @@ public class AddVaccinationInfoController extends HttpServlet {
         int vaccineID;
         int wardID;
         Timestamp date;
+        boolean isValidDate;
 
         residentID = request.getParameter("residentID");
         id = Integer.parseInt(request.getParameter("id"));
@@ -82,13 +83,16 @@ public class AddVaccinationInfoController extends HttpServlet {
         }
         if (latestVaccinationInfo != null) {
             VaccineDTO vaccine = vaccineDao.getVaccineByID(latestVaccinationInfo.getVaccineID());
-            System.out.println(latestVaccinationInfo.getResidentID());
-            boolean isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
+            isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
                                 && Validator.isBeforeCurrentDate(date);
-            if (isValidDate == false) {
-                request.setAttribute("dateError", "Date is not suitable for the next injection!");
-                throw new IllegalArgumentException();
-            }
+
+        } else {
+            isValidDate = Validator.isBeforeCurrentDate(date);
+        }
+
+        if (isValidDate == false) {
+            request.setAttribute("dateError", "Date is not suitable for the next injection!");
+            throw new IllegalArgumentException();
         }
 
         VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
