@@ -170,7 +170,6 @@ public class UpdateProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             updateProfile(request, response);
-            System.out.println("hello");
             response.sendRedirect("view?btAction=ViewProfile");
         } catch (DateTimeParseException e) {
             request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, "Date invalid");

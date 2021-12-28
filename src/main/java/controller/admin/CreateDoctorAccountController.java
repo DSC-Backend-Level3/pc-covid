@@ -118,7 +118,6 @@ public class CreateDoctorAccountController extends HttpServlet {
             }
         } catch (SQLException | NamingException | NoSuchAlgorithmException | NumberFormatException ex) {
             errorMessage = ex.getMessage();
-            System.out.println(errorMessage);
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher(ERROR_PAGE).forward(request, response);
         } catch (DateTimeParseException ex) {
