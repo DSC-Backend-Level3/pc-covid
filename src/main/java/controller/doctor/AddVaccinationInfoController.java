@@ -21,8 +21,6 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static constant.Router.PAGE.DOCTOR_ACCOUNT_FORM;
-import static constant.Router.PAGE.ERROR_PAGE;
 
 @WebServlet(name = "AddVaccinationInfoController", value = "/AddVaccinationInfoController")
 public class AddVaccinationInfoController extends HttpServlet {
@@ -56,6 +54,8 @@ public class AddVaccinationInfoController extends HttpServlet {
         int wardID;
         Timestamp date;
 
+        boolean isValidDate;
+
         residentID = request.getParameter("residentID");
         id = Integer.parseInt(request.getParameter("id"));
         vaccineID = Integer.parseInt(request.getParameter("vaccineID"));
@@ -82,17 +82,19 @@ public class AddVaccinationInfoController extends HttpServlet {
         }
         if (latestVaccinationInfo != null) {
             VaccineDTO vaccine = vaccineDao.getVaccineByID(latestVaccinationInfo.getVaccineID());
-            boolean isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
-                                && Validator.isBeforeCurrentDate(date);
-            if (isValidDate == false) {
-                request.setAttribute("dateError", "Date is not suitable for the next injection!");
-                throw new IllegalArgumentException();
-            }
+            isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
+                    && Validator.isBeforeCurrentDate(date);
+        } else {
+            isValidDate = Validator.isBeforeCurrentDate(date);
         }
-
+        if (isValidDate == false) {
+            request.setAttribute("dateError", "Date is not suitable for the next injection!");
+            throw new IllegalArgumentException();
+        }
         VaccinationInfoDTO result = new VaccinationInfoDTO(id, residentID, vaccineID, wardID, date);
         return vaccinationInfoDao.addNewVaccinationInfo(result);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
