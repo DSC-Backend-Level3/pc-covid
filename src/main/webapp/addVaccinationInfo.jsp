@@ -35,7 +35,7 @@
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <div class="card-header py-3">
-                        <h3 class="text-center text-gray-900">VACCINE INFORMATION FORM</h3>
+                        <h3 class="text-center text-gray-900">VACCINATION INFORMATION FORM</h3>
                     </div>
                     <div class="col-lg-8 mx-auto">
                         <div class="user py-3">
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <label for="vaccineID">Vaccination name:</label>
+                                        <label for="vaccineID">Vaccine name:</label>
                                         <select id="vaccineID" name="vaccineID"
                                                 class="form-control" required>
                                             <option value="">Select Vaccine</option>

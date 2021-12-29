@@ -63,7 +63,7 @@
                                     <div class="invalid-feedback">Please fill out this field.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="interval">Time for 2rd dose (week):</label>
+                                    <label for="interval">Time for 2rd dose (day):</label>
                                     <input type="text" name="interval" id="interval"
                                            class="form-control form-control-user"
                                            maxlength="10" placeholder="Pharmaceutical industry" required/>

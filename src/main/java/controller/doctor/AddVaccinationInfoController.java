@@ -85,7 +85,7 @@ public class AddVaccinationInfoController extends HttpServlet {
             isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
                     && Validator.isBeforeCurrentDate(date);
         } else {
-            isValidDate = Validator.isBeforeCurrentDate(date);
+            isValidDate = Validator.isBeforeCurrentDate(date) && Validator.isValidFirstInjection(date);
         }
         if (isValidDate == false) {
             request.setAttribute("dateError", "Date is not suitable for the next injection!");

@@ -8,6 +8,7 @@ import dto.ResidentDTO;
 import utils.Helper;
 
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +21,9 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
+
+import static constant.Router.USER.VIEW_PROFILE_CONTROLLER;
 
 
 /**
@@ -37,7 +41,10 @@ public class CreateAccountController extends HttpServlet {
         try {
             createAccount(request, response);
             response.sendRedirect(Router.PAGE.LOGIN_PAGE + "?create=success");
-        } catch (IllegalArgumentException e) {
+        }catch (DateTimeParseException e) {
+            request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, "Date invalid");
+            doGet(request, response);
+        }catch (IllegalArgumentException e) {
             request.setAttribute(Attribute.ERROR.ERROR_MESSAGE, e.getMessage());
             doGet(request, response);
         } catch (NamingException | SQLException | NoSuchAlgorithmException e) {
