@@ -104,9 +104,9 @@ public class Validator {
     }
 
     public static boolean isValidAge(Timestamp date) {
-        LocalDateTime checkDate = date.toLocalDateTime();
+        LocalDateTime checkedDate = date.toLocalDateTime();
         LocalDateTime today = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
-        return checkDate.plusYears(18).isBefore(today) && checkDate.plusYears(65).isAfter(today);
+        return checkedDate.plusYears(18).isBefore(today) && checkedDate.plusYears(65).isAfter(today);
     }
 
     public static boolean isValidNumberString(String input, String format) {
@@ -115,6 +115,13 @@ public class Validator {
             } else {
                 return input.matches(format);
             }
+    }
+
+    public static boolean isValidFirstInjection(Timestamp date) {
+        LocalDateTime checkedDate = date.toLocalDateTime();
+        LocalDateTime firstInjectionDate = LocalDateTime.of(2021, 3, 1,
+                                                            0, 0, 0, 0);
+        return checkedDate.isAfter(firstInjectionDate);
     }
 
     public static boolean isValidGmail(String gmail) {

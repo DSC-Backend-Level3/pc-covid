@@ -84,10 +84,10 @@ public class AddVaccinationInfoController extends HttpServlet {
         if (latestVaccinationInfo != null) {
             VaccineDTO vaccine = vaccineDao.getVaccineByID(latestVaccinationInfo.getVaccineID());
             isValidDate = Validator.isValidInterval(latestVaccinationInfo.getDate(), date, vaccine.getInterval())
-                                && Validator.isBeforeCurrentDate(date);
+                    && Validator.isBeforeCurrentDate(date);
 
         } else {
-            isValidDate = Validator.isBeforeCurrentDate(date);
+            isValidDate = Validator.isBeforeCurrentDate(date) && Validator.isValidFirstInjection(date);
         }
 
         if (isValidDate == false) {
